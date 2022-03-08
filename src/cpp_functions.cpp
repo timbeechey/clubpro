@@ -135,3 +135,12 @@ List c_classify(NumericVector obs, NumericVector target) {
   List out = List::create(Named("predicted_classification") = predicted_classification, _["classification_result"] = classification_result, _["pcc"] = pcc);
   return out;
 }
+
+// [[Rcpp::export]]
+NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int nreps) {
+  NumericVector pccs(nreps); // preallocate vector
+  for (int i = 0; i < nreps; i++) {
+    pccs[i] = c_classify(sample(obs, obs.length()), target)["pcc"];
+  }
+  return pccs;
+}

@@ -21,3 +21,7 @@ c_classify <- function(obs, target) {
     .Call(`_clubpro_c_classify`, obs, target)
 }
 
+c_rand_pccs <- function(obs, target, nreps) {
+    .Call(`_clubpro_c_rand_pccs`, obs, target, nreps)
+}
+

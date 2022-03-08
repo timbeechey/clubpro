@@ -4,12 +4,14 @@
 \alias{classify}
 \title{Classify observations}
 \usage{
-classify(y, x)
+classify(y, x, nreps = 1000)
 }
 \arguments{
 \item{y, }{a numeric vector of observations.}
 
 \item{x, }{a factor vector.}
+
+\item{nreps, }{the number of replicates to use in the randomisation test.}
 }
 \value{
 an object of class "clubprofit" is a list containing the folllowing

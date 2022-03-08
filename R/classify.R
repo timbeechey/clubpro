@@ -20,6 +20,7 @@
 #' rotation.
 #' @param y, a numeric vector of observations.
 #' @param x, a factor vector.
+#' @param nreps, the number of replicates to use in the randomisation test.
 #' @return an object of class "clubprofit" is a list containing the folllowing
 #' components:
 #' \describe{
@@ -29,15 +30,19 @@
 #'   \item{pcc}{the percentage of correct classifications.}
 #'   }
 #' @export
-classify <- function(y, x) {
+classify <- function(y, x, nreps = 1000) {
   assertthat::assert_that(is.factor(x), msg = "The target vector must be a factor")
-  result <- c_classify(y, x)
+  obs_pcc <- c_classify(y, x) # calls Rcpp classification function
+  rand_pccs <- c_rand_pccs(y, x, nreps)
+  cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps
   return(
     structure(
       list(
-        prediction = result$predicted_classification,
-        accuracy = result$classification_result,
-        pcc = result$pcc
+        prediction = obs_pcc$predicted_classification,
+        accuracy = obs_pcc$classification_result,
+        pcc = obs_pcc$pcc,
+        cval = cval,
+        pcc_replicates = rand_pccs
       ),
       class = "clubprofit"
     )

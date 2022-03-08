@@ -67,3 +67,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// c_rand_pccs
+NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int nreps);
+RcppExport SEXP _clubpro_c_rand_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP nrepsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< int >::type nreps(nrepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_rand_pccs(obs, target, nreps));
+    return rcpp_result_gen;
+END_RCPP
+}

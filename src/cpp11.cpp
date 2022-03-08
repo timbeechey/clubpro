@@ -22,6 +22,7 @@ extern SEXP _clubpro_c_binary_procrustes_rotation(SEXP, SEXP);
 extern SEXP _clubpro_c_classify(SEXP, SEXP);
 extern SEXP _clubpro_c_dichotemise_matrix(SEXP);
 extern SEXP _clubpro_c_normalise_matrix(SEXP);
+extern SEXP _clubpro_c_rand_pccs(SEXP, SEXP, SEXP);
 extern SEXP _clubpro_c_to_indicator_matrix(SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
@@ -29,6 +30,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_clubpro_c_classify",                   (DL_FUNC) &_clubpro_c_classify,                   2},
     {"_clubpro_c_dichotemise_matrix",         (DL_FUNC) &_clubpro_c_dichotemise_matrix,         1},
     {"_clubpro_c_normalise_matrix",           (DL_FUNC) &_clubpro_c_normalise_matrix,           1},
+    {"_clubpro_c_rand_pccs",                  (DL_FUNC) &_clubpro_c_rand_pccs,                  3},
     {"_clubpro_c_to_indicator_matrix",        (DL_FUNC) &_clubpro_c_to_indicator_matrix,        1},
     {"_clubpro_fun",                          (DL_FUNC) &_clubpro_fun,                          0},
     {NULL, NULL, 0}
