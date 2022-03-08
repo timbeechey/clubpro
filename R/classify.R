@@ -28,10 +28,16 @@
 #'   \item{accuracy}{a character vector indicating whether each classification
 #'   is "correct", "incorrect", or "ambiguous".}
 #'   \item{pcc}{the percentage of correct classifications.}
+#'   \item{cval}{the chance of randomly reordered data producing a PCC >= the
+#'   observed PCC.}
+#'   \item{pcc_replicates}{a vector of PCCs generated from randomly reordered
+#'   data used to calculate \code{cval}.}
 #'   }
 #' @export
 classify <- function(y, x, nreps = 1000) {
   assertthat::assert_that(is.factor(x), msg = "The target vector must be a factor")
+  assertthat::assert_that(assertthat::are_equal(length(x), length(y)),
+                          msg = "The vectors passed to classify() must be of the same length")
   obs_pcc <- c_classify(y, x) # calls Rcpp classification function
   rand_pccs <- c_rand_pccs(y, x, nreps)
   cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps

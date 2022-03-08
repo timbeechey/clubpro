@@ -21,6 +21,10 @@ components:
   \item{accuracy}{a character vector indicating whether each classification
   is "correct", "incorrect", or "ambiguous".}
   \item{pcc}{the percentage of correct classifications.}
+  \item{cval}{the chance of randomly reordered data producing a PCC >= the
+  observed PCC.}
+  \item{pcc_replicates}{a vector of PCCs generated from randomly reordered
+  data used to calculate \code{cval}.}
   }
 }
 \description{
