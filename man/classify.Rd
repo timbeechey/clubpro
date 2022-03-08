@@ -7,11 +7,11 @@
 classify(y, x, nreps = 1000)
 }
 \arguments{
-\item{y, }{a numeric vector of observations.}
+\item{y}{a numeric vector of observations.}
 
-\item{x, }{a factor vector.}
+\item{x}{a factor vector.}
 
-\item{nreps, }{the number of replicates to use in the randomisation test.}
+\item{nreps}{the number of replicates to use in the randomisation test.}
 }
 \value{
 an object of class "clubprofit" is a list containing the folllowing

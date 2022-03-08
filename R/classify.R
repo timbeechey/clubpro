@@ -18,9 +18,9 @@
 #'
 #' \code{classify()} is used to classify obervations using binary procrustes
 #' rotation.
-#' @param y, a numeric vector of observations.
-#' @param x, a factor vector.
-#' @param nreps, the number of replicates to use in the randomisation test.
+#' @param y a numeric vector of observations.
+#' @param x a factor vector.
+#' @param nreps the number of replicates to use in the randomisation test.
 #' @return an object of class "clubprofit" is a list containing the folllowing
 #' components:
 #' \describe{
