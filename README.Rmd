@@ -1,0 +1,24 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-"
+)
+```
+
+# clubpro
+
+
+**This is a _work in progress_ not yet ready for use**
+
+An R package for *cl*assification *u*sing *b*inary *p*rocrustes *ro*tation based on Grice (2011).
+
+# References
+
+Grice, J. W. (2011). _Observation oriented modeling: Analysis of cause in the behavioral sciences_ (1st ed). Academic Press.
