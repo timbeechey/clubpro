@@ -3,7 +3,7 @@
 
 # clubpro
 
-**This is a *work in progress* not yet ready for use**
+**This is a *work in progress***
 
 An R package for *cl*assification *u*sing *b*inary *p*rocrustes
 *ro*tation based on Grice (2011).

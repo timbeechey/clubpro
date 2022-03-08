@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # clubpro
 
 
-**This is a _work in progress_ not yet ready for use**
+**This is a _work in progress_**
 
 An R package for *cl*assification *u*sing *b*inary *p*rocrustes *ro*tation based on Grice (2011).
 
