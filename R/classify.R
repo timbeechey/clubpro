@@ -32,6 +32,7 @@
 #'   observed PCC.}
 #'   \item{pcc_replicates}{a vector of PCCs generated from randomly reordered
 #'   data used to calculate \code{cval}.}
+#'   \item{call}{the matched call.}
 #'   }
 #' @export
 classify <- function(y, x, nreps = 1000) {
@@ -48,7 +49,10 @@ classify <- function(y, x, nreps = 1000) {
         accuracy = obs_pcc$classification_result,
         pcc = obs_pcc$pcc,
         cval = cval,
-        pcc_replicates = rand_pccs
+        pcc_replicates = rand_pccs,
+        y = y,
+        x = x,
+        call = match.call()
       ),
       class = "clubprofit"
     )

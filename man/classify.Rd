@@ -25,6 +25,7 @@ components:
   observed PCC.}
   \item{pcc_replicates}{a vector of PCCs generated from randomly reordered
   data used to calculate \code{cval}.}
+  \item{call}{the matched call.}
   }
 }
 \description{
