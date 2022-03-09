@@ -64,18 +64,56 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' @export
 plot.clubprofit <- function(x, ...) {
 
+  # bind variables to function
+  observation <- accuracy <- NULL
+
   df <- individual_results(x)
 
   # find the largest count in a single group, used to set axis labels
   max_count <- max(table(df$observation, df$target))
 
-  ggplot(df, aes(x=observation)) +
-    geom_bar(stat="count", colour = "black", aes(fill = accuracy), alpha = 0.9) +
-    scale_fill_manual(values = c("#7aa457", "#cb6751", "#9e6ebd")) +
-    scale_x_reverse(breaks = min(z$observation):max(z$observation)) +
-    scale_y_continuous(breaks = 0:max_count, labels = 0:max_count) +
-    coord_flip() +
-    facet_wrap(~ target) +
-    theme_bw() +
-    theme(panel.grid = element_blank(), legend.position = "bottom", legend.title = element_blank())
+  ggplot2::ggplot(df, ggplot2::aes(x=observation)) +
+    ggplot2::geom_bar(stat="count", colour = "black",
+                      ggplot2::aes(fill = accuracy), alpha = 0.9) +
+    ggplot2::scale_fill_manual(values = c("#7aa457", "#cb6751", "#9e6ebd")) +
+    ggplot2::scale_x_reverse(breaks = min(df$observation):max(df$observation)) +
+    ggplot2::scale_y_continuous(breaks = 0:max_count, labels = 0:max_count) +
+    ggplot2::coord_flip() +
+    ggplot2::facet_wrap(~ target) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.grid = ggplot2::element_blank(),
+                   legend.position = "bottom",
+                   legend.title = ggplot2::element_blank())
+}
+
+#' Plot observed and random order generated PCCs.
+#'
+#' Produces a plot which shows the proportion of random reorderings of the
+#' observed data which produce PCCs at least as high as the observed PCC.
+#' @param m an object of class "clubprofit" produced by \code{classify()}.
+#' @return an object of class "ggplot".
+#' @export
+plot_cvalue <- function(m) {
+  UseMethod("plot_cvalue")
+}
+
+#' @rdname plot_cvalue
+#' @export
+plot_cvalue.default <- function(m) .NotYetImplemented()
+
+#' @rdname plot_cvalue
+#' @export
+plot_cvalue.clubprofit <- function(m) {
+
+  #bind variables to the function
+  n <- PCC <- NULL
+
+  df <- data.frame(n = 1:length(m$pcc_replicates),
+                   PCC = m$pcc_replicates)
+
+  ggplot2::ggplot(df, ggplot2::aes(x = PCC)) +
+    ggplot2::geom_histogram(colour = "black", fill = "#7aa457", alpha=0.7, bins=10) +
+    ggplot2::geom_vline(xintercept = m$pcc, linetype=2) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.grid = ggplot2::element_blank())
 }
