@@ -21,9 +21,14 @@ print.clubprofit <- function(x, ...) {
 
 #' @export
 summary.clubprofit <- function(object, ..., digits = 2L) {
-  cat("Classification analysis of", length(object$prediction), "observations.\n\n")
-  cat("PCC:", round(object$pcc, digits), "\n")
-  cat("c-value:", round(object$cval, 2), "\n\n")
+  cat("*****Classification Results*****\n")
+  cat("Observations:", length(object$y), "\n")
+  cat("Target groups:", nlevels(object$x), "\n")
+  cat("PCC:", round(object$pcc, digits), "\n\n")
+  cat("*****Randomisation Test*****\n")
+  cat("Minimum random PCC:", round(min(object$pcc_replicates), digits), "\n")
+  cat("Maximum random PCC:", round(max(object$pcc_replicates), digits), "\n")
+  cat("Chance-value:", round(object$cval, 2), "\n\n")
   print(individual_results(object))
 }
 
@@ -48,11 +53,11 @@ individual_results.default <- function(m, digits) .NotYetImplemented()
 #' @export
 individual_results.clubprofit <- function(m, digits = 2L) {
   df <- data.frame(individual = 1:length(m$y),
-                   observation = m$y,
-                   target = m$x,
+                   y = m$y,
+                   x = m$x,
                    prediction = m$prediction,
                    accuracy = m$accuracy)
-  df$target <- factor(df$target, levels = levels(m$x))
+  df$target <- factor(df$x, levels = levels(m$x))
   df$accuracy <- factor(df$accuracy, levels = c("correct", "incorrect", "ambiguous"))
   df
 }
@@ -78,6 +83,7 @@ plot.clubprofit <- function(x, ...) {
     ggplot2::scale_fill_manual(values = c("#7aa457", "#cb6751", "#9e6ebd")) +
     ggplot2::scale_x_reverse(breaks = min(df$observation):max(df$observation)) +
     ggplot2::scale_y_continuous(breaks = 0:max_count, labels = 0:max_count) +
+    ggplot2::labs(x = "Observed Value", y = "N Individuals") +
     ggplot2::coord_flip() +
     ggplot2::facet_wrap(~ target, nrow = 1) +
     ggplot2::theme_bw() +
