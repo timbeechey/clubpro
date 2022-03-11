@@ -41,6 +41,9 @@ classify <- function(y, x, nreps = 1000) {
   assertthat::assert_that(assertthat::are_equal(length(x), length(y)),
                           msg = "The vectors passed to classify() must be of the same length")
   obs_pcc <- c_classify(y, x) # calls Rcpp classification function
+  correct_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "correct"])
+  ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])
+  incorrect_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "incorrect"])
   rand_pccs <- c_rand_pccs(y, x, nreps)
   cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps
   return(
@@ -49,10 +52,14 @@ classify <- function(y, x, nreps = 1000) {
         prediction = obs_pcc$predicted_classification,
         accuracy = obs_pcc$classification_result,
         pcc = obs_pcc$pcc,
+        correct_classifications = correct_classifications,
+        ambiguous_classifications = ambiguous_classifications,
+        incorrect_classifications = incorrect_classifications,
         cval = cval,
         pcc_replicates = rand_pccs,
         y = y,
         x = x,
+        nreps = nreps,
         call = match.call()
       ),
       class = "clubprofit"
