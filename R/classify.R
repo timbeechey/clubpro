@@ -36,6 +36,7 @@
 #'   }
 #' @export
 classify <- function(y, x, nreps = 1000) {
+
   assertthat::assert_that(is.factor(x), msg = "The target vector must be a factor")
   assertthat::assert_that(assertthat::are_equal(length(x), length(y)),
                           msg = "The vectors passed to classify() must be of the same length")

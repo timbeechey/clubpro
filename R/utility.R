@@ -79,7 +79,7 @@ plot.clubprofit <- function(x, ...) {
     ggplot2::scale_x_reverse(breaks = min(df$observation):max(df$observation)) +
     ggplot2::scale_y_continuous(breaks = 0:max_count, labels = 0:max_count) +
     ggplot2::coord_flip() +
-    ggplot2::facet_wrap(~ target) +
+    ggplot2::facet_wrap(~ target, nrow = 1) +
     ggplot2::theme_bw() +
     ggplot2::theme(panel.grid = ggplot2::element_blank(),
                    legend.position = "bottom",
