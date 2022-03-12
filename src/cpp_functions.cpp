@@ -24,12 +24,20 @@ void fun() {}
 
 // [[Rcpp::export]]
 NumericMatrix c_to_indicator_matrix(NumericVector v) {
-  long n {v.length()};
+  // if there are any values < 1, shift all values up to align with column indices
+  // i.e. so the minimum value is 1
+  NumericVector shifted_vec(v.length());
+  if (min(v) < 1) {
+    shifted_vec = v + (1 - min(v));
+  } else {
+    shifted_vec = v; // no shift
+  }
+  long n {shifted_vec.length()};
   double m {max(v)};
   NumericMatrix indmat(n, m);
   for (unsigned int i = 0; i < n; i++) {
     for (unsigned int j = 0; j < m; j++) {
-      if (j == v[i]-1.0) {
+      if (j == shifted_vec[i]-1.0) {
         indmat(i, j) = 1.0;
       }
     }
