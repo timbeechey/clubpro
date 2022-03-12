@@ -34,12 +34,27 @@
 #'   data used to calculate \code{cval}.}
 #'   \item{call}{the matched call.}
 #'   }
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- classify(a, b)
+#' mod <- classify(a, b, nreps = 200L)
 #' @export
-classify <- function(y, x, nreps = 1000) {
+classify <- function(y, x, nreps = 1000L) {
 
-  assertthat::assert_that(is.factor(x), msg = "The target vector must be a factor")
-  assertthat::assert_that(assertthat::are_equal(length(x), length(y)),
-                          msg = "The vectors passed to classify() must be of the same length")
+  stopifnot("x is not a vector"=is.null(dim(x))) # is not not a df or matrix
+  stopifnot("x is not a vector"=is.recursive(x) == FALSE) # x is not a list
+  stopifnot("y is not a vector"=is.recursive(y) == FALSE) # y is not a list
+  stopifnot("x is not a factor"=is.factor(x))
+  stopifnot("length of vectors passed to classify() are not equal"=length(x) == length(y))
+  stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double
+  stopifnot("nreps must be a positive number"=nreps >= 1) # nreps must be a positve number
+  stopifnot("nreps must be a single number"=length(nreps) == 1) # nreps is a single value
+
+  # truncate any decimal places to make sure nreps is an integer
+  nreps <- as.integer(nreps)
+
   obs_pcc <- c_classify(y, x) # calls Rcpp classification function
   correct_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "correct"])
   ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])

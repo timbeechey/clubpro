@@ -18,7 +18,8 @@ individual_results(m, digits)
 \item{digits}{an integer}
 }
 \value{
-a data.frame containing a columns of predictions and prediction accuracy
+a data.frame containing a columns of predictions and prediction
+accuracy
 }
 \description{
 Individual level classification results.
@@ -26,4 +27,12 @@ Individual level classification results.
 \details{
 Returns a data.frame containing predicted classifications and classification
 accuracy for each individual observation.
+}
+\examples{
+a <- sample(1:5, 20, replace = TRUE)
+b <- rep(c("group1", "group2"), each = 10)
+b <- factor(b)
+mod <- classify(a, b)
+individual_results(mod)
+individual_results(mod, digits = 3)
 }

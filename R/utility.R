@@ -14,13 +14,41 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#' Print the model call.
+#' @param x an object of class "clubprofit"
+#' @param ... ignored
+#' @return No return value, called for side effects.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- classify(a, b)
+#' print(mod)
 #' @export
 print.clubprofit <- function(x, ...) {
   print(x$call)
 }
 
+#' Print a summary of results from a fitted clubpro model.
+#' @param object an object of class "clubprofit".
+#' @param digits an integer used for rounding numeric values in the output.
+#' @param ... ignored
+#' @return No return value, called for side effects.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- classify(a, b)
+#' summary(mod)
+#' summary(mod, digits = 3)
 #' @export
 summary.clubprofit <- function(object, ..., digits = 2L) {
+
+  # check function arguments
+  stopifnot("digits must be a number"= is.numeric(digits))
+  stopifnot("digits cannot be negative"= digits >= 0)
+  stopifnot("digits must be a single number"= length(digits) == 1)
+
   cat("*****Classification Results*****\n")
   cat("Observations:", length(object$y), "\n")
   cat("Target groups:", nlevels(object$x), "\n")
@@ -43,7 +71,15 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
 #' accuracy for each individual observation.
 #' @param m an object of class "clubprofit" produced by \code{classify()}
 #' @param digits an integer
-#' @return a data.frame containing a columns of predictions and prediction accuracy
+#' @return a data.frame containing a columns of predictions and prediction
+#' accuracy
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- classify(a, b)
+#' individual_results(mod)
+#' individual_results(mod, digits = 3)
 #' @export
 individual_results <- function(m, digits) {
   UseMethod("individual_results")
@@ -57,28 +93,40 @@ individual_results.default <- function(m, digits) .NotYetImplemented()
 #' @export
 individual_results.clubprofit <- function(m, digits = 2L) {
   df <- data.frame(individual = 1:length(m$y),
-                   y = m$y,
-                   x = m$x,
+                   observation = m$y,
+                   target = m$x,
                    prediction = m$prediction,
                    accuracy = m$accuracy)
-  df$target <- factor(df$x, levels = levels(m$x))
+  df$target <- factor(df$target, levels = levels(m$x))
   df$accuracy <- factor(df$accuracy, levels = c("correct", "incorrect", "ambiguous"))
   df
 }
 
-#' Plots individual-level classification results.
+#' Plot classification results.
+#'
+#' @details
+#' Produces a bar plot of counts of individuals against observed values within
+#' each possible classification grouping. Bars fill colours indicate whether
+#' individuals were classified correctly, incorrectly or ambiguously.
 #' @param x an object of class "clubprofit" produced by \code{classify()}
 #' @param ... ignored
 #' @return an object of class "ggplot"
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- classify(a, b)
+#' plot(mod)
 #' @export
 plot.clubprofit <- function(x, ...) {
 
   # bind variables to function
-  observation <- accuracy <- NULL
+  observation <- target <- accuracy <- NULL
 
   df <- individual_results(x)
 
-  # find the largest count in a single group, used to set axis labels
+  # find the largest count in any single group. This is used to specify integer
+  # axis labels
   max_count <- max(table(df$observation, df$target))
 
   ggplot2::ggplot(df, ggplot2::aes(x=observation)) +
@@ -89,7 +137,7 @@ plot.clubprofit <- function(x, ...) {
     ggplot2::scale_y_continuous(breaks = 0:max_count, labels = 0:max_count) +
     ggplot2::labs(x = "Observed Value", y = "N Individuals") +
     ggplot2::coord_flip() +
-    ggplot2::facet_wrap(~ target, nrow = 1) +
+    ggplot2::facet_wrap(~ target, nrow = 1) + # ensure barplots are side-by-side
     ggplot2::theme_bw() +
     ggplot2::theme(panel.grid = ggplot2::element_blank(),
                    legend.position = "bottom",
@@ -102,6 +150,12 @@ plot.clubprofit <- function(x, ...) {
 #' observed data which produce PCCs at least as high as the observed PCC.
 #' @param m an object of class "clubprofit" produced by \code{classify()}.
 #' @return an object of class "ggplot".
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- classify(a, b)
+#' plot_cvalue(mod)
 #' @export
 plot_cvalue <- function(m) {
   UseMethod("plot_cvalue")
@@ -116,10 +170,9 @@ plot_cvalue.default <- function(m) .NotYetImplemented()
 plot_cvalue.clubprofit <- function(m) {
 
   #bind variables to the function
-  n <- PCC <- NULL
+  PCC <- NULL
 
-  df <- data.frame(n = 1:length(m$pcc_replicates),
-                   PCC = m$pcc_replicates)
+  df <- data.frame(PCC = m$pcc_replicates)
 
   ggplot2::ggplot(df, ggplot2::aes(x = PCC)) +
     ggplot2::geom_histogram(colour = "black", fill = "#7aa457", alpha=0.7, bins=10) +

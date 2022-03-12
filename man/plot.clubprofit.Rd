@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility.R
 \name{plot.clubprofit}
 \alias{plot.clubprofit}
-\title{Plots individual-level classification results.}
+\title{Plot classification results.}
 \usage{
 \method{plot}{clubprofit}(x, ...)
 }
@@ -15,5 +15,17 @@
 an object of class "ggplot"
 }
 \description{
-Plots individual-level classification results.
+Plot classification results.
+}
+\details{
+Produces a bar plot of counts of individuals against observed values within
+each possible classification grouping. Bars fill colours indicate whether
+individuals were classified correctly, incorrectly or ambiguously.
+}
+\examples{
+a <- sample(1:5, 20, replace = TRUE)
+b <- rep(c("group1", "group2"), each = 10)
+b <- factor(b)
+mod <- classify(a, b)
+plot(mod)
 }

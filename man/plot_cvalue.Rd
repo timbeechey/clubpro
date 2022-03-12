@@ -22,3 +22,10 @@ an object of class "ggplot".
 Produces a plot which shows the proportion of random reorderings of the
 observed data which produce PCCs at least as high as the observed PCC.
 }
+\examples{
+a <- sample(1:5, 20, replace = TRUE)
+b <- rep(c("group1", "group2"), each = 10)
+b <- factor(b)
+mod <- classify(a, b)
+plot_cvalue(mod)
+}

@@ -15,6 +15,5 @@ LinkingTo:
     Rcpp
 Imports: 
     Rcpp,
-    assertthat,
     ggplot2
 SystemRequirements: C++11

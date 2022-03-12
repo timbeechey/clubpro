@@ -4,7 +4,7 @@
 \alias{classify}
 \title{Classify observations}
 \usage{
-classify(y, x, nreps = 1000)
+classify(y, x, nreps = 1000L)
 }
 \arguments{
 \item{y}{a numeric vector of observations.}
@@ -31,4 +31,11 @@ components:
 \description{
 \code{classify()} is used to classify obervations using binary procrustes
 rotation.
+}
+\examples{
+a <- sample(1:5, 20, replace = TRUE)
+b <- rep(c("group1", "group2"), each = 10)
+b <- factor(b)
+mod <- classify(a, b)
+mod <- classify(a, b, nreps = 200L)
 }
