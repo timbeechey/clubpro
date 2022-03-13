@@ -75,7 +75,7 @@ NumericMatrix c_dichotemise_matrix(NumericMatrix A) {
   for (int i = 0; i < A.nrow(); i++) {
     double m = max(A(i,_));
     for(int j = 0; j < A.ncol(); j++) {
-      if (A(i,j) == m & m > 0) {
+      if ((A(i,j) == m) & (m > 0)) {
         A(i,j) = 1.0;
       } else {
         A(i,j) = 0.0;
