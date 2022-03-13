@@ -27,16 +27,16 @@ NumericMatrix c_to_indicator_matrix(NumericVector v) {
   // if there are any values < 1, shift all values up to align with column indices
   // i.e. so the minimum value is 1
   NumericVector shifted_vec(v.length());
-  if (min(v) < 1) {
-    shifted_vec = v + (1 - min(v));
+  if (min(na_omit(v)) < 1) {
+    shifted_vec = v + (1 - min(na_omit(v)));
   } else {
     shifted_vec = v; // no shift
   }
-  long n {shifted_vec.length()};
-  double m {max(v)};
+  long long n {shifted_vec.length()};
+  double m {max(na_omit(v))};
   NumericMatrix indmat(n, m);
-  for (unsigned int i = 0; i < n; i++) {
-    for (unsigned int j = 0; j < m; j++) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
       if (j == shifted_vec[i]-1.0) {
         indmat(i, j) = 1.0;
       }
@@ -47,9 +47,9 @@ NumericMatrix c_to_indicator_matrix(NumericVector v) {
 
 // [[Rcpp::export]]
 NumericMatrix c_normalise_matrix(NumericMatrix A) {
-  for (unsigned int j = 0; j < A.ncol(); j++) {
+  for (int j = 0; j < A.ncol(); j++) {
     float colfactor = sqrt(sum(pow(A(_,j),2)));
-    for (unsigned int i = 0; i < A.nrow(); i++) {
+    for (int i = 0; i < A.nrow(); i++) {
       if (colfactor == 0.0) {
         A(i,j) = 0.0;
       } else {
@@ -57,9 +57,9 @@ NumericMatrix c_normalise_matrix(NumericMatrix A) {
       }
     }
   }
-  for (unsigned int i = 0; i < A.nrow(); i++) {
+  for (int i = 0; i < A.nrow(); i++) {
     float rowfactor = sqrt(sum(pow(A(i,_),2)));
-    for (unsigned int j = 0; j < A.ncol(); j++) {
+    for (int j = 0; j < A.ncol(); j++) {
       if (rowfactor == 0.0) {
         A(i,j) = 0.0;
       } else {
@@ -75,7 +75,7 @@ NumericMatrix c_dichotemise_matrix(NumericMatrix A) {
   for (int i = 0; i < A.nrow(); i++) {
     double m = max(A(i,_));
     for(int j = 0; j < A.ncol(); j++) {
-      if (A(i,j) == m) {
+      if (A(i,j) == m & m > 0) {
         A(i,j) = 1.0;
       } else {
         A(i,j) = 0.0;
@@ -131,7 +131,7 @@ List c_classify(NumericVector obs, NumericVector target) {
           classification_result[i] = "correct";
         } else if (sum(binary_matrix(i,_)) > 1.0) {
           classification_result[i] = "ambiguous";
-        } else{
+        } else {
           classification_result[i] = "incorrect";
         }
       }

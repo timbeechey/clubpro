@@ -51,6 +51,7 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
 
   cat("*****Classification Results*****\n")
   cat("Observations:", length(object$y), "\n")
+  cat("Missing observations:", sum(is.na(object$y)), "\n")
   cat("Target groups:", nlevels(object$x), "\n")
   cat("Correctly classified observations:", object$correct_classifications, "\n")
   cat("Incorrectly classified observations:", object$incorrect_classifications, "\n")
@@ -123,17 +124,18 @@ plot.clubprofit <- function(x, ...) {
   # bind variables to function
   observation <- target <- accuracy <- NULL
 
-  df <- individual_results(x)
+  # drop NAs for plotting
+  df <- individual_results(x)[stats::complete.cases(individual_results(x)),]
 
   # find the largest count in any single group. This is used to specify integer
   # axis labels
-  max_count <- max(table(df$observation, df$target))
+  max_count <- max(stats::na.omit(table(df$observation, df$target)))
 
   ggplot2::ggplot(df, ggplot2::aes(x=observation)) +
     ggplot2::geom_bar(stat="count", colour = "black",
                       ggplot2::aes(fill = accuracy), alpha = 0.9) +
     ggplot2::scale_fill_manual(values = c("#7aa457", "#cb6751", "#9e6ebd")) +
-    ggplot2::scale_x_reverse(breaks = min(df$observation):max(df$observation)) +
+    ggplot2::scale_x_reverse(breaks = min(stats::na.omit(df$observation)):max(stats::na.omit(df$observation))) +
     ggplot2::scale_y_continuous(breaks = 0:max_count, labels = 0:max_count) +
     ggplot2::labs(x = "Observed Value", y = "N Individuals") +
     ggplot2::coord_flip() +
