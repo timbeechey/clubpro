@@ -43,10 +43,10 @@
 #' @export
 classify <- function(y, x, nreps = 1000L) {
 
-  stopifnot("x is not a vector"=is.null(dim(x))) # is not not a df or matrix
-  stopifnot("x is not a vector"=is.recursive(x) == FALSE) # x is not a list
-  stopifnot("y is not a vector"=is.recursive(y) == FALSE) # y is not a list
-  stopifnot("x is not a factor"=is.factor(x))
+  stopifnot("The second argument to classify() must be a vector"=is.null(dim(x))) # is not not a df or matrix
+  stopifnot("The second argument to classify() must be a vector, not a list"=is.recursive(x) == FALSE) # x is not a list
+  stopifnot("The first argument to classify() must be a vector, not a list"=is.recursive(y) == FALSE) # y is not a list
+  stopifnot("The second argument to classify() must be a factor"=is.factor(x))
   stopifnot("length of vectors passed to classify() are not equal"=length(x) == length(y))
   stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double
   stopifnot("nreps must be a positive number"=nreps >= 1) # nreps must be a positve number

@@ -131,12 +131,18 @@ plot.clubprofit <- function(x, ...) {
   # axis labels
   max_count <- max(stats::na.omit(table(df$observation, df$target)))
 
+  # for plotting, the dependent variable can't be a factor
+  if (is.factor(df$observation)) {
+    cat("Converting observations column from factor to integer for plotting")
+    df$observation <- as.integer(df$observation)
+  }
+
   ggplot2::ggplot(df, ggplot2::aes(x=observation)) +
     ggplot2::geom_bar(stat="count", colour = "black",
                       ggplot2::aes(fill = accuracy), alpha = 0.9) +
     ggplot2::scale_fill_manual(values = c("#7aa457", "#cb6751", "#9e6ebd")) +
-    ggplot2::scale_x_reverse(breaks = min(stats::na.omit(df$observation)):max(stats::na.omit(df$observation))) +
     ggplot2::scale_y_continuous(breaks = 0:max_count, labels = 0:max_count) +
+    ggplot2::scale_x_reverse(breaks = min(stats::na.omit(df$observation)):max(stats::na.omit(df$observation))) +
     ggplot2::labs(x = "Observed Value", y = "N Individuals") +
     ggplot2::coord_flip() +
     ggplot2::facet_wrap(~ target, nrow = 1) + # ensure barplots are side-by-side
