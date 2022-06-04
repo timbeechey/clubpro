@@ -125,11 +125,7 @@ List c_classify(NumericVector obs, NumericVector target, int imprecision) {
 
     if (sum(binary_matrix(i,_)) == 1.0) {
 
-      if (which_max(binary_matrix(i,_)) == which_max(target_indicator_mat(i,_))) {
-        matches[i] = 1;
-        classification_result[i] = "correct";
-      }
-      else if (abs(which_max(binary_matrix(i,_)) - which_max(target_indicator_mat(i,_))) < (2 * imprecision)) {
+      if (abs(which_max(binary_matrix(i,_)) - which_max(target_indicator_mat(i,_))) <= imprecision) {
         matches[i] = 1;
         classification_result[i] = "correct";
       } else{
