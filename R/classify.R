@@ -41,7 +41,7 @@
 #' mod <- classify(a, b)
 #' mod <- classify(a, b, nreps = 200L)
 #' @export
-classify <- function(y, x, nreps = 1000L) {
+classify <- function(y, x, imprecision = 0, nreps = 10000L) {
 
   stopifnot("The second argument to classify() must be a vector"=is.null(dim(x))) # is not not a df or matrix
   stopifnot("The second argument to classify() must be a vector, not a list"=is.recursive(x) == FALSE) # x is not a list
@@ -55,11 +55,11 @@ classify <- function(y, x, nreps = 1000L) {
   # truncate any decimal places to make sure nreps is an integer
   nreps <- as.integer(nreps)
 
-  obs_pcc <- c_classify(y, x) # calls Rcpp classification function
+  obs_pcc <- c_classify(y, x, imprecision) # calls Rcpp classification function
   correct_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "correct"])
   ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])
   incorrect_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "incorrect"])
-  rand_pccs <- c_rand_pccs(y, x, nreps)
+  rand_pccs <- c_rand_pccs(y, x, imprecision, nreps)
   cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps
   return(
     structure(

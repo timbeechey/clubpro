@@ -100,8 +100,7 @@ NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y) {
 }
 
 // [[Rcpp::export]]
-List c_classify(NumericVector obs, NumericVector target) {
-
+List c_classify(NumericVector obs, NumericVector target, int imprecision) {
   IntegerVector matches(obs.length());
   CharacterVector unique_group_names = target.attr("levels");
   StringVector predicted_classification(obs.length());
@@ -117,24 +116,29 @@ List c_classify(NumericVector obs, NumericVector target) {
   }
 
   for (int i = 0; i < binary_matrix.nrow(); i++) {
-    // is_true() converts SingleLogicalResult returned by all() to bool
-    if (is_true(all(binary_matrix(i,_) == target_indicator_mat(i,_)))) {
-      matches[i] = 1;
-    } else{
-      matches[i] = 0;
-    }
     for (int j = 0; j < binary_matrix.ncol(); j++) {
       if (binary_matrix(i, j) == 1.0) {
         CharacterVector x {predicted_classification[i], unique_group_names[j]};
         predicted_classification[i] = collapse(x);
-        if (predicted_classification[i] == all_group_names[i]) {
-          classification_result[i] = "correct";
-        } else if (sum(binary_matrix(i,_)) > 1.0) {
-          classification_result[i] = "ambiguous";
-        } else {
-          classification_result[i] = "incorrect";
-        }
       }
+    }
+
+    if (sum(binary_matrix(i,_)) == 1.0) {
+
+      if (which_max(binary_matrix(i,_)) == which_max(target_indicator_mat(i,_))) {
+        matches[i] = 1;
+        classification_result[i] = "correct";
+      }
+      else if (abs(which_max(binary_matrix(i,_)) - which_max(target_indicator_mat(i,_))) < (2 * imprecision)) {
+        matches[i] = 1;
+        classification_result[i] = "correct";
+      } else{
+        matches[i] = 0;
+        classification_result[i] = "incorrect";
+      }
+    } else if (sum(binary_matrix(i,_)) > 1.0) {
+      matches[i] = 0;
+      classification_result[i] = "ambiguous";
     }
   }
 
@@ -145,10 +149,10 @@ List c_classify(NumericVector obs, NumericVector target) {
 }
 
 // [[Rcpp::export]]
-NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int nreps) {
+NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps) {
   NumericVector pccs(nreps); // preallocate vector
   for (int i = 0; i < nreps; i++) {
-    pccs[i] = c_classify(sample(obs, obs.length()), target)["pcc"];
+    pccs[i] = c_classify(sample(obs, obs.length()), target, imprecision)["pcc"];
   }
   return pccs;
 }

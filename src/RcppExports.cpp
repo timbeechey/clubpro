@@ -56,27 +56,29 @@ BEGIN_RCPP
 END_RCPP
 }
 // c_classify
-List c_classify(NumericVector obs, NumericVector target);
-RcppExport SEXP _clubpro_c_classify(SEXP obsSEXP, SEXP targetSEXP) {
+List c_classify(NumericVector obs, NumericVector target, int imprecision);
+RcppExport SEXP _clubpro_c_classify(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type target(targetSEXP);
-    rcpp_result_gen = Rcpp::wrap(c_classify(obs, target));
+    Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_classify(obs, target, imprecision));
     return rcpp_result_gen;
 END_RCPP
 }
 // c_rand_pccs
-NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int nreps);
-RcppExport SEXP _clubpro_c_rand_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP nrepsSEXP) {
+NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps);
+RcppExport SEXP _clubpro_c_rand_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
     Rcpp::traits::input_parameter< int >::type nreps(nrepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(c_rand_pccs(obs, target, nreps));
+    rcpp_result_gen = Rcpp::wrap(c_rand_pccs(obs, target, imprecision, nreps));
     return rcpp_result_gen;
 END_RCPP
 }

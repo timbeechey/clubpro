@@ -17,11 +17,11 @@ c_binary_procrustes_rotation <- function(x, y) {
     .Call(`_clubpro_c_binary_procrustes_rotation`, x, y)
 }
 
-c_classify <- function(obs, target) {
-    .Call(`_clubpro_c_classify`, obs, target)
+c_classify <- function(obs, target, imprecision) {
+    .Call(`_clubpro_c_classify`, obs, target, imprecision)
 }
 
-c_rand_pccs <- function(obs, target, nreps) {
-    .Call(`_clubpro_c_rand_pccs`, obs, target, nreps)
+c_rand_pccs <- function(obs, target, imprecision, nreps) {
+    .Call(`_clubpro_c_rand_pccs`, obs, target, imprecision, nreps)
 }
 
