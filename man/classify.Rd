@@ -4,12 +4,14 @@
 \alias{classify}
 \title{Classify observations}
 \usage{
-classify(y, x, nreps = 1000L)
+classify(y, x, imprecision = 0, nreps = 10000L)
 }
 \arguments{
 \item{y}{a numeric vector of observations.}
 
 \item{x}{a factor vector.}
+
+\item{imprecision}{a number indicting the margin of imprecision allowed in classification.}
 
 \item{nreps}{the number of replicates to use in the randomisation test.}
 }

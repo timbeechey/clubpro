@@ -9,7 +9,7 @@ Description: Implements a classification method described by Grice (2011) using
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 LinkingTo: 
     cpp11,
     Rcpp

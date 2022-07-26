@@ -20,6 +20,7 @@
 #' rotation.
 #' @param y a numeric vector of observations.
 #' @param x a factor vector.
+#' @param imprecision a number indicting the margin of imprecision allowed in classification.
 #' @param nreps the number of replicates to use in the randomisation test.
 #' @return an object of class "clubprofit" is a list containing the folllowing
 #' components:

@@ -125,11 +125,11 @@ plot.clubprofit <- function(x, ...) {
   observation <- target <- accuracy <- NULL
 
   # drop NAs for plotting
-  df <- individual_results(x)[stats::complete.cases(individual_results(x)),]
+  df <- individual_results(x)[complete.cases(individual_results(x)),]
 
   # find the largest count in any single group. This is used to specify integer
   # axis labels
-  max_count <- max(stats::na.omit(table(df$observation, df$target)))
+  max_count <- max(na.omit(table(df$observation, df$target)))
 
   # for plotting, the dependent variable can't be a factor
   if (is.factor(df$observation)) {
