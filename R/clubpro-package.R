@@ -14,6 +14,21 @@ NULL
 NULL
 
 ## usethis namespace: start
-#' @importFrom stats complete.cases
+#' @importFrom stats density
+## usethis namespace: end
+NULL
+
+## usethis namespace: start
+#' @importFrom graphics legend
+## usethis namespace: end
+NULL
+
+## usethis namespace: start
+#' @importFrom graphics stripchart
+## usethis namespace: end
+NULL
+
+## usethis namespace: start
+#' @importFrom graphics lines
 ## usethis namespace: end
 NULL

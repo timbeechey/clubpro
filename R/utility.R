@@ -103,88 +103,102 @@ individual_results.clubprofit <- function(m, digits = 2L) {
   df
 }
 
-#' Plot classification results.
+#' Plot classification accuracy.
 #'
 #' @details
-#' Produces a bar plot of counts of individuals against observed values within
-#' each possible classification grouping. Bars fill colours indicate whether
+#' Produces a strip plot showing counts of individuals against observed values within
+#' each target grouping. Point fill colours indicate whether
 #' individuals were classified correctly, incorrectly or ambiguously.
 #' @param x an object of class "clubprofit" produced by \code{classify()}
 #' @param ... ignored
-#' @return an object of class "ggplot"
+#' @return called for side-effects only
 #' @examples
 #' a <- sample(1:5, 20, replace = TRUE)
 #' b <- rep(c("group1", "group2"), each = 10)
 #' b <- factor(b)
 #' mod <- classify(a, b)
-#' plot(mod)
+#' plot_classification(mod)
 #' @export
-plot.clubprofit <- function(x, ...) {
+plot_classification <- function(x, ...) {
+  UseMethod("plot_classification")
+}
 
-  # bind variables to function
-  observation <- target <- accuracy <- NULL
+#' @rdname plot_classification
+#' @export
+plot_classification.default <- function(x, ...) .NotYetImplemented()
 
-  # drop NAs for plotting
-  df <- individual_results(x)[complete.cases(individual_results(x)),]
+#' @rdname plot_classification
+#' @export
+plot_classification.clubprofit <- function(x, ...) {
 
-  # find the largest count in any single group. This is used to specify integer
-  # axis labels
-  max_count <- max(na.omit(table(df$observation, df$target)))
-
-  # for plotting, the dependent variable can't be a factor
-  if (is.factor(df$observation)) {
-    cat("Converting observations column from factor to integer for plotting")
-    df$observation <- as.integer(df$observation)
+  z <- individual_results(x)
+    
+  stripchart(z$observation ~ z$target, method="stack", offset = 0.4, 
+             at = 1:nlevels(z$target), pch = 21, col = "#0072B2", 
+             bg = "#0072B260", cex=1.5, group.names = levels(z$target),
+             subset = z$accuracy == "correct", las = 1,
+             xlab = "Observed Value", ylab = "Observed Category", ...)
+  stripchart(z$observation ~ z$target, method="stack", offset = 0.4, 
+             at = 1:nlevels(z$target), pch = 21,
+             col = "#E69F00", bg = "#E69F0060",
+             cex=1.5, subset = z$accuracy == "incorrect", add = TRUE)
+  stripchart(z$observation ~ z$target, method="stack", offset = 0.4, 
+             at = 1:nlevels(z$target), pch = 21,
+             col = "#999999", bg = "#99999960",
+             cex=1.5, subset = z$accuracy == "ambiguous", add = TRUE)
+  for (i in 1:nlevels(z$target)) {
+       d <- density(z$observation[z$target == levels(z$target)[i]], bw=0.5, na.rm = TRUE)
+       d$y = d$y + as.numeric(i)
+       lines(d, col = "grey", lw=2)
   }
-
-  ggplot2::ggplot(df, ggplot2::aes(x=observation)) +
-    ggplot2::geom_bar(stat="count", colour = "black",
-                      ggplot2::aes(fill = accuracy), alpha = 0.9) +
-    ggplot2::scale_fill_manual(values = c("#7aa457", "#cb6751", "#9e6ebd")) +
-    ggplot2::scale_y_continuous(breaks = 0:max_count, labels = 0:max_count) +
-    ggplot2::scale_x_reverse(breaks = min(stats::na.omit(df$observation)):max(stats::na.omit(df$observation))) +
-    ggplot2::labs(x = "Observed Value", y = "N Individuals") +
-    ggplot2::coord_flip() +
-    ggplot2::facet_wrap(~ target, nrow = 1) + # ensure barplots are side-by-side
-    ggplot2::theme_bw() +
-    ggplot2::theme(panel.grid = ggplot2::element_blank(),
-                   legend.position = "bottom",
-                   legend.title = ggplot2::element_blank())
+  if ("ambiguous" %in% z$accuracy) {
+      legend("top", legend = c("Correct", "Incorrect", "Ambiguous"), pt.cex=1.5,
+             pch=21, col=c("#0072B2", "#E69F00", "#999999"), horiz = TRUE, bty = "n",
+             pt.bg=c("#0072B260", "#E69F0060", "#99999960"), xpd = TRUE, inset = c(0, -0.15))
+  } else {
+      legend("top", legend = c("Correct", "Incorrect"), pt.cex=1.5,
+             pch=21, col=c("#0072B2", "#E69F00"), horiz = TRUE, bty = "n",
+             pt.bg=c("#0072B260", "#E69F0060"), xpd = TRUE, inset = c(0, -0.15))
+  }
 }
 
-#' Plot observed and random order generated PCCs.
+#' Plot predicted classification results.
 #'
-#' Produces a plot which shows the proportion of random reorderings of the
-#' observed data which produce PCCs at least as high as the observed PCC.
-#' @param m an object of class "clubprofit" produced by \code{classify()}.
-#' @return an object of class "ggplot".
+#' @details
+#' Produces a strip plot showing counts of individuals for each observed value by
+#' predicted classification grouping.
+#' @param x an object of class "clubprofit" produced by \code{classify()}
+#' @param ... ignored
+#' @return called for side-effects only
 #' @examples
 #' a <- sample(1:5, 20, replace = TRUE)
 #' b <- rep(c("group1", "group2"), each = 10)
 #' b <- factor(b)
 #' mod <- classify(a, b)
-#' plot_cvalue(mod)
+#' plot_prediction(mod)
 #' @export
-plot_cvalue <- function(m) {
-  UseMethod("plot_cvalue")
+plot_prediction <- function(x, ...) {
+  UseMethod("plot_prediction")
 }
 
-#' @rdname plot_cvalue
+#' @rdname plot_prediction
 #' @export
-plot_cvalue.default <- function(m) .NotYetImplemented()
+plot_prediction.default <- function(x, ...) .NotYetImplemented()
 
-#' @rdname plot_cvalue
+#' @rdname plot_prediction
 #' @export
-plot_cvalue.clubprofit <- function(m) {
-
-  #bind variables to the function
-  PCC <- NULL
-
-  df <- data.frame(PCC = m$pcc_replicates)
-
-  ggplot2::ggplot(df, ggplot2::aes(x = PCC)) +
-    ggplot2::geom_histogram(colour = "black", fill = "#7aa457", alpha=0.7, bins=10) +
-    ggplot2::geom_vline(xintercept = m$pcc, linetype=2) +
-    ggplot2::theme_bw() +
-    ggplot2::theme(panel.grid = ggplot2::element_blank())
+plot_prediction <- function(x, ...) {
+    
+    z <- individual_results(x)
+    
+    stripchart(z$observation ~ z$prediction, method="stack", offset = 0.4, 
+               at = 1:nlevels(z$target), pch = 21, col = "#56B4E9", 
+               bg = "#56B4E960", cex=1.5, group.names = levels(z$target),
+               las = 1,
+               xlab = "Observed Value", ylab = "Predicted Category", ...)
+    for (i in 1:nlevels(z$target)) {
+        d <- density(z$observation[z$prediction == levels(z$target)[i]], bw=0.5, na.rm = TRUE)
+        d$y = d$y + as.numeric(i)
+        lines(d, col = "grey", lw = 2)
+    }
 }

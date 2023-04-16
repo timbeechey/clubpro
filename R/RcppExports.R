@@ -21,6 +21,10 @@ c_classify <- function(obs, target, imprecision) {
     .Call(`_clubpro_c_classify`, obs, target, imprecision)
 }
 
+c_rand_classify <- function(obs, target, imprecision) {
+    .Call(`_clubpro_c_rand_classify`, obs, target, imprecision)
+}
+
 c_rand_pccs <- function(obs, target, imprecision, nreps) {
     .Call(`_clubpro_c_rand_pccs`, obs, target, imprecision, nreps)
 }

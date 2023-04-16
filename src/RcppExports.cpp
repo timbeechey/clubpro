@@ -68,6 +68,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// c_rand_classify
+double c_rand_classify(NumericVector obs, NumericVector target, int imprecision);
+RcppExport SEXP _clubpro_c_rand_classify(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_rand_classify(obs, target, imprecision));
+    return rcpp_result_gen;
+END_RCPP
+}
 // c_rand_pccs
 NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps);
 RcppExport SEXP _clubpro_c_rand_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP) {
@@ -81,4 +94,20 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(c_rand_pccs(obs, target, imprecision, nreps));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_clubpro_c_to_indicator_matrix", (DL_FUNC) &_clubpro_c_to_indicator_matrix, 1},
+    {"_clubpro_c_normalise_matrix", (DL_FUNC) &_clubpro_c_normalise_matrix, 1},
+    {"_clubpro_c_dichotemise_matrix", (DL_FUNC) &_clubpro_c_dichotemise_matrix, 1},
+    {"_clubpro_c_binary_procrustes_rotation", (DL_FUNC) &_clubpro_c_binary_procrustes_rotation, 2},
+    {"_clubpro_c_classify", (DL_FUNC) &_clubpro_c_classify, 3},
+    {"_clubpro_c_rand_classify", (DL_FUNC) &_clubpro_c_rand_classify, 3},
+    {"_clubpro_c_rand_pccs", (DL_FUNC) &_clubpro_c_rand_pccs, 4},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_clubpro(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

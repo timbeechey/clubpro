@@ -15,12 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Rcpp.h>
-#include <cpp11.hpp>
 using namespace Rcpp;
-using namespace cpp11;
-
-[[cpp11::register]]
-void fun() {}
 
 // [[Rcpp::export]]
 NumericMatrix c_to_indicator_matrix(NumericVector v) {
@@ -101,7 +96,6 @@ NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y) {
 
 // [[Rcpp::export]]
 List c_classify(NumericVector obs, NumericVector target, int imprecision) {
-  IntegerVector matches(obs.length());
   CharacterVector unique_group_names = target.attr("levels");
   StringVector predicted_classification(obs.length());
   StringVector classification_result(obs.length());
@@ -110,6 +104,8 @@ List c_classify(NumericVector obs, NumericVector target, int imprecision) {
   NumericMatrix conformed_mat = c_binary_procrustes_rotation(obs, target);
   NumericMatrix target_indicator_mat = c_to_indicator_matrix(target);
   NumericMatrix binary_matrix = c_dichotemise_matrix(conformed_mat);
+
+  int matches{};
 
   for (int i = 0; i < all_group_names.length(); i++) {
     all_group_names[i] = unique_group_names[target[i]-1];
@@ -126,29 +122,51 @@ List c_classify(NumericVector obs, NumericVector target, int imprecision) {
     if (sum(binary_matrix(i,_)) == 1.0) {
 
       if (abs(which_max(binary_matrix(i,_)) - which_max(target_indicator_mat(i,_))) <= imprecision) {
-        matches[i] = 1;
+        matches += 1;
         classification_result[i] = "correct";
       } else{
-        matches[i] = 0;
         classification_result[i] = "incorrect";
       }
     } else if (sum(binary_matrix(i,_)) > 1.0) {
-      matches[i] = 0;
       classification_result[i] = "ambiguous";
     }
   }
 
-  double pcc = mean(matches) * 100;
+  double pcc = ((double)matches / obs.length()) * 100;
 
   List out = List::create(Named("predicted_classification") = predicted_classification, _["classification_result"] = classification_result, _["pcc"] = pcc);
   return out;
 }
 
+
+// [[Rcpp::export]]
+double c_rand_classify(NumericVector obs, NumericVector target, int imprecision) {
+
+  NumericMatrix conformed_mat = c_binary_procrustes_rotation(obs, target);
+  NumericMatrix target_indicator_mat = c_to_indicator_matrix(target);
+  NumericMatrix binary_matrix = c_dichotemise_matrix(conformed_mat);
+
+  int matches{};
+
+  for (int i = 0; i < binary_matrix.nrow(); i++) {
+
+    if (sum(binary_matrix(i,_)) == 1.0) {
+
+      if (abs(which_max(binary_matrix(i,_)) - which_max(target_indicator_mat(i,_))) <= imprecision) {
+        matches += 1;
+      } 
+    }
+  }
+
+  return ((double)matches / obs.length()) * 100;
+}
+
+
 // [[Rcpp::export]]
 NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps) {
   NumericVector pccs(nreps); // preallocate vector
   for (int i = 0; i < nreps; i++) {
-    pccs[i] = c_classify(sample(obs, obs.length()), target, imprecision)["pcc"];
+    pccs[i] = c_rand_classify(sample(obs, obs.length()), target, imprecision);
   }
   return pccs;
 }
