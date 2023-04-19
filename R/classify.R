@@ -18,8 +18,8 @@
 #'
 #' \code{classify()} is used to classify obervations using binary procrustes
 #' rotation.
-#' @param y a numeric vector of observations.
-#' @param x a factor vector.
+#' @param y a factor vector of observations.
+#' @param x a factor vector of target groups.
 #' @param imprecision a number indicting the margin of imprecision allowed in classification.
 #' @param nreps the number of replicates to use in the randomisation test.
 #' @return an object of class "clubprofit" is a list containing the folllowing
@@ -47,20 +47,33 @@ classify <- function(y, x, imprecision = 0, nreps = 10000L) {
   stopifnot("The second argument to classify() must be a vector"=is.null(dim(x))) # is not not a df or matrix
   stopifnot("The second argument to classify() must be a vector, not a list"=is.recursive(x) == FALSE) # x is not a list
   stopifnot("The first argument to classify() must be a vector, not a list"=is.recursive(y) == FALSE) # y is not a list
+  stopifnot("The first argument to classify() cannot be a factor"=!is.factor(y))
   stopifnot("The second argument to classify() must be a factor"=is.factor(x))
   stopifnot("length of vectors passed to classify() are not equal"=length(x) == length(y))
   stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double
   stopifnot("nreps must be a positive number"=nreps >= 1) # nreps must be a positve number
   stopifnot("nreps must be a single number"=length(nreps) == 1) # nreps is a single value
+  stopifnot("nreps must be a whole number"=nreps %% 1 == 0)
 
-  # truncate any decimal places to make sure nreps is an integer
-  nreps <- as.integer(nreps)
+  if (is.character(y)) {
+    if (any(is.na(y))) {
+      obs_num <- as.integer(addNA(y))
+    } else {
+      obs_num <- as.integer(factor(y))
+    }
+  } else if (is.numeric(y)) {
+    if (any(is.na(y))) {
+      obs_num <- as.integer(addNA(y))
+    } else {
+       obs_num <- y
+    }
+  }
 
-  obs_pcc <- c_classify(y, x, imprecision) # calls Rcpp classification function
+  obs_pcc <- c_classify(obs_num, x, imprecision) # calls Rcpp classification function
   correct_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "correct"])
   ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])
   incorrect_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "incorrect"])
-  rand_pccs <- c_rand_pccs(y, x, imprecision, nreps)
+  rand_pccs <- c_rand_pccs(obs_num, x, imprecision, nreps)
   cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps
   return(
     structure(
@@ -75,6 +88,7 @@ classify <- function(y, x, imprecision = 0, nreps = 10000L) {
         pcc_replicates = rand_pccs,
         y = y,
         x = x,
+        y_num = obs_num,
         nreps = nreps,
         call = match.call()
       ),

@@ -5,14 +5,14 @@
 \alias{plot_prediction.default}
 \title{Plot predicted classification results.}
 \usage{
-plot_prediction(x, ...)
+plot_prediction(m, ...)
 
-plot_prediction.default(x, ...)
+plot_prediction.default(m, ...)
 
-plot_prediction(x, ...)
+plot_prediction(m, ...)
 }
 \arguments{
-\item{x}{an object of class "clubprofit" produced by \code{classify()}}
+\item{m}{an object of class "clubprofit" produced by \code{classify()}}
 
 \item{...}{ignored}
 }
@@ -23,9 +23,8 @@ called for side-effects only
 Plot predicted classification results.
 }
 \details{
-Produces a strip plot showing counts of individuals against observed values within
-each possible classification grouping. Bars fill colours indicate whether
-individuals were classified correctly, incorrectly or ambiguously.
+Produces a strip plot showing counts of individuals for each observed value by
+predicted classification grouping.
 }
 \examples{
 a <- sample(1:5, 20, replace = TRUE)

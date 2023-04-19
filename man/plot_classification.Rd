@@ -6,16 +6,20 @@
 \alias{plot_classification.clubprofit}
 \title{Plot classification accuracy.}
 \usage{
-plot_classification(x, ...)
+plot_classification(m, ...)
 
-\method{plot_classification}{default}(x, ...)
+\method{plot_classification}{default}(m, ...)
 
-\method{plot_classification}{clubprofit}(x, ...)
+\method{plot_classification}{clubprofit}(m, abline_offset = -0.1, point_offset = 0.4, ...)
 }
 \arguments{
-\item{x}{an object of class "clubprofit" produced by \code{classify()}}
+\item{m}{an object of class "clubprofit" produced by \code{classify()}}
 
 \item{...}{ignored}
+
+\item{abline_offset}{a number indicating vertical adjustment of horizontal ablines}
+
+\item{point_offset}{a number indicating amount of vertical separation between points}
 }
 \value{
 called for side-effects only
@@ -25,7 +29,7 @@ Plot classification accuracy.
 }
 \details{
 Produces a strip plot showing counts of individuals against observed values within
-each possible classification grouping. Bars fill colours indicate whether
+each target grouping. Point fill colours indicate whether
 individuals were classified correctly, incorrectly or ambiguously.
 }
 \examples{

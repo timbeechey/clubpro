@@ -32,3 +32,18 @@ NULL
 #' @importFrom graphics lines
 ## usethis namespace: end
 NULL
+
+## usethis namespace: start
+#' @importFrom graphics axis
+## usethis namespace: end
+NULL
+
+## usethis namespace: start
+#' @importFrom graphics abline
+## usethis namespace: end
+NULL
+
+## usethis namespace: start
+#' @importFrom gtools mixedsort
+## usethis namespace: end
+NULL

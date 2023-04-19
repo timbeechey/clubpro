@@ -4,6 +4,7 @@ test_dat <- data.frame(condition = rep(c(1, 2), each = 9),
                        items = c(7,8,5,7,8,7,9,6,7,5,6,4,5,7,6,4,5,5))
 
 test_dat$condition <- factor(test_dat$condition)
+test_dat$items <- factor(test_dat$items)
 
 m1 <- classify(test_dat$items, test_dat$condition, nreps = 1000L)
 

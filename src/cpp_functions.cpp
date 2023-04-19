@@ -19,20 +19,12 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericMatrix c_to_indicator_matrix(NumericVector v) {
-  // if there are any values < 1, shift all values up to align with column indices
-  // i.e. so the minimum value is 1
-  NumericVector shifted_vec(v.length());
-  if (min(na_omit(v)) < 1) {
-    shifted_vec = v + (1 - min(na_omit(v)));
-  } else {
-    shifted_vec = v; // no shift
-  }
-  long long n {shifted_vec.length()};
+  long long n {v.length()};
   double m {max(na_omit(v))};
   NumericMatrix indmat(n, m);
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
-      if (j == shifted_vec[i]-1.0) {
+      if (j == v[i]-1.0) {
         indmat(i, j) = 1.0;
       }
     }
@@ -84,8 +76,8 @@ NumericMatrix c_dichotemise_matrix(NumericMatrix A) {
 NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y) {
   // access R base functions for matrix multiplication and cross product
   Environment::base_namespace();
-  Function crossprod("crossprod");
   Function matmult("%*%");
+  Function crossprod("crossprod");
   NumericMatrix X = c_to_indicator_matrix(x);
   NumericMatrix Y = c_to_indicator_matrix(y);
   NumericMatrix T = crossprod(X, Y);

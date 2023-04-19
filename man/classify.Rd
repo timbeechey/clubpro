@@ -7,9 +7,9 @@
 classify(y, x, imprecision = 0, nreps = 10000L)
 }
 \arguments{
-\item{y}{a numeric vector of observations.}
+\item{y}{a factor vector of observations.}
 
-\item{x}{a factor vector.}
+\item{x}{a factor vector of target groups.}
 
 \item{imprecision}{a number indicting the margin of imprecision allowed in classification.}
 
