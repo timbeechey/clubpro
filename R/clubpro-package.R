@@ -14,36 +14,16 @@ NULL
 NULL
 
 ## usethis namespace: start
-#' @importFrom stats density
+#' @importFrom lattice histogram
 ## usethis namespace: end
 NULL
 
 ## usethis namespace: start
-#' @importFrom graphics legend
+#' @importFrom lattice panel.superpose
 ## usethis namespace: end
 NULL
 
 ## usethis namespace: start
-#' @importFrom graphics stripchart
-## usethis namespace: end
-NULL
-
-## usethis namespace: start
-#' @importFrom graphics lines
-## usethis namespace: end
-NULL
-
-## usethis namespace: start
-#' @importFrom graphics axis
-## usethis namespace: end
-NULL
-
-## usethis namespace: start
-#' @importFrom graphics abline
-## usethis namespace: end
-NULL
-
-## usethis namespace: start
-#' @importFrom gtools mixedsort
+#' @importFrom lattice panel.histogram
 ## usethis namespace: end
 NULL

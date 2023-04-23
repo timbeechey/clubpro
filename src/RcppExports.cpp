@@ -21,14 +21,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// c_normalise_matrix
-NumericMatrix c_normalise_matrix(NumericMatrix A);
-RcppExport SEXP _clubpro_c_normalise_matrix(SEXP ASEXP) {
+// c_normalise_matrix_columns
+NumericMatrix c_normalise_matrix_columns(NumericMatrix A);
+RcppExport SEXP _clubpro_c_normalise_matrix_columns(SEXP ASEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
-    rcpp_result_gen = Rcpp::wrap(c_normalise_matrix(A));
+    rcpp_result_gen = Rcpp::wrap(c_normalise_matrix_columns(A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// c_normalise_matrix_rows
+NumericMatrix c_normalise_matrix_rows(NumericMatrix A);
+RcppExport SEXP _clubpro_c_normalise_matrix_rows(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(c_normalise_matrix_rows(A));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -44,46 +55,49 @@ BEGIN_RCPP
 END_RCPP
 }
 // c_binary_procrustes_rotation
-NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y);
-RcppExport SEXP _clubpro_c_binary_procrustes_rotation(SEXP xSEXP, SEXP ySEXP) {
+NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y, bool normalise_cols);
+RcppExport SEXP _clubpro_c_binary_procrustes_rotation(SEXP xSEXP, SEXP ySEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(c_binary_procrustes_rotation(x, y));
+    Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_binary_procrustes_rotation(x, y, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 // c_classify
-List c_classify(NumericVector obs, NumericVector target, int imprecision);
-RcppExport SEXP _clubpro_c_classify(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP) {
+List c_classify(NumericVector obs, NumericVector target, int imprecision, bool normalise_cols);
+RcppExport SEXP _clubpro_c_classify(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type target(targetSEXP);
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
-    rcpp_result_gen = Rcpp::wrap(c_classify(obs, target, imprecision));
+    Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_classify(obs, target, imprecision, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 // c_rand_classify
-double c_rand_classify(NumericVector obs, NumericVector target, int imprecision);
-RcppExport SEXP _clubpro_c_rand_classify(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP) {
+double c_rand_classify(NumericVector obs, NumericVector target, int imprecision, bool normalise_cols);
+RcppExport SEXP _clubpro_c_rand_classify(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type target(targetSEXP);
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
-    rcpp_result_gen = Rcpp::wrap(c_rand_classify(obs, target, imprecision));
+    Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_rand_classify(obs, target, imprecision, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 // c_rand_pccs
-NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps);
-RcppExport SEXP _clubpro_c_rand_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP) {
+NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps, bool normalise_cols);
+RcppExport SEXP _clubpro_c_rand_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -91,19 +105,21 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type target(targetSEXP);
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
     Rcpp::traits::input_parameter< int >::type nreps(nrepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(c_rand_pccs(obs, target, imprecision, nreps));
+    Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_rand_pccs(obs, target, imprecision, nreps, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_clubpro_c_to_indicator_matrix", (DL_FUNC) &_clubpro_c_to_indicator_matrix, 1},
-    {"_clubpro_c_normalise_matrix", (DL_FUNC) &_clubpro_c_normalise_matrix, 1},
+    {"_clubpro_c_normalise_matrix_columns", (DL_FUNC) &_clubpro_c_normalise_matrix_columns, 1},
+    {"_clubpro_c_normalise_matrix_rows", (DL_FUNC) &_clubpro_c_normalise_matrix_rows, 1},
     {"_clubpro_c_dichotemise_matrix", (DL_FUNC) &_clubpro_c_dichotemise_matrix, 1},
-    {"_clubpro_c_binary_procrustes_rotation", (DL_FUNC) &_clubpro_c_binary_procrustes_rotation, 2},
-    {"_clubpro_c_classify", (DL_FUNC) &_clubpro_c_classify, 3},
-    {"_clubpro_c_rand_classify", (DL_FUNC) &_clubpro_c_rand_classify, 3},
-    {"_clubpro_c_rand_pccs", (DL_FUNC) &_clubpro_c_rand_pccs, 4},
+    {"_clubpro_c_binary_procrustes_rotation", (DL_FUNC) &_clubpro_c_binary_procrustes_rotation, 3},
+    {"_clubpro_c_classify", (DL_FUNC) &_clubpro_c_classify, 4},
+    {"_clubpro_c_rand_classify", (DL_FUNC) &_clubpro_c_rand_classify, 4},
+    {"_clubpro_c_rand_pccs", (DL_FUNC) &_clubpro_c_rand_pccs, 5},
     {NULL, NULL, 0}
 };
 

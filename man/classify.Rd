@@ -4,7 +4,7 @@
 \alias{classify}
 \title{Classify observations}
 \usage{
-classify(y, x, imprecision = 0, nreps = 10000L)
+classify(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE)
 }
 \arguments{
 \item{y}{a factor vector of observations.}
@@ -14,6 +14,8 @@ classify(y, x, imprecision = 0, nreps = 10000L)
 \item{imprecision}{a number indicting the margin of imprecision allowed in classification.}
 
 \item{nreps}{the number of replicates to use in the randomisation test.}
+
+\item{normalise_cols}{a boolean indicating whether to normalise matrix columns.}
 }
 \value{
 an object of class "clubprofit" is a list containing the folllowing

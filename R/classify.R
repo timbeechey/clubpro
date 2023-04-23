@@ -22,6 +22,7 @@
 #' @param x a factor vector of target groups.
 #' @param imprecision a number indicting the margin of imprecision allowed in classification.
 #' @param nreps the number of replicates to use in the randomisation test.
+#' @param normalise_cols a boolean indicating whether to normalise matrix columns.
 #' @return an object of class "clubprofit" is a list containing the folllowing
 #' components:
 #' \describe{
@@ -42,7 +43,7 @@
 #' mod <- classify(a, b)
 #' mod <- classify(a, b, nreps = 200L)
 #' @export
-classify <- function(y, x, imprecision = 0, nreps = 10000L) {
+classify <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE) {
 
   stopifnot("The second argument to classify() must be a vector"=is.null(dim(x))) # is not not a df or matrix
   stopifnot("The second argument to classify() must be a vector, not a list"=is.recursive(x) == FALSE) # x is not a list
@@ -69,11 +70,11 @@ classify <- function(y, x, imprecision = 0, nreps = 10000L) {
     }
   }
 
-  obs_pcc <- c_classify(obs_num, x, imprecision) # calls Rcpp classification function
+  obs_pcc <- c_classify(obs_num, x, imprecision, normalise_cols)
   correct_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "correct"])
   ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])
   incorrect_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "incorrect"])
-  rand_pccs <- c_rand_pccs(obs_num, x, imprecision, nreps)
+  rand_pccs <- c_rand_pccs(obs_num, x, imprecision, nreps, normalise_cols)
   cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps
   return(
     structure(

@@ -33,7 +33,7 @@ NumericMatrix c_to_indicator_matrix(NumericVector v) {
 }
 
 // [[Rcpp::export]]
-NumericMatrix c_normalise_matrix(NumericMatrix A) {
+NumericMatrix c_normalise_matrix_columns(NumericMatrix A) {
   for (int j = 0; j < A.ncol(); j++) {
     float colfactor = sqrt(sum(pow(A(_,j),2)));
     for (int i = 0; i < A.nrow(); i++) {
@@ -44,6 +44,11 @@ NumericMatrix c_normalise_matrix(NumericMatrix A) {
       }
     }
   }
+  return A;
+}
+
+// [[Rcpp::export]]
+NumericMatrix c_normalise_matrix_rows(NumericMatrix A) {
   for (int i = 0; i < A.nrow(); i++) {
     float rowfactor = sqrt(sum(pow(A(i,_),2)));
     for (int j = 0; j < A.ncol(); j++) {
@@ -73,7 +78,7 @@ NumericMatrix c_dichotemise_matrix(NumericMatrix A) {
 }
 
 // [[Rcpp::export]]
-NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y) {
+NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y, bool normalise_cols) {
   // access R base functions for matrix multiplication and cross product
   Environment::base_namespace();
   Function matmult("%*%");
@@ -81,19 +86,24 @@ NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y) {
   NumericMatrix X = c_to_indicator_matrix(x);
   NumericMatrix Y = c_to_indicator_matrix(y);
   NumericMatrix T = crossprod(X, Y);
-  NumericMatrix Tn = c_normalise_matrix(T);
+  NumericMatrix Tn;
+  if (normalise_cols) {
+    Tn = c_normalise_matrix_rows(c_normalise_matrix_columns(T));
+  } else {
+    Tn = c_normalise_matrix_rows(T);
+  }
   NumericMatrix Z = matmult(X, Tn);
   return Z;
 }
 
 // [[Rcpp::export]]
-List c_classify(NumericVector obs, NumericVector target, int imprecision) {
+List c_classify(NumericVector obs, NumericVector target, int imprecision, bool normalise_cols) {
   CharacterVector unique_group_names = target.attr("levels");
   StringVector predicted_classification(obs.length());
   StringVector classification_result(obs.length());
   CharacterVector all_group_names(target.length());
 
-  NumericMatrix conformed_mat = c_binary_procrustes_rotation(obs, target);
+  NumericMatrix conformed_mat = c_binary_procrustes_rotation(obs, target, normalise_cols);
   NumericMatrix target_indicator_mat = c_to_indicator_matrix(target);
   NumericMatrix binary_matrix = c_dichotemise_matrix(conformed_mat);
 
@@ -132,9 +142,9 @@ List c_classify(NumericVector obs, NumericVector target, int imprecision) {
 
 
 // [[Rcpp::export]]
-double c_rand_classify(NumericVector obs, NumericVector target, int imprecision) {
+double c_rand_classify(NumericVector obs, NumericVector target, int imprecision, bool normalise_cols) {
 
-  NumericMatrix conformed_mat = c_binary_procrustes_rotation(obs, target);
+  NumericMatrix conformed_mat = c_binary_procrustes_rotation(obs, target, normalise_cols);
   NumericMatrix target_indicator_mat = c_to_indicator_matrix(target);
   NumericMatrix binary_matrix = c_dichotemise_matrix(conformed_mat);
 
@@ -155,10 +165,10 @@ double c_rand_classify(NumericVector obs, NumericVector target, int imprecision)
 
 
 // [[Rcpp::export]]
-NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps) {
+NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps, bool normalise_cols) {
   NumericVector pccs(nreps); // preallocate vector
   for (int i = 0; i < nreps; i++) {
-    pccs[i] = c_rand_classify(sample(obs, obs.length()), target, imprecision);
+    pccs[i] = c_rand_classify(sample(obs, obs.length()), target, imprecision, normalise_cols);
   }
   return pccs;
 }

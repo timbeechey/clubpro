@@ -5,27 +5,31 @@ c_to_indicator_matrix <- function(v) {
     .Call(`_clubpro_c_to_indicator_matrix`, v)
 }
 
-c_normalise_matrix <- function(A) {
-    .Call(`_clubpro_c_normalise_matrix`, A)
+c_normalise_matrix_columns <- function(A) {
+    .Call(`_clubpro_c_normalise_matrix_columns`, A)
+}
+
+c_normalise_matrix_rows <- function(A) {
+    .Call(`_clubpro_c_normalise_matrix_rows`, A)
 }
 
 c_dichotemise_matrix <- function(A) {
     .Call(`_clubpro_c_dichotemise_matrix`, A)
 }
 
-c_binary_procrustes_rotation <- function(x, y) {
-    .Call(`_clubpro_c_binary_procrustes_rotation`, x, y)
+c_binary_procrustes_rotation <- function(x, y, normalise_cols) {
+    .Call(`_clubpro_c_binary_procrustes_rotation`, x, y, normalise_cols)
 }
 
-c_classify <- function(obs, target, imprecision) {
-    .Call(`_clubpro_c_classify`, obs, target, imprecision)
+c_classify <- function(obs, target, imprecision, normalise_cols) {
+    .Call(`_clubpro_c_classify`, obs, target, imprecision, normalise_cols)
 }
 
-c_rand_classify <- function(obs, target, imprecision) {
-    .Call(`_clubpro_c_rand_classify`, obs, target, imprecision)
+c_rand_classify <- function(obs, target, imprecision, normalise_cols) {
+    .Call(`_clubpro_c_rand_classify`, obs, target, imprecision, normalise_cols)
 }
 
-c_rand_pccs <- function(obs, target, imprecision, nreps) {
-    .Call(`_clubpro_c_rand_pccs`, obs, target, imprecision, nreps)
+c_rand_pccs <- function(obs, target, imprecision, nreps, normalise_cols) {
+    .Call(`_clubpro_c_rand_pccs`, obs, target, imprecision, nreps, normalise_cols)
 }
 

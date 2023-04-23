@@ -106,12 +106,10 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' Plot classification accuracy.
 #'
 #' @details
-#' Produces a strip plot showing counts of individuals against observed values within
-#' each target grouping. Point fill colours indicate whether
-#' individuals were classified correctly, incorrectly or ambiguously.
-#' @param m an object of class "clubprofit" produced by \code{classify()}
-#' @param abline_offset a number indicating vertical adjustment of horizontal ablines
-#' @param point_offset a number indicating amount of vertical separation between points
+#' Produces bar plot showing counts of individuals against observed values within
+#' each target grouping. Fill colours indicate whether each individual was
+#' classified correctly, incorrectly or ambiguously.
+#' @param x an object of class "clubprofit" produced by \code{classify()}
 #' @param ... ignored
 #' @return called for side-effects only
 #' @examples
@@ -119,112 +117,43 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' b <- rep(c("group1", "group2"), each = 10)
 #' b <- factor(b)
 #' mod <- classify(a, b)
-#' plot_classification(mod)
+#' plot(mod)
 #' @export
-plot_classification <- function(m, ...) {
-  UseMethod("plot_classification")
-}
+plot.clubprofit <- function(x, ...) {
+  accuracy <- observation <- target <- NULL
+  z <- individual_results(x)
+  xlabs <- levels(addNA(z$observation))
+  xlabs[is.na(xlabs)] <- "NA"
 
-#' @rdname plot_classification
-#' @export
-plot_classification.default <- function(m, ...) .NotYetImplemented()
-
-#' @rdname plot_classification
-#' @export
-plot_classification.clubprofit <- function(m, abline_offset = -0.1, point_offset = 0.4, ...) {
-
-  dat_vals <- m$y_num
-  dat_labels <- m$y
-  dat_labels[is.na(dat_labels)] <- "NA"
-  dat_labels <- mixedsort(unique(dat_labels))
-  target_labels <- as.character(m$x)
-  target_labels[is.na(target_labels)] <- "NA"
-  target_labels <- factor(target_labels)
-
-  if (is.numeric(m$y)) {
-    x_at <- min(dat_vals, na.rm=TRUE):max(dat_vals, na.rm=TRUE)
-    x_labs <- dat_labels
+  if (any(is.na(z$target))) {
+    z$target <- addNA(z$target)
+    npanels <- nlevels(z$target)
   } else {
-    x_at <- 1:length(dat_labels)
-    x_labs <- dat_labels
+    z$target <- factor(z$target)
+    npanels <- nlevels(z$target)
   }
 
-  stripchart(dat_vals ~ target_labels, method="stack", offset = point_offset, 
-             at = 1:nlevels(target_labels), pch = 21, col = "#0072B2", 
-             bg = "#0072B260", cex=1.5, group.names = levels(target_labels),
-             subset = m$accuracy == "correct", las = 1, xaxt = "n", yaxt = "n",
-             xlab = "Observed Value", ylab = "Observed Category", ...)
-  axis(1, at = x_at, labels = x_labs)
-  axis(2, at = 1:nlevels(target_labels), labels = levels(target_labels), las = 1)
-  stripchart(dat_vals ~ target_labels, method="stack", offset = point_offset, 
-             at = 1:nlevels(target_labels), pch = 21,
-             col = "#D55E00", bg = "#D55E0060",
-             cex=1.5, subset = m$accuracy == "incorrect", add = TRUE)
-  stripchart(dat_vals ~ target_labels, method="stack", offset = point_offset, 
-             at = 1:nlevels(target_labels), pch = 21,
-             col = "#999999", bg = "#99999960",
-             cex=1.5, subset = m$accuracy == "ambiguous", add = TRUE)
-  for (i in 2:nlevels(target_labels)) {
-    abline(h = i + abline_offset)
-  }
-  if ("ambiguous" %in% m$accuracy) {
-      legend("top", legend = c("Correct", "Incorrect", "Ambiguous"), pt.cex=1.5,
-             pch=21, col=c("#0072B2", "#D55E00", "#999999"), horiz = TRUE, bty = "n",
-             pt.bg=c("#0072B260", "#D55E0060", "#99999960"), xpd = TRUE, inset = c(0, -0.15))
+  if (any(is.na(z$observation))) {
+    z$observation <- addNA(z$observation)
   } else {
-      legend("top", legend = c("Correct", "Incorrect"), pt.cex=1.5,
-             pch=21, col=c("#0072B2", "#D55E00"), horiz = TRUE, bty = "n",
-             pt.bg=c("#0072B260", "#D55E0060"), xpd = TRUE, inset = c(0, -0.15))
+    z$observation <- factor(z$observation)
   }
-}
 
-#' Plot predicted classification results.
-#'
-#' @details
-#' Produces a strip plot showing counts of individuals for each observed value by
-#' predicted classification grouping.
-#' @param m an object of class "clubprofit" produced by \code{classify()}
-#' @param ... ignored
-#' @return called for side-effects only
-#' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- classify(a, b)
-#' plot_prediction(mod)
-#' @export
-plot_prediction <- function(m, ...) {
-  UseMethod("plot_prediction")
-}
 
-#' @rdname plot_prediction
-#' @export
-plot_prediction.default <- function(m, ...) .NotYetImplemented()
-
-#' @rdname plot_prediction
-#' @export
-plot_prediction <- function(m, ...) {
-    
-  dat_vals <- m$y_num
-  dat_labels <- unique(m$y)
-
-  if (is.numeric(m$y)) {
-    x_at <- min(dat_vals):max(dat_vals)
-    x_labs <- min(dat_vals):max(dat_vals)
-  } else {
-    x_at <- 1:length(dat_labels)
-    x_labs <- dat_labels
-  }
-    
-  stripchart(dat_vals ~ m$prediction, method="stack", offset = 0.4, 
-             at = 1:nlevels(m$x), pch = 21, col = "#0072B2", 
-             bg = "#0072B260", cex=1.5, group.names = levels(m$x),
-             las = 1, xaxt="n",
-             xlab = "Observed Value", ylab = "Predicted Category", ...)
-  axis(1, at = x_at, labels = x_labs)
-  for (i in 1:nlevels(m$x)) {
-       d <- density(dat_vals[m$prediction == levels(m$x)[i]], bw=0.5, na.rm = TRUE)
-       d$y = d$y + as.numeric(i)
-      lines(d, col = "#0072B2", lw = 2)
-  }
+  histogram(~ observation | target,
+     data = z,
+     type = "count",
+     xlim = c(0:(nlevels(z$observation) + 1)),
+     scales = list(x = list(at = 1:nlevels(z$observation), labels = xlabs), 
+                   y = list(at = 0:nrow(z))),
+     groups = factor(accuracy, levels = c("correct", "incorrect", "ambiguous")),
+     panel = function(...) panel.superpose(..., panel.groups=panel.histogram,
+                                           col=c("#0072B2", "#E69F00", "#999999"),
+                                           alpha = 0.8, border = "white"),
+     xlab = "Observed Value", ylab = "N Individuals",
+     layout = c(1, npanels),
+     par.settings = list(superpose.polygon = list(col = c("#0072B2", "#E69F00", "#999999"), 
+                                                  border="white", alpha = 0.8)),
+     auto.key=list(space = "right", rectangles=TRUE)
+     )
 }
