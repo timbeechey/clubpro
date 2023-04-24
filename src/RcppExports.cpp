@@ -96,8 +96,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // c_rand_pccs
-NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps, bool normalise_cols);
-RcppExport SEXP _clubpro_c_rand_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP) {
+NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps, bool normalise_cols, String reorder_obs);
+RcppExport SEXP _clubpro_c_rand_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP, SEXP reorder_obsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -106,7 +106,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
     Rcpp::traits::input_parameter< int >::type nreps(nrepsSEXP);
     Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(c_rand_pccs(obs, target, imprecision, nreps, normalise_cols));
+    Rcpp::traits::input_parameter< String >::type reorder_obs(reorder_obsSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_rand_pccs(obs, target, imprecision, nreps, normalise_cols, reorder_obs));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -119,7 +120,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_clubpro_c_binary_procrustes_rotation", (DL_FUNC) &_clubpro_c_binary_procrustes_rotation, 3},
     {"_clubpro_c_classify", (DL_FUNC) &_clubpro_c_classify, 4},
     {"_clubpro_c_rand_classify", (DL_FUNC) &_clubpro_c_rand_classify, 4},
-    {"_clubpro_c_rand_pccs", (DL_FUNC) &_clubpro_c_rand_pccs, 5},
+    {"_clubpro_c_rand_pccs", (DL_FUNC) &_clubpro_c_rand_pccs, 6},
     {NULL, NULL, 0}
 };
 

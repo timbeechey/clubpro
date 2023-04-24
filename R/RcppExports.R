@@ -29,7 +29,7 @@ c_rand_classify <- function(obs, target, imprecision, normalise_cols) {
     .Call(`_clubpro_c_rand_classify`, obs, target, imprecision, normalise_cols)
 }
 
-c_rand_pccs <- function(obs, target, imprecision, nreps, normalise_cols) {
-    .Call(`_clubpro_c_rand_pccs`, obs, target, imprecision, nreps, normalise_cols)
+c_rand_pccs <- function(obs, target, imprecision, nreps, normalise_cols, reorder_obs) {
+    .Call(`_clubpro_c_rand_pccs`, obs, target, imprecision, nreps, normalise_cols, reorder_obs)
 }
 

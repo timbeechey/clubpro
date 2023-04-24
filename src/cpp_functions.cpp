@@ -165,10 +165,18 @@ double c_rand_classify(NumericVector obs, NumericVector target, int imprecision,
 
 
 // [[Rcpp::export]]
-NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps, bool normalise_cols) {
-  NumericVector pccs(nreps); // preallocate vector
-  for (int i = 0; i < nreps; i++) {
-    pccs[i] = c_rand_classify(sample(obs, obs.length()), target, imprecision, normalise_cols);
+NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps, bool normalise_cols, String reorder_obs) {
+  NumericVector pccs(nreps);
+  if (reorder_obs == "random") { // randomly sample with replacement from range of possible data values
+    IntegerVector obs_int_range = seq(min(obs), max(obs));
+    NumericVector obs_range = as<NumericVector>(obs_int_range);
+    for (int i = 0; i < nreps; i++) {
+      pccs[i] = c_rand_classify(sample(obs_range, obs.length(), true), target, imprecision, normalise_cols);
+    } 
+  } else if (reorder_obs == "shuffle") { // shuffle actual observations, keeping distribution of observed data
+    for (int i = 0; i < nreps; i++) {
+      pccs[i] = c_rand_classify(sample(obs, obs.length()), target, imprecision, normalise_cols);
+    }
   }
   return pccs;
 }

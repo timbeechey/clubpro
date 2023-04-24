@@ -49,7 +49,7 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
   stopifnot("digits cannot be negative"= digits >= 0)
   stopifnot("digits must be a single number"= length(digits) == 1)
 
-  cat("*****Classification Results*****\n")
+  cat("********** Classification Results **********\n")
   cat("Observations:", length(object$y), "\n")
   cat("Missing observations:", sum(is.na(object$y)), "\n")
   cat("Target groups:", nlevels(object$x), "\n")
@@ -57,7 +57,7 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
   cat("Incorrectly classified observations:", object$incorrect_classifications, "\n")
   cat("Ambiguously classified observations:", object$ambiguous_classifications, "\n")
   cat("PCC:", round(object$pcc, digits), "\n\n")
-  cat("*****Randomisation Test*****\n")
+  cat("********** Randomisation Test **********\n")
   cat("Random reorderings:", object$nreps, "\n")
   cat("Minimum random PCC:", round(min(object$pcc_replicates), digits), "\n")
   cat("Maximum random PCC:", round(max(object$pcc_replicates), digits), "\n")

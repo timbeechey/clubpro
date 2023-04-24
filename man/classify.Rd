@@ -4,7 +4,14 @@
 \alias{classify}
 \title{Classify observations}
 \usage{
-classify(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE)
+classify(
+  y,
+  x,
+  imprecision = 0,
+  nreps = 1000L,
+  normalise_cols = TRUE,
+  reorder_obs = "shuffle"
+)
 }
 \arguments{
 \item{y}{a factor vector of observations.}
@@ -16,6 +23,8 @@ classify(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE)
 \item{nreps}{the number of replicates to use in the randomisation test.}
 
 \item{normalise_cols}{a boolean indicating whether to normalise matrix columns.}
+
+\item{reorder_obs}{a string indicating the method for reordering observations to calculate c-values.}
 }
 \value{
 an object of class "clubprofit" is a list containing the folllowing
