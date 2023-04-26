@@ -26,6 +26,6 @@ classified correctly, incorrectly or ambiguously.
 a <- sample(1:5, 20, replace = TRUE)
 b <- rep(c("group1", "group2"), each = 10)
 b <- factor(b)
-mod <- classify(a, b)
+mod <- club(a, b)
 plot(mod)
 }

@@ -14,169 +14,113 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <Rcpp.h>
-using namespace Rcpp;
+#include <RcppArmadillo.h>
+#include <RcppArmadilloExtensions/sample.h>
+using namespace arma;
+// [[Rcpp::depends(RcppArmadillo)]]
 
 // [[Rcpp::export]]
-NumericMatrix c_to_indicator_matrix(NumericVector v) {
-  long long n {v.length()};
-  double m {max(na_omit(v))};
-  NumericMatrix indmat(n, m);
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      if (j == v[i]-1.0) {
-        indmat(i, j) = 1.0;
-      }
+arma::mat to_indicator_matrix(arma::vec v) {
+    auto n {v.n_elem};
+    auto m {v.max()};
+    arma::mat indmat(n, m);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (j == v[i] - 1.0) {
+                indmat(i, j) = 1.0;
+            }
+        }
     }
-  }
-  return indmat;
+    return indmat;
 }
 
 // [[Rcpp::export]]
-NumericMatrix c_normalise_matrix_columns(NumericMatrix A) {
-  for (int j = 0; j < A.ncol(); j++) {
-    float colfactor = sqrt(sum(pow(A(_,j),2)));
-    for (int i = 0; i < A.nrow(); i++) {
-      if (colfactor == 0.0) {
-        A(i,j) = 0.0;
-      } else {
-        A(i,j) = A(i,j) / colfactor;
-      }
+arma::mat normalise_matrix_columns(arma::mat A) {
+    for (int j = 0; j < A.n_cols; j++) {
+        double colfactor = sqrt(accu(pow(A.col(j),2)));
+        for (int i = 0; i < A.n_rows; i++) {
+            if (colfactor == 0.0) {
+                A(i,j) = 0.0;
+            } else {
+                A(i,j) /= colfactor;
+            }
+        }
     }
-  }
-  return A;
+    return A;
 }
 
 // [[Rcpp::export]]
-NumericMatrix c_normalise_matrix_rows(NumericMatrix A) {
-  for (int i = 0; i < A.nrow(); i++) {
-    float rowfactor = sqrt(sum(pow(A(i,_),2)));
-    for (int j = 0; j < A.ncol(); j++) {
-      if (rowfactor == 0.0) {
-        A(i,j) = 0.0;
-      } else {
-        A(i,j) = A(i,j) / rowfactor;
-      }
+arma::mat normalise_matrix_rows(arma::mat A) {
+    for (int i = 0; i < A.n_rows; i++) {
+        float rowfactor = sqrt(accu(pow(A.row(i),2)));
+        for (int j = 0; j < A.n_cols; j++) {
+            if (rowfactor == 0.0) {
+                A(i,j) = 0.0;
+            } else {
+                A(i,j) /= rowfactor;
+            }
+        }
     }
-  }
-  return A;
+    return A;
 }
 
 // [[Rcpp::export]]
-NumericMatrix c_dichotemise_matrix(NumericMatrix A) {
-  for (int i = 0; i < A.nrow(); i++) {
-    double m = max(A(i,_));
-    for(int j = 0; j < A.ncol(); j++) {
-      if ((A(i,j) == m) & (m > 0)) {
-        A(i,j) = 1.0;
-      } else {
-        A(i,j) = 0.0;
-      }
+arma::mat dichotemise_matrix(arma::mat A) {
+    for (int i = 0; i < A.n_rows; i++) {
+        auto m = max(A.row(i));
+        for(int j = 0; j < A.n_cols; j++) {
+            if ((A(i,j) == m) & (m > 0)) {
+                A(i,j) = 1.0;
+            } else {
+                A(i,j) = 0.0;
+            }
+        }
     }
-  }
-  return A;
+    return A;
 }
 
 // [[Rcpp::export]]
-NumericMatrix c_binary_procrustes_rotation(NumericVector x, NumericVector y, bool normalise_cols) {
-  // access R base functions for matrix multiplication and cross product
-  Environment::base_namespace();
-  Function matmult("%*%");
-  Function crossprod("crossprod");
-  NumericMatrix X = c_to_indicator_matrix(x);
-  NumericMatrix Y = c_to_indicator_matrix(y);
-  NumericMatrix T = crossprod(X, Y);
-  NumericMatrix Tn;
-  if (normalise_cols) {
-    Tn = c_normalise_matrix_rows(c_normalise_matrix_columns(T));
-  } else {
-    Tn = c_normalise_matrix_rows(T);
-  }
-  NumericMatrix Z = matmult(X, Tn);
-  return Z;
+arma::mat binary_procrustes_rotation(arma::vec x, arma::vec y, bool normalise_cols) {
+    arma::mat T = trans(to_indicator_matrix(x)) * to_indicator_matrix(y);
+    arma::mat Z;
+    if (normalise_cols) {
+        Z = to_indicator_matrix(x) * normalise_matrix_rows(normalise_matrix_columns(T));
+    } else {
+        Z = to_indicator_matrix(x) * normalise_matrix_rows(T);
+    }
+    return Z;
 }
 
 // [[Rcpp::export]]
-List c_classify(NumericVector obs, NumericVector target, int imprecision, bool normalise_cols) {
-  CharacterVector unique_group_names = target.attr("levels");
-  StringVector predicted_classification(obs.length());
-  StringVector classification_result(obs.length());
-  CharacterVector all_group_names(target.length());
-
-  NumericMatrix conformed_mat = c_binary_procrustes_rotation(obs, target, normalise_cols);
-  NumericMatrix target_indicator_mat = c_to_indicator_matrix(target);
-  NumericMatrix binary_matrix = c_dichotemise_matrix(conformed_mat);
-
-  int matches{};
-
-  for (int i = 0; i < all_group_names.length(); i++) {
-    all_group_names[i] = unique_group_names[target[i]-1];
-  }
-
-  for (int i = 0; i < binary_matrix.nrow(); i++) {
-    for (int j = 0; j < binary_matrix.ncol(); j++) {
-      if (binary_matrix(i, j) == 1.0) {
-        CharacterVector x {predicted_classification[i], unique_group_names[j]};
-        predicted_classification[i] = collapse(x);
-      }
+double c_pcc(arma::vec obs, arma::vec target, int imprecision, bool normalise_cols) {
+    arma::mat target_indicator_mat = to_indicator_matrix(target);
+    arma::mat binary_matrix = dichotemise_matrix(binary_procrustes_rotation(obs, target, normalise_cols));
+    int matches{};
+    for (int i = 0; i < binary_matrix.n_rows; i++) {
+        if (accu(binary_matrix.row(i)) == 1.0) {
+            if (std::abs(int(binary_matrix.row(i).index_max()) - int(target_indicator_mat.row(i).index_max())) <= imprecision) {
+                matches += 1;
+            } 
+        }
     }
-
-    if (sum(binary_matrix(i,_)) == 1.0) {
-
-      if (abs(which_max(binary_matrix(i,_)) - which_max(target_indicator_mat(i,_))) <= imprecision) {
-        matches += 1;
-        classification_result[i] = "correct";
-      } else{
-        classification_result[i] = "incorrect";
-      }
-    } else if (sum(binary_matrix(i,_)) > 1.0) {
-      classification_result[i] = "ambiguous";
-    }
-  }
-
-  double pcc = ((double)matches / obs.length()) * 100;
-
-  List out = List::create(Named("predicted_classification") = predicted_classification, _["classification_result"] = classification_result, _["pcc"] = pcc);
-  return out;
+    return ((double)matches / obs.n_elem) * 100;
 }
 
-
 // [[Rcpp::export]]
-double c_rand_classify(NumericVector obs, NumericVector target, int imprecision, bool normalise_cols) {
-
-  NumericMatrix conformed_mat = c_binary_procrustes_rotation(obs, target, normalise_cols);
-  NumericMatrix target_indicator_mat = c_to_indicator_matrix(target);
-  NumericMatrix binary_matrix = c_dichotemise_matrix(conformed_mat);
-
-  int matches{};
-
-  for (int i = 0; i < binary_matrix.nrow(); i++) {
-
-    if (sum(binary_matrix(i,_)) == 1.0) {
-
-      if (abs(which_max(binary_matrix(i,_)) - which_max(target_indicator_mat(i,_))) <= imprecision) {
-        matches += 1;
-      } 
-    }
-  }
-
-  return ((double)matches / obs.length()) * 100;
-}
-
-
-// [[Rcpp::export]]
-NumericVector c_rand_pccs(NumericVector obs, NumericVector target, int imprecision, int nreps, bool normalise_cols, String reorder_obs) {
-  NumericVector pccs(nreps);
-  if (reorder_obs == "random") { // randomly sample with replacement from range of possible data values
-    IntegerVector obs_int_range = seq(min(obs), max(obs));
-    NumericVector obs_range = as<NumericVector>(obs_int_range);
+arma::vec shuffle_obs_pccs(arma::vec obs, arma::vec target, int imprecision, int nreps, bool normalise_cols) {
+    arma::vec pccs(nreps);
     for (int i = 0; i < nreps; i++) {
-      pccs[i] = c_rand_classify(sample(obs_range, obs.length(), true), target, imprecision, normalise_cols);
-    } 
-  } else if (reorder_obs == "shuffle") { // shuffle actual observations, keeping distribution of observed data
-    for (int i = 0; i < nreps; i++) {
-      pccs[i] = c_rand_classify(sample(obs, obs.length()), target, imprecision, normalise_cols);
+        pccs(i) = c_pcc(shuffle(obs), target, imprecision, normalise_cols);
     }
-  }
-  return pccs;
+    return pccs;
+}
+
+// [[Rcpp::export]]
+arma::vec random_dat_pccs(arma::vec obs, arma::vec target, int imprecision, int nreps, bool normalise_cols) {
+    arma::vec pccs(nreps);
+    arma::vec obs_range = linspace(min(obs), max(obs), (max(obs)-min(obs))+1);
+    for (int i = 0; i < nreps; i++) {
+        pccs(i) = c_pcc(Rcpp::RcppArmadillo::sample(obs_range, obs.n_elem, true), target, imprecision, normalise_cols);
+    }
+    return pccs;
 }

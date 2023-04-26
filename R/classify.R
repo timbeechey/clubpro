@@ -14,9 +14,50 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+classify <- function(obs, target, imprecision, normalise_cols) {
+    unique_group_names <- levels(target)
+    predicted_classification <- character(length(obs))
+    classification_result <- character(length(obs))
+    all_group_names <- character(length(obs))
+    
+    conformed_mat <- binary_procrustes_rotation(obs, target, normalise_cols)
+    target_indicator_mat <- to_indicator_matrix(target)
+    binary_matrix <- dichotemise_matrix(conformed_mat)
+    
+    matches <- 0
+    
+    for (i in 1:length(all_group_names)) {
+        all_group_names[i] <- unique_group_names[target[i]]
+    }
+    
+    for (i in 1:nrow(binary_matrix)) {
+        for (j in 1:ncol(binary_matrix)) {
+            if (binary_matrix[i,j] == 1) {
+                predicted_classification[i] <- paste0(predicted_classification[i], unique_group_names[j])
+            }
+        }
+        if (sum(binary_matrix[i,]) == 1) {
+            if (abs(which.max(binary_matrix[i,]) - which.max(target_indicator_mat[i,])) <= imprecision) {
+                matches <- matches + 1
+                classification_result[i] <- "correct"
+            } else {
+                classification_result[i] <- "incorrect"
+            }
+        }
+        else if (sum(binary_matrix[i,]) > 1) {
+            classification_result[i] <- "ambiguous"
+        }
+    }
+    pcc <- (matches / length(obs)) * 100
+    list(predicted_classification = predicted_classification,
+         classification_result = classification_result,
+         pcc = pcc)
+}
+
 #' Classify observations
 #'
-#' \code{classify()} is used to classify obervations using binary procrustes
+#' \code{club()} is used to classify obervations using binary procrustes
 #' rotation.
 #' @param y a factor vector of observations.
 #' @param x a factor vector of target groups.
@@ -41,10 +82,10 @@
 #' a <- sample(1:5, 20, replace = TRUE)
 #' b <- rep(c("group1", "group2"), each = 10)
 #' b <- factor(b)
-#' mod <- classify(a, b)
-#' mod <- classify(a, b, nreps = 200L)
+#' mod <- club(a, b)
+#' mod <- club(a, b, nreps = 200L)
 #' @export
-classify <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
+club <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
 
   stopifnot("The second argument to classify() must be a vector"=is.null(dim(x))) # is not not a df or matrix
   stopifnot("The second argument to classify() must be a vector, not a list"=is.recursive(x) == FALSE) # x is not a list
@@ -71,11 +112,15 @@ classify <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE
     }
   }
 
-  obs_pcc <- c_classify(obs_num, x, imprecision, normalise_cols)
+  obs_pcc <- classify(obs_num, x, imprecision, normalise_cols)
   correct_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "correct"])
   ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])
   incorrect_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "incorrect"])
-  rand_pccs <- c_rand_pccs(obs_num, x, imprecision, nreps, normalise_cols, reorder_obs)
+  if (reorder_obs == "shuffle") {
+      rand_pccs <- shuffle_obs_pccs(obs_num, x, imprecision, nreps, normalise_cols)
+  } else if (reorder_obs == "random") {
+      rand_pccs <- random_dat_pccs(obs_num, x, imprecision, nreps, normalise_cols)
+  }
   cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps
   return(
     structure(

@@ -22,7 +22,7 @@
 #' a <- sample(1:5, 20, replace = TRUE)
 #' b <- rep(c("group1", "group2"), each = 10)
 #' b <- factor(b)
-#' mod <- classify(a, b)
+#' mod <- club(a, b)
 #' print(mod)
 #' @export
 print.clubprofit <- function(x, ...) {
@@ -38,7 +38,7 @@ print.clubprofit <- function(x, ...) {
 #' a <- sample(1:5, 20, replace = TRUE)
 #' b <- rep(c("group1", "group2"), each = 10)
 #' b <- factor(b)
-#' mod <- classify(a, b)
+#' mod <- club(a, b)
 #' summary(mod)
 #' summary(mod, digits = 3)
 #' @export
@@ -78,7 +78,7 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
 #' a <- sample(1:5, 20, replace = TRUE)
 #' b <- rep(c("group1", "group2"), each = 10)
 #' b <- factor(b)
-#' mod <- classify(a, b)
+#' mod <- club(a, b)
 #' individual_results(mod)
 #' individual_results(mod, digits = 3)
 #' @export
@@ -116,7 +116,7 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' a <- sample(1:5, 20, replace = TRUE)
 #' b <- rep(c("group1", "group2"), each = 10)
 #' b <- factor(b)
-#' mod <- classify(a, b)
+#' mod <- club(a, b)
 #' plot(mod)
 #' @export
 plot.clubprofit <- function(x, ...) {
