@@ -16,43 +16,46 @@
 
 
 classify <- function(obs, target, imprecision, normalise_cols) {
-    unique_group_names <- levels(target)
-    predicted_classification <- character(length(obs))
-    classification_result <- character(length(obs))
-    all_group_names <- character(length(obs))
+  unique_group_names <- levels(target)
+  predicted_classification <- character(length(obs))
+  classification_result <- character(length(obs))
+  all_group_names <- character(length(obs))
     
-    conformed_mat <- binary_procrustes_rotation(obs, target, normalise_cols)
-    target_indicator_mat <- to_indicator_matrix(target)
-    binary_matrix <- dichotemise_matrix(conformed_mat)
+  conformed_mat <- binary_procrustes_rotation(obs, target, normalise_cols)
+  target_indicator_mat <- to_indicator_matrix(target)
+  binary_matrix <- dichotemise_matrix(conformed_mat)
+  matches <- 0
     
-    matches <- 0
+  for (i in 1:length(all_group_names)) {
+    all_group_names[i] <- unique_group_names[target[i]]
+  }
     
-    for (i in 1:length(all_group_names)) {
-        all_group_names[i] <- unique_group_names[target[i]]
+  for (i in 1:nrow(binary_matrix)) {
+    for (j in 1:ncol(binary_matrix)) {
+      if (binary_matrix[i,j] == 1) {
+        if (predicted_classification[i] == "") {
+          predicted_classification[i] <- unique_group_names[j]
+        } else {
+            predicted_classification[i] <- paste0(c(predicted_classification[i], unique_group_names[j]), collapse = "|")
+        }
+      }
     }
-    
-    for (i in 1:nrow(binary_matrix)) {
-        for (j in 1:ncol(binary_matrix)) {
-            if (binary_matrix[i,j] == 1) {
-                predicted_classification[i] <- paste0(predicted_classification[i], unique_group_names[j])
-            }
-        }
-        if (sum(binary_matrix[i,]) == 1) {
-            if (abs(which.max(binary_matrix[i,]) - which.max(target_indicator_mat[i,])) <= imprecision) {
-                matches <- matches + 1
-                classification_result[i] <- "correct"
-            } else {
-                classification_result[i] <- "incorrect"
-            }
-        }
-        else if (sum(binary_matrix[i,]) > 1) {
-            classification_result[i] <- "ambiguous"
-        }
+    if (sum(binary_matrix[i,]) == 1) {
+      if (abs(which.max(binary_matrix[i,]) - which.max(target_indicator_mat[i,])) <= imprecision) {
+        matches <- matches + 1
+          classification_result[i] <- "correct"
+      } else {
+          classification_result[i] <- "incorrect"
+      }
     }
-    pcc <- (matches / length(obs)) * 100
-    list(predicted_classification = predicted_classification,
-         classification_result = classification_result,
-         pcc = pcc)
+    else if (sum(binary_matrix[i,]) > 1) {
+      classification_result[i] <- "ambiguous"
+    }
+  }
+  pcc <- (matches / length(obs)) * 100
+  list(predicted_classification = predicted_classification,
+       classification_result = classification_result,
+       pcc = pcc)
 }
 
 #' Classify observations
@@ -97,6 +100,7 @@ club <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, re
   stopifnot("nreps must be a positive number"=nreps >= 1) # nreps must be a positve number
   stopifnot("nreps must be a single number"=length(nreps) == 1) # nreps is a single value
   stopifnot("nreps must be a whole number"=nreps %% 1 == 0)
+  stopifnot("reorder_obs must be 'shuffle' or 'random'"=reorder_obs %in% c("shuffle", "random"))
 
   if (is.character(y)) {
     if (any(is.na(y))) {
