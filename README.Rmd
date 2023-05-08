@@ -12,6 +12,30 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r, function_max_output_lines, include = FALSE}
+library(knitr)
+hook_output <- knit_hooks$get("output")
+knit_hooks$set(output = function(x, options) {
+  lines <- options$output.lines
+  if (is.null(lines)) {
+    return(hook_output(x, options))  # pass to default hook
+  }
+  x <- unlist(strsplit(x, "\n"))
+  more <- "..."
+  if (length(lines)==1) {        # first n lines
+    if (length(x) > lines) {
+      # truncate the output, but add ....
+      x <- c(head(x, lines), more)
+    }
+  } else {
+    x <- c(more, x[lines], more)
+  }
+  # paste these lines together
+  x <- paste(c(x, ""), collapse = "\n")
+  hook_output(x, options)
+})
+``` 
+
 # clubpro
 
 An R package for *cl*assification *u*sing *b*inary *p*rocrustes *ro*tation based on Grice (2011).
@@ -41,9 +65,43 @@ citation(package = "clubpro")
 
 ```{r load_clubpro}
 library(clubpro)
+library(lattice)
 ```
 
+Simulate some count data.
 
+```{r simulate_data}
+set.seed(123)
+
+n <- 300
+
+dat <- data.frame(x = rep(c("A","B","C"), each = n),
+                  y = c(rpois(n, lambda = 10),
+                        rpois(n, lambda = 15),
+                        rpois(n, lambda = 20)))
+
+dat$x <- factor(dat$x)
+
+histogram( ~ y | x, data = dat, layout = c(1,3))
+```
+
+Run the model.
+
+```{r run_model}
+mod <- with(dat, club(y, x))
+```
+
+Print a summary of the model output (note: only the first 50 lines of output are shown here).
+
+```{r model_summary, output.lines = 50}
+summary(mod)
+```
+
+Plot the classification results.
+
+```{r plot}
+plot(mod)
+```
 
 # References
 
