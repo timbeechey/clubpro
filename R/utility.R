@@ -153,6 +153,6 @@ plot.clubprofit <- function(x, ...) {
      layout = c(1, npanels),
      par.settings = list(superpose.polygon = list(col = c("#0072B2", "#E69F00", "#999999"), 
                                                   border="white", alpha = 0.8)),
-     auto.key=list(space = "right", rectangles=TRUE)
+     auto.key=list(space = "top", rectangles=TRUE, columns = 3)
      )
 }
