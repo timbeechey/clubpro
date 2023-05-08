@@ -43,7 +43,7 @@ set.seed(123)
 
 n <- 300
 
-dat <- data.frame(x = rep(c("A","B","C"), each = n),
+dat <- data.frame(x = rep(c("A", "B", "C"), each = n),
                   y = c(rpois(n, lambda = 5),
                         rpois(n, lambda = 25),
                         rpois(n, lambda = 15)))
