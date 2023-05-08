@@ -1,5 +1,5 @@
 # clubpro, an R package for classification using binary procrustes rotation.
-# Copyright (C) 2022  Timothy Beechey (tim.beechey@protonmail.com)
+# Copyright (C) 2023  Timothy Beechey (tim.beechey@protonmail.com)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ classify <- function(obs, target, imprecision, normalise_cols) {
   predicted_classification <- character(length(obs))
   classification_result <- character(length(obs))
   all_group_names <- character(length(obs))
-    
-  conformed_mat <- binary_procrustes_rotation(obs, target, normalise_cols)
   target_indicator_mat <- to_indicator_matrix(target)
+    
+  conformed_mat <- binary_procrustes_rotation(obs, target_indicator_mat, normalise_cols)
   binary_matrix <- dichotemise_matrix(conformed_mat)
   matches <- 0
     
@@ -90,12 +90,12 @@ classify <- function(obs, target, imprecision, normalise_cols) {
 #' @export
 club <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
 
-  stopifnot("The second argument to classify() must be a vector"=is.null(dim(x))) # is not not a df or matrix
-  stopifnot("The second argument to classify() must be a vector, not a list"=is.recursive(x) == FALSE) # x is not a list
-  stopifnot("The first argument to classify() must be a vector, not a list"=is.recursive(y) == FALSE) # y is not a list
-  stopifnot("The first argument to classify() cannot be a factor"=!is.factor(y))
-  stopifnot("The second argument to classify() must be a factor"=is.factor(x))
-  stopifnot("length of vectors passed to classify() are not equal"=length(x) == length(y))
+  stopifnot("The second argument to club() must be a vector"=is.null(dim(x))) # is not not a df or matrix
+  stopifnot("The second argument to club() must be a vector, not a list"=is.recursive(x) == FALSE) # x is not a list
+  stopifnot("The first argument to club() must be a vector, not a list"=is.recursive(y) == FALSE) # y is not a list
+  stopifnot("The first argument to club() cannot be a factor"=!is.factor(y))
+  stopifnot("The second argument to club() must be a factor"=is.factor(x))
+  stopifnot("length of vectors passed to club() are not equal"=length(x) == length(y))
   stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double
   stopifnot("nreps must be a positive number"=nreps >= 1) # nreps must be a positve number
   stopifnot("nreps must be a single number"=length(nreps) == 1) # nreps is a single value
@@ -112,18 +112,20 @@ club <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, re
     if (any(is.na(y))) {
       obs_num <- as.integer(addNA(y))
     } else {
-       obs_num <- y
+       obs_num <- as.integer(factor(y))
     }
   }
+
+  x_mat <- to_indicator_matrix(x)
 
   obs_pcc <- classify(obs_num, x, imprecision, normalise_cols)
   correct_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "correct"])
   ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])
   incorrect_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "incorrect"])
   if (reorder_obs == "shuffle") {
-      rand_pccs <- shuffle_obs_pccs(obs_num, x, imprecision, nreps, normalise_cols)
+      rand_pccs <- shuffle_obs_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols)
   } else if (reorder_obs == "random") {
-      rand_pccs <- random_dat_pccs(obs_num, x, imprecision, nreps, normalise_cols)
+      rand_pccs <- random_dat_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols)
   }
   cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps
   return(

@@ -1,5 +1,5 @@
 # clubpro, an R package for classification using binary procrustes rotation.
-# Copyright (C) 2022  Timothy Beechey (tim.beechey@protonmail.com)
+# Copyright (C) 2023  Timothy Beechey (tim.beechey@protonmail.com)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

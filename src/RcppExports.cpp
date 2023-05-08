@@ -22,25 +22,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// normalise_matrix_columns
-arma::mat normalise_matrix_columns(arma::mat A);
-RcppExport SEXP _clubpro_normalise_matrix_columns(SEXP ASEXP) {
+// normalise_columns
+arma::mat normalise_columns(arma::mat A);
+RcppExport SEXP _clubpro_normalise_columns(SEXP ASEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type A(ASEXP);
-    rcpp_result_gen = Rcpp::wrap(normalise_matrix_columns(A));
+    rcpp_result_gen = Rcpp::wrap(normalise_columns(A));
     return rcpp_result_gen;
 END_RCPP
 }
-// normalise_matrix_rows
-arma::mat normalise_matrix_rows(arma::mat A);
-RcppExport SEXP _clubpro_normalise_matrix_rows(SEXP ASEXP) {
+// normalise_rows
+arma::mat normalise_rows(arma::mat A);
+RcppExport SEXP _clubpro_normalise_rows(SEXP ASEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type A(ASEXP);
-    rcpp_result_gen = Rcpp::wrap(normalise_matrix_rows(A));
+    rcpp_result_gen = Rcpp::wrap(normalise_rows(A));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -56,67 +56,67 @@ BEGIN_RCPP
 END_RCPP
 }
 // binary_procrustes_rotation
-arma::mat binary_procrustes_rotation(arma::vec x, arma::vec y, bool normalise_cols);
-RcppExport SEXP _clubpro_binary_procrustes_rotation(SEXP xSEXP, SEXP ySEXP, SEXP normalise_colsSEXP) {
+arma::mat binary_procrustes_rotation(arma::vec obs, arma::mat target_mat, bool normalise_cols);
+RcppExport SEXP _clubpro_binary_procrustes_rotation(SEXP obsSEXP, SEXP target_matSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type obs(obsSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type target_mat(target_matSEXP);
     Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(binary_procrustes_rotation(x, y, normalise_cols));
+    rcpp_result_gen = Rcpp::wrap(binary_procrustes_rotation(obs, target_mat, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 // c_pcc
-double c_pcc(arma::vec obs, arma::vec target, int imprecision, bool normalise_cols);
-RcppExport SEXP _clubpro_c_pcc(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP normalise_colsSEXP) {
+double c_pcc(arma::vec obs, arma::mat target_indicator_mat, int imprecision, bool normalise_cols);
+RcppExport SEXP _clubpro_c_pcc(SEXP obsSEXP, SEXP target_indicator_matSEXP, SEXP imprecisionSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::vec >::type obs(obsSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type target_indicator_mat(target_indicator_matSEXP);
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
     Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(c_pcc(obs, target, imprecision, normalise_cols));
+    rcpp_result_gen = Rcpp::wrap(c_pcc(obs, target_indicator_mat, imprecision, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 // shuffle_obs_pccs
-arma::vec shuffle_obs_pccs(arma::vec obs, arma::vec target, int imprecision, int nreps, bool normalise_cols);
-RcppExport SEXP _clubpro_shuffle_obs_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP) {
+arma::vec shuffle_obs_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, int nreps, bool normalise_cols);
+RcppExport SEXP _clubpro_shuffle_obs_pccs(SEXP obsSEXP, SEXP target_indicator_matSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::vec >::type obs(obsSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type target_indicator_mat(target_indicator_matSEXP);
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
     Rcpp::traits::input_parameter< int >::type nreps(nrepsSEXP);
     Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(shuffle_obs_pccs(obs, target, imprecision, nreps, normalise_cols));
+    rcpp_result_gen = Rcpp::wrap(shuffle_obs_pccs(obs, target_indicator_mat, imprecision, nreps, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 // random_dat_pccs
-arma::vec random_dat_pccs(arma::vec obs, arma::vec target, int imprecision, int nreps, bool normalise_cols);
-RcppExport SEXP _clubpro_random_dat_pccs(SEXP obsSEXP, SEXP targetSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP) {
+arma::vec random_dat_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, int nreps, bool normalise_cols);
+RcppExport SEXP _clubpro_random_dat_pccs(SEXP obsSEXP, SEXP target_indicator_matSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::vec >::type obs(obsSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type target_indicator_mat(target_indicator_matSEXP);
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
     Rcpp::traits::input_parameter< int >::type nreps(nrepsSEXP);
     Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(random_dat_pccs(obs, target, imprecision, nreps, normalise_cols));
+    rcpp_result_gen = Rcpp::wrap(random_dat_pccs(obs, target_indicator_mat, imprecision, nreps, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_clubpro_to_indicator_matrix", (DL_FUNC) &_clubpro_to_indicator_matrix, 1},
-    {"_clubpro_normalise_matrix_columns", (DL_FUNC) &_clubpro_normalise_matrix_columns, 1},
-    {"_clubpro_normalise_matrix_rows", (DL_FUNC) &_clubpro_normalise_matrix_rows, 1},
+    {"_clubpro_normalise_columns", (DL_FUNC) &_clubpro_normalise_columns, 1},
+    {"_clubpro_normalise_rows", (DL_FUNC) &_clubpro_normalise_rows, 1},
     {"_clubpro_dichotemise_matrix", (DL_FUNC) &_clubpro_dichotemise_matrix, 1},
     {"_clubpro_binary_procrustes_rotation", (DL_FUNC) &_clubpro_binary_procrustes_rotation, 3},
     {"_clubpro_c_pcc", (DL_FUNC) &_clubpro_c_pcc, 4},

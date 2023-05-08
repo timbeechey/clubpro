@@ -14,11 +14,37 @@ knitr::opts_chunk$set(
 
 # clubpro
 
-
-**This is a _work in progress_**
-
 An R package for *cl*assification *u*sing *b*inary *p*rocrustes *ro*tation based on Grice (2011).
+
+## Installation
+
+Install the development version of `clubpro` from [GitHub](https://github.com/timbeechey/clubpro) with:
+
+```{r install_github, eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("timbeechey/clubpro")
+```
+
+## Citation
+
+To cite `clubpro` in your work you can use the output of:
+
+```{r citation, eval=FALSE, message=FALSE, warning=FALSE}
+citation(package = "clubpro")
+```
+
+## Background
+
+`clubpro` is an implementation of methods described in [Grice (2011)](https://psycnet.apa.org/record/2011-14580-000).
+
+## using `clubpro`
+
+```{r load_clubpro}
+library(clubpro)
+```
+
+
 
 # References
 
-Grice, J. W. (2011). _Observation oriented modeling: Analysis of cause in the behavioral sciences_ (1st ed). Academic Press.
+Grice, J. W. (2011). _Observation oriented modeling: Analysis of cause in the behavioral sciences_. Academic Press.
