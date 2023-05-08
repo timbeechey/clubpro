@@ -77,12 +77,12 @@ n <- 300
 
 dat <- data.frame(x = rep(c("A","B","C"), each = n),
                   y = c(rpois(n, lambda = 5),
-                        rpois(n, lambda = 15),
-                        rpois(n, lambda = 25)))
+                        rpois(n, lambda = 25),
+                        rpois(n, lambda = 15)))
 
 dat$x <- factor(dat$x)
 
-histogram( ~ y | x, data = dat, layout = c(1,3))
+histogram( ~ y | x, data = dat, type = "count", layout = c(1,3))
 ```
 
 Run the model.
