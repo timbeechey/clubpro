@@ -14,6 +14,11 @@ NULL
 NULL
 
 ## usethis namespace: start
+#' @importFrom stats median
+## usethis namespace: end
+NULL
+
+## usethis namespace: start
 #' @importFrom lattice histogram
 ## usethis namespace: end
 NULL

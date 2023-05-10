@@ -56,7 +56,8 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
   cat("Correctly classified observations:", object$correct_classifications, "\n")
   cat("Incorrectly classified observations:", object$incorrect_classifications, "\n")
   cat("Ambiguously classified observations:", object$ambiguous_classifications, "\n")
-  cat("PCC:", round(object$pcc, digits), "\n\n")
+  cat("PCC:", round(object$pcc, digits), "\n")
+  cat("Median CSI:", round(object$median_csi, digits), "\n\n")
   cat("********** Randomisation Test **********\n")
   cat("Random reorderings:", object$nreps, "\n")
   cat("Minimum random PCC:", round(min(object$pcc_replicates), digits), "\n")
@@ -97,7 +98,8 @@ individual_results.clubprofit <- function(m, digits = 2L) {
                    observation = m$y,
                    target = m$x,
                    prediction = m$prediction,
-                   accuracy = m$accuracy)
+                   accuracy = m$accuracy,
+                   csi = round(m$csi, 2))
   df$target <- factor(df$target, levels = levels(m$x))
   df$accuracy <- factor(df$accuracy, levels = c("correct", "incorrect", "ambiguous"))
   df

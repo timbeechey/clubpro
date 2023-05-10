@@ -23,6 +23,8 @@ classify <- function(obs, target, imprecision, normalise_cols) {
   target_indicator_mat <- to_indicator_matrix(target)
     
   conformed_mat <- binary_procrustes_rotation(obs, target_indicator_mat, normalise_cols)
+  csi <- apply(conformed_mat, 1, max)
+  median_csi <- median(csi)
   binary_matrix <- dichotemise_matrix(conformed_mat)
   matches <- 0
     
@@ -55,6 +57,8 @@ classify <- function(obs, target, imprecision, normalise_cols) {
   pcc <- (matches / length(obs)) * 100
   list(predicted_classification = predicted_classification,
        classification_result = classification_result,
+       csi = csi,
+       median_csi = median_csi,
        pcc = pcc)
 }
 
@@ -137,6 +141,8 @@ club <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, re
         correct_classifications = correct_classifications,
         ambiguous_classifications = ambiguous_classifications,
         incorrect_classifications = incorrect_classifications,
+        csi = obs_pcc$csi,
+        median_csi = obs_pcc$median_csi,
         cval = cval,
         pcc_replicates = rand_pccs,
         y = y,
