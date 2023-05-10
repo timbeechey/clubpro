@@ -57,7 +57,7 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
   cat("Incorrectly classified observations:", object$incorrect_classifications, "\n")
   cat("Ambiguously classified observations:", object$ambiguous_classifications, "\n")
   cat("PCC:", round(object$pcc, digits), "\n")
-  cat("Median CSI:", round(object$median_csi, digits), "\n\n")
+  cat("Median classification strength index:", round(object$median_csi, digits), "\n\n")
   cat("********** Randomisation Test **********\n")
   cat("Random reorderings:", object$nreps, "\n")
   cat("Minimum random PCC:", round(min(object$pcc_replicates), digits), "\n")

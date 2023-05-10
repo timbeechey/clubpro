@@ -74,6 +74,7 @@ summary(mod)
 #> Incorrectly classified observations: 102 
 #> Ambiguously classified observations: 0 
 #> PCC: 88.67 
+#> Median classification strength index: 1 
 #> 
 #> ********** Randomisation Test **********
 #> Random reorderings: 1000 
@@ -81,41 +82,40 @@ summary(mod)
 #> Maximum random PCC: 46.33 
 #> Chance-value: 0 
 #> 
-#>     individual observation target prediction  accuracy
-#> 1            1           4      A          A   correct
-#> 2            2           7      A          A   correct
-#> 3            3           4      A          A   correct
-#> 4            4           8      A          A   correct
-#> 5            5           9      A          A   correct
-#> 6            6           2      A          A   correct
-#> 7            7           5      A          A   correct
-#> 8            8           8      A          A   correct
-#> 9            9           5      A          A   correct
-#> 10          10           5      A          A   correct
-#> 11          11           9      A          A   correct
-#> 12          12           5      A          A   correct
-#> 13          13           6      A          A   correct
-#> 14          14           5      A          A   correct
-#> 15          15           2      A          A   correct
-#> 16          16           8      A          A   correct
-#> 17          17           3      A          A   correct
-#> 18          18           2      A          A   correct
-#> 19          19           4      A          A   correct
-#> 20          20           9      A          A   correct
-#> 21          21           8      A          A   correct
-#> 22          22           6      A          A   correct
-#> 23          23           6      A          A   correct
-#> 24          24          11      A          C incorrect
-#> 25          25           6      A          A   correct
-#> 26          26           6      A          A   correct
-#> 27          27           5      A          A   correct
-#> 28          28           5      A          A   correct
-#> 29          29           4      A          A   correct
-#> 30          30           3      A          A   correct
-#> 31          31           9      A          A   correct
-#> 32          32           8      A          A   correct
-#> 33          33           6      A          A   correct
-#> 34          34           7      A          A   correct
+#>     individual observation target prediction  accuracy  csi
+#> 1            1           4      A          A   correct 1.00
+#> 2            2           7      A          A   correct 0.97
+#> 3            3           4      A          A   correct 1.00
+#> 4            4           8      A          A   correct 0.99
+#> 5            5           9      A          A   correct 0.73
+#> 6            6           2      A          A   correct 1.00
+#> 7            7           5      A          A   correct 1.00
+#> 8            8           8      A          A   correct 0.99
+#> 9            9           5      A          A   correct 1.00
+#> 10          10           5      A          A   correct 1.00
+#> 11          11           9      A          A   correct 0.73
+#> 12          12           5      A          A   correct 1.00
+#> 13          13           6      A          A   correct 1.00
+#> 14          14           5      A          A   correct 1.00
+#> 15          15           2      A          A   correct 1.00
+#> 16          16           8      A          A   correct 0.99
+#> 17          17           3      A          A   correct 1.00
+#> 18          18           2      A          A   correct 1.00
+#> 19          19           4      A          A   correct 1.00
+#> 20          20           9      A          A   correct 0.73
+#> 21          21           8      A          A   correct 0.99
+#> 22          22           6      A          A   correct 1.00
+#> 23          23           6      A          A   correct 1.00
+#> 24          24          11      A          C incorrect 1.00
+#> 25          25           6      A          A   correct 1.00
+#> 26          26           6      A          A   correct 1.00
+#> 27          27           5      A          A   correct 1.00
+#> 28          28           5      A          A   correct 1.00
+#> 29          29           4      A          A   correct 1.00
+#> 30          30           3      A          A   correct 1.00
+#> 31          31           9      A          A   correct 0.73
+#> 32          32           8      A          A   correct 0.99
+#> 33          33           6      A          A   correct 1.00
 ...
 ```
 
