@@ -59,7 +59,7 @@ citation(package = "clubpro")
 
 ## Background
 
-`clubpro` is an implementation of methods described in [Grice (2011)](https://psycnet.apa.org/record/2011-14580-000).
+`clubpro` is an implementation of a subset of the methods described in [Grice (2011)](https://psycnet.apa.org/record/2011-14580-000).
 
 ## using `clubpro`
 
