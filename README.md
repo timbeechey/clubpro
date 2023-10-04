@@ -54,15 +54,6 @@ str(dat)
 #>  $ correct  : int  39 25 37 25 29 39 21 39 24 25 ...
 ```
 
-View the distribution of recalled word counts in each of the three
-conditions.
-
-``` r
-histogram( ~ correct | condition, data = dat, type = "count", layout = c(1,3))
-```
-
-![](man/figures/README-plot_data-1.png)<!-- -->
-
 Run the model to quantify how well `condition` can be classified from
 `correct`, the count of correctly recalled words.
 

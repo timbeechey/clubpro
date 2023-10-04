@@ -82,12 +82,6 @@ This data set consists of counts of correctly recalled words (out of 40) across 
 str(dat)
 ```
 
-View the distribution of recalled word counts in each of the three conditions.
-
-```{r plot_data}
-histogram( ~ correct | condition, data = dat, type = "count", layout = c(1,3))
-```
-
 Run the model to quantify how well `condition` can be classified from `correct`, the count of correctly recalled words.
 
 ```{r run_model}
