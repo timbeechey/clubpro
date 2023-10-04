@@ -33,8 +33,10 @@ classify <- function(obs, target, imprecision, normalise_cols) {
   }
     
   for (i in 1:nrow(binary_matrix)) {
+    matched_groups <- c()
     for (j in 1:ncol(binary_matrix)) {
       if (binary_matrix[i,j] == 1) {
+        matched_groups <- c(matched_groups, unique_group_names[j])
         if (predicted_classification[i] == "") {
           predicted_classification[i] <- unique_group_names[j]
         } else {
@@ -51,7 +53,11 @@ classify <- function(obs, target, imprecision, normalise_cols) {
       }
     }
     else if (sum(binary_matrix[i,]) > 1) {
-      classification_result[i] <- "ambiguous"
+      if (all_group_names[i] %in% matched_groups) {
+        classification_result[i] <- "ambiguous"
+      } else {
+        classification_result[i] <- "incorrect"
+      }
     }
   }
   pcc <- (matches / length(obs)) * 100

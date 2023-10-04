@@ -25,11 +25,7 @@ arma::mat to_indicator_matrix(arma::vec v) {
     auto m {v.max()};
     arma::mat A(n, m);
     for (size_t i {}; i < n; i++) {
-        for (size_t j {}; j < m; j++) {
-            if (j == v[i] - 1.0) {
-                A(i, j) = 1.0;
-            }
-        }
+        A(i, v[i]-1.0) = 1.0;
     }
     return A;
 }

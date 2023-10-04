@@ -34,89 +34,93 @@ citation(package = "clubpro")
 ``` r
 library(clubpro)
 library(lattice)
+library(carData)
 ```
 
-Simulate some count data.
+Load the `Friendly` dataset from the `carData` package.
 
 ``` r
-set.seed(123)
-
-n <- 300
-
-dat <- data.frame(x = rep(c("A", "B", "C"), each = n),
-                  y = c(rpois(n, lambda = 5),
-                        rpois(n, lambda = 25),
-                        rpois(n, lambda = 15)))
-
-dat$x <- factor(dat$x)
-
-histogram( ~ y | x, data = dat, type = "count", layout = c(1,3))
+data(Friendly, package = "carData")
+dat <- Friendly
 ```
 
-![](man/figures/README-simulate_data-1.png)<!-- -->
-
-Run the model.
+This data set consists of counts of correctly recalled words (out of 40)
+across three experimental conditions.
 
 ``` r
-mod <- with(dat, club(y, x))
+str(dat)
+#> 'data.frame':    30 obs. of  2 variables:
+#>  $ condition: Factor w/ 3 levels "Before","Meshed",..: 3 3 3 3 3 3 3 3 3 3 ...
+#>  $ correct  : int  39 25 37 25 29 39 21 39 24 25 ...
 ```
 
-Print a summary of the model output (note: only the first 50 lines of
-output are shown here).
+View the distribution of recalled word counts in each of the three
+conditions.
+
+``` r
+histogram( ~ correct | condition, data = dat, type = "count", layout = c(1,3))
+```
+
+![](man/figures/README-plot_data-1.png)<!-- -->
+
+Run the model to quantify how well `condition` can be classified from
+`correct`, the count of correctly recalled words.
+
+``` r
+mod <- with(dat, club(correct, condition, nreps = 1000))
+```
+
+Print a summary of the model output.
 
 ``` r
 summary(mod)
 #> ********** Classification Results **********
-#> Observations: 900 
+#> Observations: 30 
 #> Missing observations: 0 
 #> Target groups: 3 
-#> Correctly classified observations: 798 
-#> Incorrectly classified observations: 102 
-#> Ambiguously classified observations: 0 
-#> PCC: 88.67 
-#> Median classification strength index: 1 
+#> Correctly classified observations: 15 
+#> Incorrectly classified observations: 7 
+#> Ambiguously classified observations: 8 
+#> PCC: 50 
+#> Median classification strength index: 0.74 
 #> 
 #> ********** Randomisation Test **********
 #> Random reorderings: 1000 
-#> Minimum random PCC: 37 
-#> Maximum random PCC: 46.33 
-#> Chance-value: 0 
+#> Minimum random PCC: 20 
+#> Maximum random PCC: 80 
+#> Chance-value: 0.91 
 #> 
-#>     individual observation target prediction  accuracy  csi
-#> 1            1           4      A          A   correct 1.00
-#> 2            2           7      A          A   correct 0.97
-#> 3            3           4      A          A   correct 1.00
-#> 4            4           8      A          A   correct 0.99
-#> 5            5           9      A          A   correct 0.73
-#> 6            6           2      A          A   correct 1.00
-#> 7            7           5      A          A   correct 1.00
-#> 8            8           8      A          A   correct 0.99
-#> 9            9           5      A          A   correct 1.00
-#> 10          10           5      A          A   correct 1.00
-#> 11          11           9      A          A   correct 0.73
-#> 12          12           5      A          A   correct 1.00
-#> 13          13           6      A          A   correct 1.00
-#> 14          14           5      A          A   correct 1.00
-#> 15          15           2      A          A   correct 1.00
-#> 16          16           8      A          A   correct 0.99
-#> 17          17           3      A          A   correct 1.00
-#> 18          18           2      A          A   correct 1.00
-#> 19          19           4      A          A   correct 1.00
-#> 20          20           9      A          A   correct 0.73
-#> 21          21           8      A          A   correct 0.99
-#> 22          22           6      A          A   correct 1.00
-#> 23          23           6      A          A   correct 1.00
-#> 24          24          11      A          C incorrect 1.00
-#> 25          25           6      A          A   correct 1.00
-#> 26          26           6      A          A   correct 1.00
-#> 27          27           5      A          A   correct 1.00
-#> 28          28           5      A          A   correct 1.00
-#> 29          29           4      A          A   correct 1.00
-#> 30          30           3      A          A   correct 1.00
-#> 31          31           9      A          A   correct 0.73
-#> 32          32           8      A          A   correct 0.99
-#> 33          33           6      A          A   correct 1.00
-...
+#>    individual observation target prediction  accuracy  csi
+#> 1           1          39    SFR Before|SFR ambiguous 0.68
+#> 2           2          25    SFR        SFR   correct 1.00
+#> 3           3          37    SFR     Meshed incorrect 0.62
+#> 4           4          25    SFR        SFR   correct 1.00
+#> 5           5          29    SFR        SFR   correct 1.00
+#> 6           6          39    SFR Before|SFR ambiguous 0.68
+#> 7           7          21    SFR        SFR   correct 1.00
+#> 8           8          39    SFR Before|SFR ambiguous 0.68
+#> 9           9          24    SFR Before|SFR ambiguous 0.71
+#> 10         10          25    SFR        SFR   correct 1.00
+#> 11         11          40 Before     Before   correct 0.80
+#> 12         12          38 Before     Meshed incorrect 0.74
+#> 13         13          39 Before Before|SFR ambiguous 0.68
+#> 14         14          37 Before     Meshed incorrect 0.62
+#> 15         15          39 Before Before|SFR ambiguous 0.68
+#> 16         16          24 Before Before|SFR ambiguous 0.71
+#> 17         17          30 Before     Meshed incorrect 0.74
+#> 18         18          39 Before Before|SFR ambiguous 0.68
+#> 19         19          40 Before     Before   correct 0.80
+#> 20         20          40 Before     Before   correct 0.80
+#> 21         21          40 Meshed     Before incorrect 0.80
+#> 22         22          39 Meshed Before|SFR incorrect 0.68
+#> 23         23          34 Meshed     Meshed   correct 1.00
+#> 24         24          37 Meshed     Meshed   correct 0.62
+#> 25         25          40 Meshed     Before incorrect 0.80
+#> 26         26          36 Meshed     Meshed   correct 1.00
+#> 27         27          36 Meshed     Meshed   correct 1.00
+#> 28         28          38 Meshed     Meshed   correct 0.74
+#> 29         29          36 Meshed     Meshed   correct 1.00
+#> 30         30          30 Meshed     Meshed   correct 0.74
 ```
 
 Plot the classification results.
