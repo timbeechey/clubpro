@@ -2,15 +2,9 @@
 % Please edit documentation in R/utility.R
 \name{individual_results}
 \alias{individual_results}
-\alias{individual_results.default}
-\alias{individual_results.clubprofit}
 \title{Individual level classification results.}
 \usage{
 individual_results(m, digits)
-
-\method{individual_results}{default}(m, digits)
-
-\method{individual_results}{clubprofit}(m, digits = 2L)
 }
 \arguments{
 \item{m}{an object of class "clubprofit" produced by \code{classify()}}

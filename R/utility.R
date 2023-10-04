@@ -87,11 +87,9 @@ individual_results <- function(m, digits) {
   UseMethod("individual_results")
 }
 
-#' @rdname individual_results
 #' @export
 individual_results.default <- function(m, digits) .NotYetImplemented()
 
-#' @rdname individual_results
 #' @export
 individual_results.clubprofit <- function(m, digits = 2L) {
   df <- data.frame(individual = 1:length(m$y),
