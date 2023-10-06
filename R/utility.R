@@ -434,11 +434,13 @@ plot.clubprofit <- function(x, ...) {
      groups = factor(accuracy, levels = c("correct", "incorrect", "ambiguous")),
      panel = function(...) panel.superpose(..., panel.groups=panel.histogram,
                                            col=c("#0072B2", "#E69F00", "#999999"),
-                                           alpha = 0.8, border = "white"),
+                                           border = "black",
+                                           alpha = 1.0),
      xlab = "Observed Value", ylab = "N Individuals",
      layout = c(1, npanels),
      par.settings = list(superpose.polygon = list(col = c("#0072B2", "#E69F00", "#999999"), 
-                                                  border="white", alpha = 0.8)),
+                                                  border="black", 
+                                                  alpha = 1.0)),
      auto.key=list(space = "top", rectangles=TRUE, columns = 3)
      )
 }
