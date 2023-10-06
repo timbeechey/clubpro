@@ -3,6 +3,12 @@
 
 # clubpro
 
+<!-- badges: start -->
+
+![](https://www.r-pkg.org/badges/version-ago/clubpro?color=orange)
+![](https://cranlogs.r-pkg.org/badges/grand-total/clubpro)
+<!-- badges: end -->
+
 An R package for *cl*assification *u*sing *b*inary *p*rocrustes
 *ro*tation based on Grice (2011).
 
@@ -77,9 +83,9 @@ summary(mod)
 #> 
 #> ********** Randomisation Test **********
 #> Random reorderings: 1000 
-#> Minimum random PCC: 20 
-#> Maximum random PCC: 80 
-#> Chance-value: 0.91 
+#> Minimum random PCC: 26.67 
+#> Maximum random PCC: 83.33 
+#> Chance-value: 0.9 
 #> 
 #>    individual observation target prediction  accuracy  csi
 #> 1           1          39    SFR Before|SFR ambiguous 0.68
