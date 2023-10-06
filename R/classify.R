@@ -68,11 +68,11 @@ classify <- function(obs, target, imprecision, normalise_cols) {
        pcc = pcc)
 }
 
-#' Classify observations
+#' Classify observations.
 #'
 #' \code{club()} is used to classify obervations using binary procrustes
 #' rotation.
-#' @param y a factor vector of observations.
+#' @param y a vector of observations.
 #' @param x a factor vector of target groups.
 #' @param imprecision a number indicting the margin of imprecision allowed in classification.
 #' @param nreps the number of replicates to use in the randomisation test.

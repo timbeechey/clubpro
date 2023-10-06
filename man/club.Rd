@@ -2,7 +2,7 @@
 % Please edit documentation in R/classify.R
 \name{club}
 \alias{club}
-\title{Classify observations}
+\title{Classify observations.}
 \usage{
 club(
   y,
@@ -14,7 +14,7 @@ club(
 )
 }
 \arguments{
-\item{y}{a factor vector of observations.}
+\item{y}{a vector of observations.}
 
 \item{x}{a factor vector of target groups.}
 

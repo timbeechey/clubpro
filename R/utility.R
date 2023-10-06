@@ -71,7 +71,7 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
 #' @details
 #' Returns a data.frame containing predicted classifications and classification
 #' accuracy for each individual observation.
-#' @param m an object of class "clubprofit" produced by \code{classify()}
+#' @param m an object of class "clubprofit" produced by \code{club()}
 #' @param digits an integer
 #' @return a data.frame containing a columns of predictions and prediction
 #' accuracy
@@ -103,13 +103,299 @@ individual_results.clubprofit <- function(m, digits = 2L) {
   df
 }
 
+
+#' Predicted category for each observation.
+#'
+#' @details
+#' Returns a character vector containing the name of the predicted category
+#' for each observed value.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return a character vector.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' predict(mod)
+#' @export
+predict.clubprofit <- function(m) {
+  m$prediction
+}
+
+
+#' Classification accuracy for each observation.
+#'
+#' @details
+#' Returns a character vector containing a string corresponding to each
+#' observation indicating whether classification of that observation was
+#' "correct", "incorrect", or "ambigous".
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return a character vector.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' accuracy(mod)
+#' @export
+accuracy <- function(m) {
+  UseMethod("accuracy")
+}
+
+#' @export
+accuracy.default <- function(m) .NotYetImplemented()
+
+#' @export
+accuracy.clubprofit <- function(m) {
+  m$accuracy
+}
+
+
+
+#' Percentage of correct classifications.
+#'
+#' @details
+#' Returns the percentage of correctly classified observations.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return a numeric value.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' pcc(mod)
+#' @export
+pcc <- function(m) {
+  UseMethod("pcc")
+}
+
+#' @export
+pcc.default <- function(m) .NotYetImplemented()
+
+#' @export
+pcc.clubprofit <- function(m) {
+  m$pcc
+}
+
+
+#' Chance value.
+#'
+#' @details
+#' Compute the chance that randomly reordered data results in a
+#' percentage of correctly classified observations at least as high as
+#' the observed data.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return a numeric value.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' cval(mod)
+#' @export
+cval <- function(m) {
+  UseMethod("cval")
+}
+
+#' @export
+cval.default <- function(m) .NotYetImplemented()
+
+#' @export
+cval.clubprofit <- function(m) {
+  m$cval
+}
+
+
+#' Number of correct classifications.
+#'
+#' @details
+#' Returns the number of observations which were
+#' classified correctly by the model.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return an integer.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' n_correct(mod)
+#' @export
+n_correct <- function(m) {
+  UseMethod("n_correct")
+}
+
+#' @export
+n_correct.default <- function(m) .NotYetImplemented()
+
+#' @export
+n_correct.clubprofit <- function(m) {
+  m$correct_classifications
+}
+
+
+#' Number of incorrect classifications.
+#'
+#' @details
+#' Returns the number of observations which were
+#' classified incorrectly by the model.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return an integer.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' n_incorrect(mod)
+#' @export
+n_incorrect <- function(m) {
+  UseMethod("n_incorrect")
+}
+
+#' @export
+n_incorrect.default <- function(m) .NotYetImplemented()
+
+#' @export
+n_incorrect.clubprofit <- function(m) {
+  m$incorrect_classifications
+}
+
+
+#' Number of ambiguous classifications.
+#'
+#' @details
+#' Returns the number of observations which were
+#' classified ambiguously by the model.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return an integer.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' n_ambiguous(mod)
+#' @export
+n_ambiguous <- function(m) {
+  UseMethod("n_ambiguous")
+}
+
+#' @export
+n_ambiguous.default <- function(m) .NotYetImplemented()
+
+#' @export
+n_ambiguous.clubprofit <- function(m) {
+  m$ambiguous_classifications
+}
+
+
+#' Classification strength indices.
+#'
+#' @details
+#' Returns a vector containing the classification strength
+#' index for each observation.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return a numeric vector.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' csi(mod)
+#' @export
+csi <- function(m) {
+  UseMethod("csi")
+}
+
+#' @export
+csi.default <- function(m) .NotYetImplemented()
+
+#' @export
+csi.clubprofit <- function(m) {
+  m$csi
+}
+
+
+#' Median classification strength index.
+#'
+#' @details
+#' Returns the median classification strength index.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return a numeric vector.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' median_csi(mod)
+#' @export
+median_csi <- function(m) {
+  UseMethod("median_csi")
+}
+
+#' @export
+median_csi.default <- function(m) .NotYetImplemented()
+
+#' @export
+median_csi.clubprofit <- function(m) {
+  m$median_csi
+}
+
+
+#' PCC replicates.
+#'
+#' @details
+#' Returns an object containing a vector of PCC replicates used to
+#' calculate the chance-value.
+#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @return an object of class clubprorand.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' pcc_replicates(mod)
+#' @export
+pcc_replicates <- function(m) {
+  UseMethod("pcc_replicates")
+}
+
+#' @export
+pcc_replicates.default <- function(m) .NotYetImplemented()
+
+#' @export
+pcc_replicates.clubprofit <- function(m) {
+  pcc_replicates <- m$pcc_replicates
+  class(pcc_replicates) <- "clubprorand"
+  pcc_replicates
+}
+
+
+#' Plot PCC replicates.
+#'
+#' @details
+#' Plot a histogram of PCCs computed from randomly reordered data
+#' used to calculate the chance-value.
+#' @param x an object of class "clubprofit" produced by \code{club()}
+#' @param ... ignored
+#' @return no return value, called for side effects only.
+#' @examples
+#' a <- sample(1:5, 20, replace = TRUE)
+#' b <- rep(c("group1", "group2"), each = 10)
+#' b <- factor(b)
+#' mod <- club(a, b)
+#' plot(pcc_replicates(mod))
+#' @export
+plot.clubprorand <- function(x, ...) {
+  lattice::histogram(unclass(x), type = "count", xlab = "PCC", ylab = "Count")
+}
+
+
 #' Plot classification accuracy.
 #'
 #' @details
 #' Produces bar plot showing counts of individuals against observed values within
 #' each target grouping. Fill colours indicate whether each individual was
 #' classified correctly, incorrectly or ambiguously.
-#' @param x an object of class "clubprofit" produced by \code{classify()}
+#' @param x an object of class "clubprofit" produced by \code{club()}
 #' @param ... ignored
 #' @return called for side-effects only
 #' @examples

@@ -7,7 +7,7 @@
 \method{plot}{clubprofit}(x, ...)
 }
 \arguments{
-\item{x}{an object of class "clubprofit" produced by \code{classify()}}
+\item{x}{an object of class "clubprofit" produced by \code{club()}}
 
 \item{...}{ignored}
 }

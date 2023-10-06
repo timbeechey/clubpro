@@ -7,7 +7,7 @@
 individual_results(m, digits)
 }
 \arguments{
-\item{m}{an object of class "clubprofit" produced by \code{classify()}}
+\item{m}{an object of class "clubprofit" produced by \code{club()}}
 
 \item{digits}{an integer}
 }
