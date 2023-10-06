@@ -14,6 +14,12 @@ An R package for *cl*assification *u*sing *b*inary *p*rocrustes
 
 ## Installation
 
+`clubpro` can be installed from CRAN:
+
+``` r
+install.packages("clubpro")
+```
+
 Install the development version of `clubpro` from
 [GitHub](https://github.com/timbeechey/clubpro) with:
 
@@ -84,8 +90,8 @@ summary(mod)
 #> ********** Randomisation Test **********
 #> Random reorderings: 1000 
 #> Minimum random PCC: 26.67 
-#> Maximum random PCC: 76.67 
-#> Chance-value: 0.92 
+#> Maximum random PCC: 83.33 
+#> Chance-value: 0.9 
 #> 
 #>    individual observation target prediction  accuracy  csi
 #> 1           1          39    SFR Before|SFR ambiguous 0.68

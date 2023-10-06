@@ -47,6 +47,12 @@ An R package for *cl*assification *u*sing *b*inary *p*rocrustes *ro*tation based
 
 ## Installation
 
+`clubpro` can be installed from CRAN:
+
+```{r install_cran, eval=FALSE}
+install.packages("clubpro")
+```
+
 Install the development version of `clubpro` from [GitHub](https://github.com/timbeechey/clubpro) with:
 
 ```{r install_github, eval=FALSE}
