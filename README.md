@@ -84,8 +84,8 @@ summary(mod)
 #> ********** Randomisation Test **********
 #> Random reorderings: 1000 
 #> Minimum random PCC: 26.67 
-#> Maximum random PCC: 83.33 
-#> Chance-value: 0.9 
+#> Maximum random PCC: 76.67 
+#> Chance-value: 0.92 
 #> 
 #>    individual observation target prediction  accuracy  csi
 #> 1           1          39    SFR Before|SFR ambiguous 0.68
