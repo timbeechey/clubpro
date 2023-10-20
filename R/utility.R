@@ -395,7 +395,9 @@ plot.clubprorand <- function(x, ...) {
 #' Produces bar plot showing counts of individuals against observed values within
 #' each target grouping. Fill colours indicate whether each individual was
 #' classified correctly, incorrectly or ambiguously.
+#' 
 #' @param x an object of class "clubprofit" produced by \code{club()}
+#' @param colors a character vector of length 3 specifying colors to use in plot
 #' @param ... ignored
 #' @return called for side-effects only
 #' @examples
@@ -405,7 +407,7 @@ plot.clubprorand <- function(x, ...) {
 #' mod <- club(a ~ b, df)
 #' plot(mod)
 #' @export
-plot.clubprofit <- function(x, ...) {
+plot.clubprofit <- function(x, colors=c("#0072B2", "#E69F00", "#999999"), ...) {
   accuracy <- observation <- target <- NULL
   z <- individual_results(x)
   xlabs <- levels(addNA(z$observation))
@@ -433,12 +435,12 @@ plot.clubprofit <- function(x, ...) {
      scales = list(x = list(at = 1:nlevels(z$observation), labels = xlabs)),
      groups = factor(accuracy, levels = c("correct", "incorrect", "ambiguous")),
      panel = function(...) panel.superpose(..., panel.groups=panel.histogram,
-                                           col=c("#0072B2", "#E69F00", "#999999"),
+                                           col=colors,
                                            border = "black",
                                            alpha = 1.0),
      xlab = "Observed Value", ylab = "N Individuals",
      layout = c(1, npanels),
-     par.settings = list(superpose.polygon = list(col = c("#0072B2", "#E69F00", "#999999"), 
+     par.settings = list(superpose.polygon = list(col = colors, 
                                                   border="black", 
                                                   alpha = 1.0)),
      auto.key=list(space = "top", rectangles=TRUE, columns = 3)

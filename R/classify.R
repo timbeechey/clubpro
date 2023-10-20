@@ -131,12 +131,10 @@ club <- function(y, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE,
     } else {
       obs_num <- as.integer(factor(y))
     }
-  } else if (is.numeric(y)) {
-    if (any(is.na(y))) {
-      obs_num <- as.integer(addNA(y))
-    } else {
-       obs_num <- as.integer(factor(y))
-    }
+  } else if (any(is.na(y))) {
+      obs_num <- addNA(y)
+  } else {
+      obs_num <- y
   }
 
   x_mat <- to_indicator_matrix(x)
