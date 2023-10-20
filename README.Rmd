@@ -60,14 +60,6 @@ Install the development version of `clubpro` from [GitHub](https://github.com/ti
 remotes::install_github("timbeechey/clubpro")
 ```
 
-## Citation
-
-To cite `clubpro` in your work you can use the output of:
-
-```{r citation, eval=FALSE, message=FALSE, warning=FALSE}
-citation(package = "clubpro")
-```
-
 ## Background
 
 `clubpro` is an implementation of a subset of the methods described in [Grice (2011)](https://psycnet.apa.org/record/2011-14580-000).
@@ -96,7 +88,7 @@ str(dat)
 Run the model to quantify how well `condition` can be classified from `correct`, the count of correctly recalled words.
 
 ```{r run_model}
-mod <- with(dat, club(correct, condition, nreps = 1000))
+mod <- club(correct ~ condition, data = dat, nreps = 1000)
 ```
 
 Print a summary of the model output.

@@ -28,14 +28,6 @@ Install the development version of `clubpro` from
 remotes::install_github("timbeechey/clubpro")
 ```
 
-## Citation
-
-To cite `clubpro` in your work you can use the output of:
-
-``` r
-citation(package = "clubpro")
-```
-
 ## Background
 
 `clubpro` is an implementation of a subset of the methods described in
@@ -70,7 +62,7 @@ Run the model to quantify how well `condition` can be classified from
 `correct`, the count of correctly recalled words.
 
 ``` r
-mod <- with(dat, club(correct, condition, nreps = 1000))
+mod <- club(correct ~ condition, data = dat, nreps = 1000)
 ```
 
 Print a summary of the model output.
@@ -89,7 +81,7 @@ summary(mod)
 #> 
 #> ********** Randomisation Test **********
 #> Random reorderings: 1000 
-#> Minimum random PCC: 26.67 
+#> Minimum random PCC: 23.33 
 #> Maximum random PCC: 83.33 
 #> Chance-value: 0.9 
 #> 
