@@ -6,7 +6,7 @@
 \usage{
 club(
   y,
-  x,
+  data,
   imprecision = 0,
   nreps = 1000L,
   normalise_cols = TRUE,
@@ -14,9 +14,9 @@ club(
 )
 }
 \arguments{
-\item{y}{a vector of observations.}
+\item{y}{a formula.}
 
-\item{x}{a factor vector of target groups.}
+\item{data}{a data.frame.}
 
 \item{imprecision}{a number indicting the margin of imprecision allowed in classification.}
 
@@ -46,9 +46,8 @@ components:
 rotation.
 }
 \examples{
-a <- sample(1:5, 20, replace = TRUE)
-b <- rep(c("group1", "group2"), each = 10)
-b <- factor(b)
-mod <- club(a, b)
-mod <- club(a, b, nreps = 200L)
+df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+                 b = rep(c("group1", "group2"), each = 10))
+df$b <- factor(df$b)
+mod <- club(a ~ b, df)
 }

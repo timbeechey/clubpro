@@ -21,9 +21,9 @@ percentage of correctly classified observations at least as high as
 the observed data.
 }
 \examples{
-a <- sample(1:5, 20, replace = TRUE)
-b <- rep(c("group1", "group2"), each = 10)
-b <- factor(b)
-mod <- club(a, b)
+df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+                 b = rep(c("group1", "group2"), each = 10))
+df$b <- factor(df$b)
+mod <- club(a ~ b, df)
 cval(mod)
 }

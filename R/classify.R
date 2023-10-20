@@ -68,12 +68,25 @@ classify <- function(obs, target, imprecision, normalise_cols) {
        pcc = pcc)
 }
 
+
+parse_formula <- function(f, dat) {
+    my_cols <- list()
+    vars <- all.vars(f)
+    preds <- vars[-1]
+    for (i in seq(preds)) {
+        my_cols[[i]] <- dat[,preds[i]]
+    }
+    y <- unname(unlist(dat[vars[1]]))
+    x <- interaction(my_cols, sep=":")
+    list(y = y, x = x)
+}
+
 #' Classify observations.
 #'
 #' \code{club()} is used to classify obervations using binary procrustes
 #' rotation.
-#' @param y a vector of observations.
-#' @param x a factor vector of target groups.
+#' @param y a formula.
+#' @param data a data.frame.
 #' @param imprecision a number indicting the margin of imprecision allowed in classification.
 #' @param nreps the number of replicates to use in the randomisation test.
 #' @param normalise_cols a boolean indicating whether to normalise matrix columns.
@@ -92,25 +105,25 @@ classify <- function(obs, target, imprecision, normalise_cols) {
 #'   \item{call}{the matched call.}
 #'   }
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
-#' mod <- club(a, b, nreps = 200L)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' @export
-club <- function(y, x, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
+club <- function(y, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
 
-  stopifnot("The second argument to club() must be a vector"=is.null(dim(x))) # is not not a df or matrix
-  stopifnot("The second argument to club() must be a vector, not a list"=is.recursive(x) == FALSE) # x is not a list
-  stopifnot("The first argument to club() must be a vector, not a list"=is.recursive(y) == FALSE) # y is not a list
-  stopifnot("The first argument to club() cannot be a factor"=!is.factor(y))
-  stopifnot("The second argument to club() must be a factor"=is.factor(x))
-  stopifnot("length of vectors passed to club() are not equal"=length(x) == length(y))
+  stopifnot("The first argument must be a formula"=inherits(y, "formula"))
+  stopifnot("The data source must be specified"=is.data.frame(data))
   stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double
   stopifnot("nreps must be a positive number"=nreps >= 1) # nreps must be a positve number
   stopifnot("nreps must be a single number"=length(nreps) == 1) # nreps is a single value
   stopifnot("nreps must be a whole number"=nreps %% 1 == 0)
   stopifnot("reorder_obs must be 'shuffle' or 'random'"=reorder_obs %in% c("shuffle", "random"))
+
+
+  vars <- parse_formula(y, data)
+  y <- vars$y
+  x <- vars$x
 
   if (is.character(y)) {
     if (any(is.na(y))) {

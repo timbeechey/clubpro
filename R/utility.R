@@ -19,10 +19,10 @@
 #' @param ... ignored
 #' @return No return value, called for side effects.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' print(mod)
 #' @export
 print.clubprofit <- function(x, ...) {
@@ -35,10 +35,10 @@ print.clubprofit <- function(x, ...) {
 #' @param ... ignored
 #' @return No return value, called for side effects.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' summary(mod)
 #' summary(mod, digits = 3)
 #' @export
@@ -76,10 +76,10 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
 #' @return a data.frame containing a columns of predictions and prediction
 #' accuracy
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' individual_results(mod)
 #' individual_results(mod, digits = 3)
 #' @export
@@ -112,10 +112,10 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return a character vector.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' predict(mod)
 #' @export
 predict.clubprofit <- function(m) {
@@ -132,10 +132,10 @@ predict.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return a character vector.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' accuracy(mod)
 #' @export
 accuracy <- function(m) {
@@ -159,10 +159,10 @@ accuracy.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return a numeric value.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' pcc(mod)
 #' @export
 pcc <- function(m) {
@@ -187,10 +187,10 @@ pcc.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return a numeric value.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' cval(mod)
 #' @export
 cval <- function(m) {
@@ -214,10 +214,10 @@ cval.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return an integer.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' n_correct(mod)
 #' @export
 n_correct <- function(m) {
@@ -241,10 +241,10 @@ n_correct.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return an integer.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' n_incorrect(mod)
 #' @export
 n_incorrect <- function(m) {
@@ -268,10 +268,10 @@ n_incorrect.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return an integer.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' n_ambiguous(mod)
 #' @export
 n_ambiguous <- function(m) {
@@ -295,10 +295,10 @@ n_ambiguous.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return a numeric vector.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' csi(mod)
 #' @export
 csi <- function(m) {
@@ -321,10 +321,10 @@ csi.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return a numeric vector.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' median_csi(mod)
 #' @export
 median_csi <- function(m) {
@@ -348,10 +348,10 @@ median_csi.clubprofit <- function(m) {
 #' @param m an object of class "clubprofit" produced by \code{club()}
 #' @return an object of class clubprorand.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' pcc_replicates(mod)
 #' @export
 pcc_replicates <- function(m) {
@@ -378,10 +378,10 @@ pcc_replicates.clubprofit <- function(m) {
 #' @param ... ignored
 #' @return no return value, called for side effects only.
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' plot(pcc_replicates(mod))
 #' @export
 plot.clubprorand <- function(x, ...) {
@@ -399,10 +399,10 @@ plot.clubprorand <- function(x, ...) {
 #' @param ... ignored
 #' @return called for side-effects only
 #' @examples
-#' a <- sample(1:5, 20, replace = TRUE)
-#' b <- rep(c("group1", "group2"), each = 10)
-#' b <- factor(b)
-#' mod <- club(a, b)
+#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+#'                  b = rep(c("group1", "group2"), each = 10))
+#' df$b <- factor(df$b)
+#' mod <- club(a ~ b, df)
 #' plot(mod)
 #' @export
 plot.clubprofit <- function(x, ...) {

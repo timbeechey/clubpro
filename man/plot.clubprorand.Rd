@@ -22,9 +22,9 @@ Plot a histogram of PCCs computed from randomly reordered data
 used to calculate the chance-value.
 }
 \examples{
-a <- sample(1:5, 20, replace = TRUE)
-b <- rep(c("group1", "group2"), each = 10)
-b <- factor(b)
-mod <- club(a, b)
+df <- data.frame(a = sample(1:5, 20, replace = TRUE),
+                 b = rep(c("group1", "group2"), each = 10))
+df$b <- factor(df$b)
+mod <- club(a ~ b, df)
 plot(pcc_replicates(mod))
 }
