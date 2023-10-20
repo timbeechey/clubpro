@@ -41,7 +41,8 @@ library(lattice)
 library(carData)
 ```
 
-Load the `Friendly` dataset from the `carData` package.
+For this example we’ll use the `Friendly` dataset from the `carData`
+package.
 
 ``` r
 data(Friendly, package = "carData")
@@ -81,8 +82,8 @@ summary(mod)
 #> 
 #> ********** Randomisation Test **********
 #> Random reorderings: 1000 
-#> Minimum random PCC: 23.33 
-#> Maximum random PCC: 83.33 
+#> Minimum random PCC: 26.67 
+#> Maximum random PCC: 80 
 #> Chance-value: 0.9 
 #> 
 #>    individual observation target prediction  accuracy  csi
