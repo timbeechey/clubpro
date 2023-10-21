@@ -120,7 +120,7 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' predict(mod)
 #' @export
 predict.clubprofit <- function(object, ...) {
-  m$prediction
+  object$prediction
 }
 
 
