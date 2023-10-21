@@ -7,7 +7,7 @@ Authors@R: person("Timothy", "Beechey", email = "tim.beechey@proton.me",
 Description: Implements a classification method described by Grice (2011, ISBN:978-0-12-385194-9) using
     binary procrustes rotation; a simplified version of procrustes rotation.
 License: GPL (>= 3)
-URL: https://github.com/timbeechey/clubpro
+URL: https://github.com/timbeechey/clubpro, https://timbeechey.github.io/clubpro/
 BugReports: https://github.com/timbeechey/clubpro/issues
 Encoding: UTF-8
 LazyData: true
