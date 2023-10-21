@@ -8,6 +8,8 @@
 ![](https://www.r-pkg.org/badges/version-ago/clubpro?color=orange)
 ![](https://cranlogs.r-pkg.org/badges/grand-total/clubpro)
 [![R-CMD-check](https://github.com/timbeechey/clubpro/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/timbeechey/clubpro/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/timbeechey/clubpro/branch/master/graph/badge.svg)](https://app.codecov.io/gh/timbeechey/clubpro?branch=master)
 <!-- badges: end -->
 
 An R package for *cl*assification *u*sing *b*inary *p*rocrustes
@@ -85,7 +87,7 @@ summary(mod)
 #> Random reorderings: 1000 
 #> Minimum random PCC: 33.33 
 #> Maximum random PCC: 80 
-#> Chance-value: 0.91 
+#> Chance-value: 0.92 
 #> 
 #>    individual observation target prediction  accuracy  csi
 #> 1           1          39    SFR Before|SFR ambiguous 0.68
