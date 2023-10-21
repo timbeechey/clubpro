@@ -1,4 +1,4 @@
 url: https://timbeechey.github.io/clubpro/
 template:
   bootstrap: 5
-
+  bootswatch: solar
