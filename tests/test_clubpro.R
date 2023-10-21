@@ -32,6 +32,17 @@ expect_equal(length(accuracy(m1)), nrow(test_dat_int))
 expect_equal(accuracy(m1), c("correct","correct","incorrect","correct","correct","correct","correct",
                              "incorrect","correct","correct","correct","correct","correct","incorrect",
                              "correct","correct","correct","correct"))
+# check default generics
+expect_error(accuracy(c(1,2,3)))
+expect_error(csi(c(1,2,3)))
+expect_error(cval(c(1,2,3)))
+expect_error(individual_results(c(1,2,3)))
+expect_error(median_csi(c(1,2,3)))
+expect_error(n_ambiguous(c(1,2,3)))
+expect_error(n_correct(c(1,2,3)))
+expect_error(n_incorrect(c(1,2,3)))
+expect_error(pcc_replicates(c(1,2,3)))
+expect_error(pcc(c(1,2,3)))
 # check functions called for side-effects
 expect_stdout(print(m1))
 expect_silent(plot(m1))
