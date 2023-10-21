@@ -41,6 +41,7 @@ knit_hooks$set(output = function(x, options) {
 <!-- badges: start -->
 ![](https://www.r-pkg.org/badges/version-ago/clubpro?color=orange)
 ![](https://cranlogs.r-pkg.org/badges/grand-total/clubpro) 
+[![R-CMD-check](https://github.com/timbeechey/clubpro/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/timbeechey/clubpro/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 An R package for *cl*assification *u*sing *b*inary *p*rocrustes *ro*tation based on Grice (2011).
