@@ -4,10 +4,12 @@
 \alias{predict.clubprofit}
 \title{Predicted category for each observation.}
 \usage{
-\method{predict}{clubprofit}(m)
+\method{predict}{clubprofit}(object, ...)
 }
 \arguments{
-\item{m}{an object of class "clubprofit" produced by \code{club()}}
+\item{object}{an object of class "clubprofit" produced by \code{club()}}
+
+\item{...}{ignored}
 }
 \value{
 a character vector.

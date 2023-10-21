@@ -109,7 +109,8 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' @details
 #' Returns a character vector containing the name of the predicted category
 #' for each observed value.
-#' @param m an object of class "clubprofit" produced by \code{club()}
+#' @param object an object of class "clubprofit" produced by \code{club()}
+#' @param ... ignored
 #' @return a character vector.
 #' @examples
 #' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
@@ -118,7 +119,7 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' mod <- club(a ~ b, df)
 #' predict(mod)
 #' @export
-predict.clubprofit <- function(m) {
+predict.clubprofit <- function(object, ...) {
   m$prediction
 }
 
