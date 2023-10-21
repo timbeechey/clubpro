@@ -62,8 +62,8 @@ str(dat)
 #>  $ correct  : int  39 25 37 25 29 39 21 39 24 25 ...
 ```
 
-Run the model to quantify how well `condition` can be classified from
-`correct`, the count of correctly recalled words.
+Run the model to quantify how well each count of `correct` recalled
+words is classified in terms of `condition`.
 
 ``` r
 mod <- club(correct ~ condition, data = dat, nreps = 1000)
@@ -85,9 +85,9 @@ summary(mod)
 #> 
 #> ********** Randomisation Test **********
 #> Random reorderings: 1000 
-#> Minimum random PCC: 33.33 
+#> Minimum random PCC: 30 
 #> Maximum random PCC: 80 
-#> Chance-value: 0.92 
+#> Chance-value: 0.91 
 #> 
 #>    individual observation target prediction  accuracy  csi
 #> 1           1          39    SFR Before|SFR ambiguous 0.68

@@ -87,7 +87,7 @@ This data set consists of counts of correctly recalled words (out of 40) across 
 str(dat)
 ```
 
-Run the model to quantify how well `condition` can be classified from `correct`, the count of correctly recalled words.
+Run the model to quantify how well each count of `correct` recalled words is classified in terms of `condition`.
 
 ```{r run_model}
 mod <- club(correct ~ condition, data = dat, nreps = 1000)
