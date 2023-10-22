@@ -85,7 +85,7 @@ parse_formula <- function(f, dat) {
 #'
 #' \code{club()} is used to classify obervations using binary procrustes
 #' rotation.
-#' @param y a formula.
+#' @param f a formula.
 #' @param data a data.frame.
 #' @param imprecision a number indicting the margin of imprecision allowed in classification.
 #' @param nreps the number of replicates to use in the randomisation test.
@@ -110,9 +110,9 @@ parse_formula <- function(f, dat) {
 #' df$b <- factor(df$b)
 #' mod <- club(a ~ b, df)
 #' @export
-club <- function(y, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
+club <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
 
-  stopifnot("The first argument must be a formula"=inherits(y, "formula"))
+  stopifnot("The first argument must be a formula"=inherits(f, "formula"))
   stopifnot("The data source must be specified"=is.data.frame(data))
   stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double
   stopifnot("nreps must be a positive number"=nreps >= 1) # nreps must be a positve number
@@ -121,7 +121,7 @@ club <- function(y, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE,
   stopifnot("reorder_obs must be 'shuffle' or 'random'"=reorder_obs %in% c("shuffle", "random"))
 
 
-  vars <- parse_formula(y, data)
+  vars <- parse_formula(f, data)
   y <- vars$y
   x <- vars$x
 
@@ -134,7 +134,7 @@ club <- function(y, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE,
   } else if (any(is.na(y))) {
       obs_num <- addNA(y)
   } else {
-      obs_num <- y
+      obs_num <- factor(y)
   }
 
   x_mat <- to_indicator_matrix(x)

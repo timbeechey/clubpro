@@ -5,7 +5,7 @@
 \title{Classify observations.}
 \usage{
 club(
-  y,
+  f,
   data,
   imprecision = 0,
   nreps = 1000L,
@@ -14,7 +14,7 @@ club(
 )
 }
 \arguments{
-\item{y}{a formula.}
+\item{f}{a formula.}
 
 \item{data}{a data.frame.}
 
