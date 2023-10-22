@@ -12,3 +12,4 @@
 
 * Added getter methods for accessing individual elements of model output.
 * Added data sets.
+* Show observed PCC reference line in pcc_replicates plot. 

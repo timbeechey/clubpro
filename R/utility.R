@@ -152,7 +152,6 @@ accuracy.clubprofit <- function(m) {
 }
 
 
-
 #' Percentage of correct classifications.
 #'
 #' @details
@@ -170,8 +169,10 @@ pcc <- function(m) {
   UseMethod("pcc")
 }
 
+
 #' @export
 pcc.default <- function(m) .NotYetImplemented()
+
 
 #' @export
 pcc.clubprofit <- function(m) {
@@ -198,8 +199,10 @@ cval <- function(m) {
   UseMethod("cval")
 }
 
+
 #' @export
 cval.default <- function(m) .NotYetImplemented()
+
 
 #' @export
 cval.clubprofit <- function(m) {
@@ -225,8 +228,10 @@ n_correct <- function(m) {
   UseMethod("n_correct")
 }
 
+
 #' @export
 n_correct.default <- function(m) .NotYetImplemented()
+
 
 #' @export
 n_correct.clubprofit <- function(m) {
@@ -252,8 +257,10 @@ n_incorrect <- function(m) {
   UseMethod("n_incorrect")
 }
 
+
 #' @export
 n_incorrect.default <- function(m) .NotYetImplemented()
+
 
 #' @export
 n_incorrect.clubprofit <- function(m) {
@@ -279,8 +286,10 @@ n_ambiguous <- function(m) {
   UseMethod("n_ambiguous")
 }
 
+
 #' @export
 n_ambiguous.default <- function(m) .NotYetImplemented()
+
 
 #' @export
 n_ambiguous.clubprofit <- function(m) {
@@ -306,8 +315,10 @@ csi <- function(m) {
   UseMethod("csi")
 }
 
+
 #' @export
 csi.default <- function(m) .NotYetImplemented()
+
 
 #' @export
 csi.clubprofit <- function(m) {
@@ -332,8 +343,10 @@ median_csi <- function(m) {
   UseMethod("median_csi")
 }
 
+
 #' @export
 median_csi.default <- function(m) .NotYetImplemented()
+
 
 #' @export
 median_csi.clubprofit <- function(m) {
@@ -359,12 +372,15 @@ pcc_replicates <- function(m) {
   UseMethod("pcc_replicates")
 }
 
+
 #' @export
 pcc_replicates.default <- function(m) .NotYetImplemented()
+
 
 #' @export
 pcc_replicates.clubprofit <- function(m) {
   pcc_replicates <- m$pcc_replicates
+  attr(pcc_replicates, "observed_pcc") <- m$pcc
   class(pcc_replicates) <- "clubprorand"
   pcc_replicates
 }
@@ -386,7 +402,11 @@ pcc_replicates.clubprofit <- function(m) {
 #' plot(pcc_replicates(mod))
 #' @export
 plot.clubprorand <- function(x, ...) {
-  lattice::histogram(unclass(x), type = "count", xlab = "PCC", ylab = "Count")
+  lattice::histogram(unclass(x), type = "count", xlab = "PCC", ylab = "Count", col = "#56B4E9",
+                     panel = function(...) {
+                      panel.histogram(...)
+                      panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)
+                      })
 }
 
 
@@ -408,7 +428,7 @@ plot.clubprorand <- function(x, ...) {
 #' mod <- club(a ~ b, df)
 #' plot(mod)
 #' @export
-plot.clubprofit <- function(x, colors=c("#0072B2", "#E69F00", "#999999"), ...) {
+plot.clubprofit <- function(x, colors=c("#56B4E9", "#E69F00", "#999999"), ...) {
   accuracy <- observation <- target <- NULL
   z <- individual_results(x)
   xlabs <- levels(addNA(z$observation))
@@ -439,7 +459,7 @@ plot.clubprofit <- function(x, colors=c("#0072B2", "#E69F00", "#999999"), ...) {
                                            col=colors,
                                            border = "black",
                                            alpha = 1.0),
-     xlab = "Observed Value", ylab = "N Individuals",
+     xlab = "Observed Value", ylab = "Count",
      layout = c(1, npanels),
      par.settings = list(superpose.polygon = list(col = colors, 
                                                   border="black", 
