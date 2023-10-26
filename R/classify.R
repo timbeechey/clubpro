@@ -105,10 +105,7 @@ parse_formula <- function(f, dat) {
 #'   \item{call}{the matched call.}
 #'   }
 #' @examples
-#' df <- data.frame(a = sample(1:5, 20, replace = TRUE),
-#'                  b = rep(c("group1", "group2"), each = 10))
-#' df$b <- factor(df$b)
-#' mod <- club(a ~ b, df)
+#' mod <- club(rate ~ dose, data = caffeine)
 #' @export
 club <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
 

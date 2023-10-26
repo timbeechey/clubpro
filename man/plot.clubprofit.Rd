@@ -25,9 +25,6 @@ each target grouping. Fill colours indicate whether each individual was
 classified correctly, incorrectly or ambiguously.
 }
 \examples{
-df <- data.frame(a = sample(1:5, 20, replace = TRUE),
-                 b = rep(c("group1", "group2"), each = 10))
-df$b <- factor(df$b)
-mod <- club(a ~ b, df)
+mod <- club(rate ~ dose, data = caffeine)
 plot(mod)
 }

@@ -4,3 +4,6 @@
 .Ruserdata
 .DS\_Store
 docs
+inst/doc
+/doc/
+/Meta/

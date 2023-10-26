@@ -20,9 +20,6 @@ Returns an object containing a vector of PCC replicates used to
 calculate the chance-value.
 }
 \examples{
-df <- data.frame(a = sample(1:5, 20, replace = TRUE),
-                 b = rep(c("group1", "group2"), each = 10))
-df$b <- factor(df$b)
-mod <- club(a ~ b, df)
-pcc_replicates(mod)
+mod <- club(rate ~ dose, data = caffeine)
+head(pcc_replicates(mod))
 }

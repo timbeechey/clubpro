@@ -1,0 +1,51 @@
+---
+title: "clubpro"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{clubpro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(clubpro)
+```
+
+```{r model_jellyfish}
+mod <- club(width ~ location, data = jellyfish)
+```
+
+```{r summary_jelyfish}
+summary(mod)
+```
+
+```{r plot_jellyfish}
+plot(mod)
+```
+
+```{r predict_jellyfish}
+predict(mod)
+```
+
+```{r accuracy_jellyfish}
+accuracy(mod)
+```
+
+```{r pcc_jellyfish}
+pcc(mod)
+```
+
+```{r cval_jellyfish}
+cval(mod)
+```
+
+```{r plot_cval_dist}
+plot(pcc_replicates(mod))
+```
