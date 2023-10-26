@@ -127,9 +127,9 @@ club <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE,
 
   if (is.character(y)) {
     if (any(is.na(y))) {
-      obs_num <- as.integer(addNA(y))
+      obs_num <- addNA(as.integer(y))
     } else {
-      obs_num <- as.integer(factor(y))
+      obs_num <- factor(as.integer(y))
     }
   } else if (any(is.na(y))) {
       obs_num <- addNA(y)
