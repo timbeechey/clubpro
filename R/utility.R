@@ -360,9 +360,11 @@ pcc_replicates.clubprofit <- function(m) {
 plot.clubprorand <- function(x, ...) {
   lattice::histogram(unclass(x), type = "count", xlab = "PCC", ylab = "Count", col = "#56B4E9",
                      panel = function(...) {
-                      panel.histogram(...)
-                      panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)
-                      })
+                       panel.histogram(...)
+                       panel.abline(v = attr(x, "observed_pcc"), 
+                                    col = "red", 
+                                    lty = 2)
+                     })
 }
 
 
@@ -381,7 +383,7 @@ plot.clubprorand <- function(x, ...) {
 #' mod <- club(rate ~ dose, data = caffeine)
 #' plot(mod)
 #' @export
-plot.clubprofit <- function(x, colors=c("#56B4E9", "#E69F00", "#999999"), ...) {
+plot.clubprofit <- function(x, colors = c("#56B4E9", "#E69F00", "#999999"), ...) {
   accuracy <- observation <- target <- NULL
   z <- individual_results(x)
   xlabs <- levels(addNA(z$observation))
@@ -403,20 +405,22 @@ plot.clubprofit <- function(x, colors=c("#56B4E9", "#E69F00", "#999999"), ...) {
 
 
   histogram(~ observation | target,
-     data = z,
-     type = "count",
-     xlim = c(0:(nlevels(z$observation) + 1)),
-     scales = list(x = list(at = 1:nlevels(z$observation), labels = xlabs)),
-     groups = factor(accuracy, levels = c("correct", "incorrect", "ambiguous")),
-     panel = function(...) panel.superpose(..., panel.groups=panel.histogram,
-                                           col=colors,
-                                           border = "black",
-                                           alpha = 1.0),
-     xlab = "Observed Value", ylab = "Count",
-     layout = c(1, npanels),
-     par.settings = list(superpose.polygon = list(col = colors, 
-                                                  border="black", 
-                                                  alpha = 1.0)),
-     auto.key=list(space = "top", rectangles=TRUE, columns = 3)
-     )
+    data = z,
+    type = "count",
+    xlim = c(0:(nlevels(z$observation) + 1)),
+    scales = list(x = list(at = 1:nlevels(z$observation), labels = xlabs)),
+    groups = factor(accuracy, levels = c("correct", "incorrect", "ambiguous")),
+    panel = function(...) {
+                           panel.superpose(..., 
+                                           panel.groups = panel.histogram,
+                                           col = colors, 
+                                           border = "black", 
+                                           alpha = 1.0)},
+    xlab = "Observed Value", ylab = "Count",
+    layout = c(1, npanels),
+    par.settings = list(superpose.polygon = list(col = colors, 
+                                                 border = "black", 
+                                                 alpha = 1.0)),
+    auto.key = list(space = "top", rectangles = TRUE, columns = 3)
+  )
 }

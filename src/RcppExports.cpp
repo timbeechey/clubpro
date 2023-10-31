@@ -83,7 +83,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // shuffle_obs_pccs
-arma::vec shuffle_obs_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, int nreps, bool normalise_cols);
+arma::vec shuffle_obs_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, size_t nreps, bool normalise_cols);
 RcppExport SEXP _clubpro_shuffle_obs_pccs(SEXP obsSEXP, SEXP target_indicator_matSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -91,14 +91,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type obs(obsSEXP);
     Rcpp::traits::input_parameter< arma::mat >::type target_indicator_mat(target_indicator_matSEXP);
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
-    Rcpp::traits::input_parameter< int >::type nreps(nrepsSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nreps(nrepsSEXP);
     Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
     rcpp_result_gen = Rcpp::wrap(shuffle_obs_pccs(obs, target_indicator_mat, imprecision, nreps, normalise_cols));
     return rcpp_result_gen;
 END_RCPP
 }
 // random_dat_pccs
-arma::vec random_dat_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, int nreps, bool normalise_cols);
+arma::vec random_dat_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, size_t nreps, bool normalise_cols);
 RcppExport SEXP _clubpro_random_dat_pccs(SEXP obsSEXP, SEXP target_indicator_matSEXP, SEXP imprecisionSEXP, SEXP nrepsSEXP, SEXP normalise_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -106,7 +106,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type obs(obsSEXP);
     Rcpp::traits::input_parameter< arma::mat >::type target_indicator_mat(target_indicator_matSEXP);
     Rcpp::traits::input_parameter< int >::type imprecision(imprecisionSEXP);
-    Rcpp::traits::input_parameter< int >::type nreps(nrepsSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nreps(nrepsSEXP);
     Rcpp::traits::input_parameter< bool >::type normalise_cols(normalise_colsSEXP);
     rcpp_result_gen = Rcpp::wrap(random_dat_pccs(obs, target_indicator_mat, imprecision, nreps, normalise_cols));
     return rcpp_result_gen;

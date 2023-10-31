@@ -1,7 +1,7 @@
 Package: clubpro
 Type: Package
 Title: Classification Using Binary Procrustes Rotation
-Version: 0.6.0.009
+Version: 0.6.0.010
 Authors@R: person("Timothy", "Beechey", email = "tim.beechey@proton.me",
     role = c("aut", "cre"), comment = c(ORCID = "0000-0001-8858-946X"))
 Description: Implements a classification method described by Grice (2011, ISBN:978-0-12-385194-9) using

@@ -86,7 +86,7 @@ double c_pcc(arma::vec obs, arma::mat target_indicator_mat, int imprecision, boo
 }
 
 // [[Rcpp::export]]
-arma::vec shuffle_obs_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, int nreps, bool normalise_cols) {
+arma::vec shuffle_obs_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, size_t nreps, bool normalise_cols) {
     arma::vec pccs(nreps);
     for (size_t i {}; i < nreps; i++) {
         Rcpp::checkUserInterrupt();
@@ -96,7 +96,7 @@ arma::vec shuffle_obs_pccs(arma::vec obs, arma::mat target_indicator_mat, int im
 }
 
 // [[Rcpp::export]]
-arma::vec random_dat_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, int nreps, bool normalise_cols) {
+arma::vec random_dat_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, size_t nreps, bool normalise_cols) {
     arma::vec pccs(nreps);
     arma::vec obs_range = arma::linspace(min(obs), max(obs), (max(obs) - min(obs)) + 1);
     for (size_t i {}; i < nreps; i++) {

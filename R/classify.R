@@ -40,19 +40,18 @@ classify <- function(obs, target, imprecision, normalise_cols) {
         if (predicted_classification[i] == "") {
           predicted_classification[i] <- unique_group_names[j]
         } else {
-            predicted_classification[i] <- paste0(c(predicted_classification[i], unique_group_names[j]), collapse = "|")
+          predicted_classification[i] <- paste0(c(predicted_classification[i], unique_group_names[j]), collapse = "|")
         }
       }
     }
     if (sum(binary_matrix[i,]) == 1) {
       if (abs(which.max(binary_matrix[i,]) - which.max(target_indicator_mat[i,])) <= imprecision) {
         matches <- matches + 1
-          classification_result[i] <- "correct"
+        classification_result[i] <- "correct"
       } else {
-          classification_result[i] <- "incorrect"
+        classification_result[i] <- "incorrect"
       }
-    }
-    else if (sum(binary_matrix[i,]) > 1) {
+    } else if (sum(binary_matrix[i,]) > 1) {
       if (all_group_names[i] %in% matched_groups) {
         classification_result[i] <- "ambiguous"
       } else {
@@ -70,16 +69,17 @@ classify <- function(obs, target, imprecision, normalise_cols) {
 
 
 parse_formula <- function(f, dat) {
-    my_cols <- list()
-    vars <- all.vars(f)
-    preds <- vars[-1]
-    for (i in seq(preds)) {
-        my_cols[[i]] <- dat[,preds[i]]
-    }
-    y <- unname(unlist(dat[vars[1]]))
-    x <- interaction(my_cols, sep=":")
-    list(y = y, x = x)
+  my_cols <- list()
+  vars <- all.vars(f)
+  preds <- vars[-1]
+  for (i in seq(preds)) {
+    my_cols[[i]] <- dat[,preds[i]]
+  }
+  y <- unname(unlist(dat[vars[1]]))
+  x <- interaction(my_cols, sep=":")
+  list(y = y, x = x)
 }
+
 
 #' Classify observations.
 #'
@@ -117,7 +117,6 @@ club <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE,
   stopifnot("nreps must be a whole number"=nreps %% 1 == 0)
   stopifnot("reorder_obs must be 'shuffle' or 'random'"=reorder_obs %in% c("shuffle", "random"))
 
-
   vars <- parse_formula(f, data)
   y <- vars$y
   x <- vars$x
@@ -129,9 +128,9 @@ club <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE,
       obs_num <- as.integer(factor(y))
     }
   } else if (any(is.na(y))) {
-      obs_num <- addNA(y)
+    obs_num <- addNA(y)
   } else {
-      obs_num <- factor(y)
+    obs_num <- factor(y)
   }
 
   x_mat <- to_indicator_matrix(x)
@@ -141,9 +140,9 @@ club <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE,
   ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])
   incorrect_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "incorrect"])
   if (reorder_obs == "shuffle") {
-      rand_pccs <- shuffle_obs_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols)
+    rand_pccs <- shuffle_obs_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols)
   } else if (reorder_obs == "random") {
-      rand_pccs <- random_dat_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols)
+    rand_pccs <- random_dat_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols)
   }
   cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc])/nreps
   return(
