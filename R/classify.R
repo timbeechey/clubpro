@@ -109,7 +109,7 @@ parse_formula <- function(f, dat) {
 #' @export
 club <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
 
-  stopifnot("The first argument must be a formula"=inherits(f, "formula"))
+  stopifnot("The first argument must be a formula, e.g. y ~ x, data = d"=inherits(f, "formula"))
   stopifnot("The data source must be specified"=is.data.frame(data))
   stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double
   stopifnot("nreps must be a positive number"=nreps >= 1) # nreps must be a positve number

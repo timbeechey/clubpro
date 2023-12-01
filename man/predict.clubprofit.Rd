@@ -12,7 +12,7 @@
 \item{...}{ignored}
 }
 \value{
-a character vector.
+no return value, called for side-effects only
 }
 \description{
 Predicted category for each observation.
