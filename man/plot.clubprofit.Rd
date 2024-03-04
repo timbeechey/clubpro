@@ -4,12 +4,10 @@
 \alias{plot.clubprofit}
 \title{Plot classification accuracy.}
 \usage{
-\method{plot}{clubprofit}(x, colors = c("#56B4E9", "#E69F00", "#999999"), ...)
+\method{plot}{clubprofit}(x, ...)
 }
 \arguments{
 \item{x}{an object of class "clubprofit" produced by \code{club()}}
-
-\item{colors}{a character vector of length 3 specifying colors to use in plot}
 
 \item{...}{ignored}
 }

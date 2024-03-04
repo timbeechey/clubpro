@@ -18,6 +18,10 @@ knitr::opts_chunk$set(
 library(clubpro)
 ```
 
+```{r set_palette}
+palette(c("#0073C2", "#EFC000", "#868686"))
+```
+
 ```{r model_jellyfish}
 mod <- club(width ~ location, data = jellyfish)
 ```

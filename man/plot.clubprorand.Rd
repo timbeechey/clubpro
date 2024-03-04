@@ -18,7 +18,7 @@ no return value, called for side effects only.
 Plot PCC replicates.
 }
 \details{
-Plot a histogram of PCCs computed from randomly reordered data
+Plot the dustribution of PCCs computed from randomly reordered data
 used to calculate the chance-value.
 }
 \examples{

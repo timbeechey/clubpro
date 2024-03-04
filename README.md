@@ -84,9 +84,9 @@ summary(mod)
 #> Median classification strength index:  0.74 
 #> ----- Randomisation Test Results -----
 #> Random reorderings:  1000 
-#> Minimum random PCC:  20 
-#> Maximum random PCC:  83.33 
-#> Chance-value:  0.92
+#> Minimum random PCC:  26.67 
+#> Maximum random PCC:  76.67 
+#> Chance-value:  0.91
 ```
 
 Plot the classification results.

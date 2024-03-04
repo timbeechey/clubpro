@@ -350,7 +350,7 @@ pcc_replicates.clubprofit <- function(m) {
 #' Plot PCC replicates.
 #'
 #' @details
-#' Plot a histogram of PCCs computed from randomly reordered data
+#' Plot the dustribution of PCCs computed from randomly reordered data
 #' used to calculate the chance-value.
 #' @param x an object of class "clubprofit" produced by \code{club()}
 #' @param ... ignored
@@ -360,15 +360,12 @@ pcc_replicates.clubprofit <- function(m) {
 #' plot(pcc_replicates(mod))
 #' @export
 plot.clubprorand <- function(x, ...) {
-  histogram(unclass(x), type = "count", xlab = "PCC",
-    ylab = "Count", col = "#56B4E9",
-    panel = function(...) {
-      panel.histogram(...)
-      panel.abline(v = attr(x, "observed_pcc"),
-                   col = "red",
-                   lty = 2)
-    }
-  )
+
+  densityplot(unclass(x), pch = 4, cex = 0.5, col = palette()[1], xlab = "PCC",
+              xlim = c(NA, min(max(max(x), attr(x, "observed_pcc")) + 5, 105)), ylab = "",
+              panel = function(...) {
+                  panel.densityplot(...)
+                  panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)})
 }
 
 
@@ -380,14 +377,13 @@ plot.clubprorand <- function(x, ...) {
 #' classified correctly, incorrectly or ambiguously.
 #' 
 #' @param x an object of class "clubprofit" produced by \code{club()}
-#' @param colors a character vector of length 3 specifying colors to use in plot
 #' @param ... ignored
 #' @return called for side-effects only
 #' @examples
 #' mod <- club(rate ~ dose, data = caffeine)
 #' plot(mod)
 #' @export
-plot.clubprofit <- function(x, colors = c("#56B4E9", "#E69F00", "#999999"), ...) {
+plot.clubprofit <- function(x, ...) {
   accuracy <- observation <- target <- NULL
   z <- individual_results(x)
   xlabs <- levels(addNA(z$observation))
@@ -417,12 +413,12 @@ plot.clubprofit <- function(x, colors = c("#56B4E9", "#E69F00", "#999999"), ...)
     panel = function(...) {
                            panel.superpose(..., 
                                            panel.groups = panel.histogram,
-                                           col = colors, 
+                                           col = palette()[1:3], 
                                            border = "black", 
                                            alpha = 1.0)},
     xlab = "Observed Value", ylab = "Count",
     layout = c(1, npanels),
-    par.settings = list(superpose.polygon = list(col = colors, 
+    par.settings = list(superpose.polygon = list(col = palette()[1:3], 
                                                  border = "black", 
                                                  alpha = 1.0)),
     auto.key = list(space = "top", rectangles = TRUE, columns = 3)
