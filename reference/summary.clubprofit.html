@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">clubpro</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,26 +83,21 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="club.html">club</a></span><span class="op">(</span><span class="va">rate</span> <span class="op">~</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">caffeine</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Model Summary</span> <span style="color: #00BBBB;">───────────────────────────────────────────────────────────────</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Classification Results</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: <span style="color: #0000BB;">30</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Missing observations: <span style="color: #0000BB;">0</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Target groups: <span style="color: #0000BB;">3</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Correctly classified observations: <span style="color: #0000BB;">18</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Incorrectly classified observations: <span style="color: #0000BB;">12</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Ambiguously classified observations: <span style="color: #0000BB;">0</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> PCC: <span style="color: #0000BB;">60</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Median classification strength index: <span style="color: #0000BB;">0.8</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Randomisation Test Results</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Random reorderings: <span style="color: #0000BB;">1000</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Minimum random PCC: <span style="color: #0000BB;">23.33</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Maximum random PCC: <span style="color: #0000BB;">76.67</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chance-value: <span style="color: #0000BB;">0.52</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ********** Model Summary **********n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----- Classification Results -----</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observations:  30 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Missing observations:  0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Target groups:  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Correctly classified observations:  18 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Incorrectly classified observations:  12 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ambiguously classified observations:  0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PCC:  60 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Median classification strength index:  0.8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----- Randomisation Test Results -----</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random reorderings:  1000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Minimum random PCC:  23.33 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Maximum random PCC:  80 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chance-value:  0.49 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

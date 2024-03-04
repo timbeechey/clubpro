@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">clubpro</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,26 +83,21 @@
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/club.html">club</a></span><span class="op">(</span><span class="va">width</span> <span class="op">~</span> <span class="va">location</span>, data <span class="op">=</span> <span class="va">jellyfish</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Model Summary</span> <span style="color: #00BBBB;">───────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Classification Results</span> ──</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Observations: <span style="color: #0000BB;">46</span></span></span>
-<span><span class="co">#&gt; Missing observations: <span style="color: #0000BB;">0</span></span></span>
-<span><span class="co">#&gt; Target groups: <span style="color: #0000BB;">2</span></span></span>
-<span><span class="co">#&gt; Correctly classified observations: <span style="color: #0000BB;">39</span></span></span>
-<span><span class="co">#&gt; Incorrectly classified observations: <span style="color: #0000BB;">7</span></span></span>
-<span><span class="co">#&gt; Ambiguously classified observations: <span style="color: #0000BB;">0</span></span></span>
-<span><span class="co">#&gt; PCC: <span style="color: #0000BB;">84.78</span></span></span>
-<span><span class="co">#&gt; Median classification strength index: <span style="color: #0000BB;">1</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Randomisation Test Results</span> ──</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Random reorderings: <span style="color: #0000BB;">1000</span></span></span>
-<span><span class="co">#&gt; Minimum random PCC: <span style="color: #0000BB;">47.83</span></span></span>
-<span><span class="co">#&gt; Maximum random PCC: <span style="color: #0000BB;">91.3</span></span></span>
-<span><span class="co">#&gt; Chance-value: <span style="color: #0000BB;">0.01</span></span></span></code></pre></div>
+<span><span class="co">#&gt; ********** Model Summary **********n</span></span>
+<span><span class="co">#&gt; ----- Classification Results -----</span></span>
+<span><span class="co">#&gt; Observations:  46 </span></span>
+<span><span class="co">#&gt; Missing observations:  0 </span></span>
+<span><span class="co">#&gt; Target groups:  2 </span></span>
+<span><span class="co">#&gt; Correctly classified observations:  39 </span></span>
+<span><span class="co">#&gt; Incorrectly classified observations:  7 </span></span>
+<span><span class="co">#&gt; Ambiguously classified observations:  0 </span></span>
+<span><span class="co">#&gt; PCC:  84.78 </span></span>
+<span><span class="co">#&gt; Median classification strength index:  1 </span></span>
+<span><span class="co">#&gt; ----- Randomisation Test Results -----</span></span>
+<span><span class="co">#&gt; Random reorderings:  1000 </span></span>
+<span><span class="co">#&gt; Minimum random PCC:  50 </span></span>
+<span><span class="co">#&gt; Maximum random PCC:  86.96 </span></span>
+<span><span class="co">#&gt; Chance-value:  0.01</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_jellyfish-1.png" width="700"></p>
@@ -111,8 +106,7 @@
 <span><span class="co">#&gt;                 </span></span>
 <span><span class="co">#&gt;                  Dangar Island Salamander Bay</span></span>
 <span><span class="co">#&gt;   Dangar Island             17              5</span></span>
-<span><span class="co">#&gt;   Salamander Bay             2             22</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Note: rows represent observed categories, columns represent predicted categories.</span></span></code></pre></div>
+<span><span class="co">#&gt;   Salamander Bay             2             22</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 </span></span>
@@ -124,7 +118,7 @@
 <span><span class="co">#&gt; [1] 84.78261</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cval.html">cval</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.01</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.007</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/pcc_replicates.html">pcc_replicates</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_cval_dist-1.png" width="700"></p>
