@@ -12,7 +12,7 @@
 \item{...}{ignored}
 }
 \value{
-no return value, called for side-effects only
+a table
 }
 \description{
 Predicted category for each observation.

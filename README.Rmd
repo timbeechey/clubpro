@@ -70,7 +70,6 @@ remotes::install_github("timbeechey/clubpro")
 
 ```{r load_clubpro}
 library(clubpro)
-library(lattice)
 library(carData)
 ```
 

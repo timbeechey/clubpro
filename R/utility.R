@@ -42,21 +42,21 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
   stopifnot("digits cannot be negative"= digits >= 0)
   stopifnot("digits must be a single number"= length(digits) == 1)
 
-  cli_h1("Model Summary")
-  cli_h2("Classification Results")
-  cli_text("Observations: {.val {length(object$y)}}")
-  cli_text("Missing observations: {.val {sum(is.na(object$y))}}")
-  cli_text("Target groups: {.val {nlevels(object$x)}}")
-  cli_text("Correctly classified observations: {.val {object$correct_classifications}}")
-  cli_text("Incorrectly classified observations: {.val {object$incorrect_classifications}}")
-  cli_text("Ambiguously classified observations: {.val {object$ambiguous_classifications}}")
-  cli_text("PCC: {.val {round(object$pcc, digits)}}")
-  cli_text("Median classification strength index: {.val {round(object$median_csi, digits)}}")
-  cli_h2("Randomisation Test Results")
-  cli_text("Random reorderings: {.val {object$nreps}}")
-  cli_text("Minimum random PCC: {.val {round(min(object$pcc_replicates), digits)}}")
-  cli_text("Maximum random PCC: {.val {round(max(object$pcc_replicates), digits)}}")
-  cli_text("Chance-value: {.val {round(object$cval, 2)}}")
+  cat("********** Model Summary **********n\n")
+  cat("----- Classification Results -----\n")
+  cat("Observations: ", length(object$y), "\n")
+  cat("Missing observations: ", sum(is.na(object$y)), "\n")
+  cat("Target groups: ", nlevels(object$x), "\n")
+  cat("Correctly classified observations: ", object$correct_classifications, "\n")
+  cat("Incorrectly classified observations: ", object$incorrect_classifications, "\n")
+  cat("Ambiguously classified observations: ", object$ambiguous_classifications, "\n")
+  cat("PCC: ", round(object$pcc, digits), "\n")
+  cat("Median classification strength index: ", round(object$median_csi, digits), "\n")
+  cat("----- Randomisation Test Results -----\n")
+  cat("Random reorderings: ", object$nreps, "\n")
+  cat("Minimum random PCC: ", round(min(object$pcc_replicates), digits), "\n")
+  cat("Maximum random PCC: ", round(max(object$pcc_replicates), digits), "\n")
+  cat("Chance-value: ", round(object$cval, 2), "\n")
 }
 
 #' Individual level classification results.
@@ -100,15 +100,14 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' for each observed value.
 #' @param object an object of class "clubprofit" produced by \code{club()}
 #' @param ... ignored
-#' @return no return value, called for side-effects only
+#' @return a table
 #' @examples
 #' mod <- club(rate ~ dose, data = caffeine)
 #' predict(mod)
 #' @export
 predict.clubprofit <- function(object, ...) {
   x <- individual_results(object)
-  print(table(x$target, x$prediction))
-  cli_alert_info("Note: rows represent observed categories, columns represent predicted categories.")
+  table(x$target, x$prediction)
 }
 
 
@@ -119,7 +118,7 @@ predict.clubprofit <- function(object, ...) {
 #' observation indicating whether classification of that observation was
 #' "correct", "incorrect", or "ambigous".
 #' @param m an object of class "clubprofit" produced by \code{club()}
-#' @return no return value, called for side-effects only
+#' @return a table
 #' @examples
 #' mod <- club(rate ~ dose, data = caffeine)
 #' accuracy(mod)

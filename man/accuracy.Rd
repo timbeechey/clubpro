@@ -10,7 +10,7 @@ accuracy(m)
 \item{m}{an object of class "clubprofit" produced by \code{club()}}
 }
 \value{
-no return value, called for side-effects only
+a table
 }
 \description{
 Classification accuracy for each observation.

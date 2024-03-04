@@ -40,7 +40,6 @@ remotes::install_github("timbeechey/clubpro")
 
 ``` r
 library(clubpro)
-library(lattice)
 library(carData)
 ```
 
@@ -73,26 +72,21 @@ Print a summary of the model output.
 
 ``` r
 summary(mod)
-#> 
-#> ── Model Summary ───────────────────────────────────────────────────────────────
-#> 
-#> ── Classification Results ──
-#> 
-#> Observations: 30
-#> Missing observations: 0
-#> Target groups: 3
-#> Correctly classified observations: 15
-#> Incorrectly classified observations: 7
-#> Ambiguously classified observations: 8
-#> PCC: 50
-#> Median classification strength index: 0.74
-#> 
-#> ── Randomisation Test Results ──
-#> 
-#> Random reorderings: 1000
-#> Minimum random PCC: 26.67
-#> Maximum random PCC: 80
-#> Chance-value: 0.9
+#> ********** Model Summary **********n
+#> ----- Classification Results -----
+#> Observations:  30 
+#> Missing observations:  0 
+#> Target groups:  3 
+#> Correctly classified observations:  15 
+#> Incorrectly classified observations:  7 
+#> Ambiguously classified observations:  8 
+#> PCC:  50 
+#> Median classification strength index:  0.74 
+#> ----- Randomisation Test Results -----
+#> Random reorderings:  1000 
+#> Minimum random PCC:  20 
+#> Maximum random PCC:  83.33 
+#> Chance-value:  0.92
 ```
 
 Plot the classification results.
