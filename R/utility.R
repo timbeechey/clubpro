@@ -350,7 +350,7 @@ pcc_replicates.clubprofit <- function(m) {
 #' Plot PCC replicates.
 #'
 #' @details
-#' Plot the dustribution of PCCs computed from randomly reordered data
+#' Plot the distribution of PCCs computed from randomly reordered data
 #' used to calculate the chance-value.
 #' @param x an object of class "clubprofit" produced by \code{club()}
 #' @param ... ignored
@@ -360,12 +360,12 @@ pcc_replicates.clubprofit <- function(m) {
 #' plot(pcc_replicates(mod))
 #' @export
 plot.clubprorand <- function(x, ...) {
-
-  densityplot(unclass(x), pch = 4, cex = 0.5, col = palette()[1], xlab = "PCC",
-              xlim = c(NA, min(max(max(x), attr(x, "observed_pcc")) + 5, 105)), ylab = "",
-              panel = function(...) {
-                  panel.densityplot(...)
-                  panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)})
+    histogram(unclass(x), type = "count", xlab = "PCC", ylab = "Count", col = palette()[1],
+        panel = function(...) {
+            panel.histogram(...)
+            panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)
+    }
+  )
 }
 
 

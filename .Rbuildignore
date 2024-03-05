@@ -8,7 +8,6 @@
 ^README\.Rmd$
 ^.DS\_Store
 ^codecov\.yml$
-^tests$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$

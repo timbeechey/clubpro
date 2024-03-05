@@ -29,16 +29,6 @@ NULL
 NULL
 
 ## usethis namespace: start
-#' @importFrom lattice densityplot
-## usethis namespace: end
-NULL
-
-## usethis namespace: start
-#' @importFrom lattice panel.densityplot
-## usethis namespace: end
-NULL
-
-## usethis namespace: start
 #' @importFrom lattice panel.superpose
 ## usethis namespace: end
 NULL
