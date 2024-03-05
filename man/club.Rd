@@ -4,14 +4,7 @@
 \alias{club}
 \title{Classify observations.}
 \usage{
-club(
-  f,
-  data,
-  imprecision = 0,
-  nreps = 1000L,
-  normalise_cols = TRUE,
-  reorder_obs = "shuffle"
-)
+club(f, data, imprecision, nreps, normalise_cols, reorder_obs)
 }
 \arguments{
 \item{f}{a formula.}

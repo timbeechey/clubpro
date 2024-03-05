@@ -23,7 +23,7 @@
 #' print(mod)
 #' @export
 print.clubprofit <- function(x, ...) {
-  print(x$call)
+    print(x$call)
 }
 
 #' Print a summary of results from a fitted clubpro model.
@@ -36,28 +36,28 @@ print.clubprofit <- function(x, ...) {
 #' summary(mod)
 #' @export
 summary.clubprofit <- function(object, ..., digits = 2L) {
+    # check function arguments
+    stopifnot("digits must be a number"= is.numeric(digits))
+    stopifnot("digits cannot be negative"= digits >= 0)
+    stopifnot("digits must be a single number"= length(digits) == 1)
 
-  # check function arguments
-  stopifnot("digits must be a number"= is.numeric(digits))
-  stopifnot("digits cannot be negative"= digits >= 0)
-  stopifnot("digits must be a single number"= length(digits) == 1)
-
-  cat("********** Model Summary **********n\n")
-  cat("----- Classification Results -----\n")
-  cat("Observations: ", length(object$y), "\n")
-  cat("Missing observations: ", sum(is.na(object$y)), "\n")
-  cat("Target groups: ", nlevels(object$x), "\n")
-  cat("Correctly classified observations: ", object$correct_classifications, "\n")
-  cat("Incorrectly classified observations: ", object$incorrect_classifications, "\n")
-  cat("Ambiguously classified observations: ", object$ambiguous_classifications, "\n")
-  cat("PCC: ", round(object$pcc, digits), "\n")
-  cat("Median classification strength index: ", round(object$median_csi, digits), "\n")
-  cat("----- Randomisation Test Results -----\n")
-  cat("Random reorderings: ", object$nreps, "\n")
-  cat("Minimum random PCC: ", round(min(object$pcc_replicates), digits), "\n")
-  cat("Maximum random PCC: ", round(max(object$pcc_replicates), digits), "\n")
-  cat("Chance-value: ", round(object$cval, 2), "\n")
+    cat("********** Model Summary **********n\n")
+    cat("----- Classification Results -----\n")
+    cat("Observations: ", length(object$y), "\n")
+    cat("Missing observations: ", sum(is.na(object$y)), "\n")
+    cat("Target groups: ", nlevels(object$x), "\n")
+    cat("Correctly classified observations: ", object$correct_classifications, "\n")
+    cat("Incorrectly classified observations: ", object$incorrect_classifications, "\n")
+    cat("Ambiguously classified observations: ", object$ambiguous_classifications, "\n")
+    cat("PCC: ", round(object$pcc, digits), "\n")
+    cat("Median classification strength index: ", round(object$median_csi, digits), "\n")
+    cat("----- Randomisation Test Results -----\n")
+    cat("Random reorderings: ", object$nreps, "\n")
+    cat("Minimum random PCC: ", round(min(object$pcc_replicates), digits), "\n")
+    cat("Maximum random PCC: ", round(max(object$pcc_replicates), digits), "\n")
+    cat("Chance-value: ", round(object$cval, 2), "\n")
 }
+
 
 #' Individual level classification results.
 #'
@@ -73,23 +73,27 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
 #' individual_results(mod)
 #' @export
 individual_results <- function(m, digits) {
-  UseMethod("individual_results")
+    UseMethod("individual_results")
 }
 
+
 #' @export
-individual_results.default <- function(m, digits) .NotYetImplemented()
+individual_results.default <- function(m, digits) {
+    .NotYetImplemented()
+}
+
 
 #' @export
 individual_results.clubprofit <- function(m, digits = 2L) {
-  df <- data.frame(individual = seq_along(m$y),
-                   observation = m$y,
-                   target = m$x,
-                   prediction = m$prediction,
-                   accuracy = m$accuracy,
-                   csi = round(m$csi, 2))
-  df$target <- factor(df$target, levels = levels(m$x))
-  df$accuracy <- factor(df$accuracy, levels = c("correct", "incorrect", "ambiguous"))
-  df
+    df <- data.frame(individual = seq_along(m$y),
+                     observation = m$y,
+                     target = m$x,
+                     prediction = m$prediction,
+                     accuracy = m$accuracy,
+                     csi = round(m$csi, 2))
+    df$target <- factor(df$target, levels = levels(m$x))
+    df$accuracy <- factor(df$accuracy, levels = c("correct", "incorrect", "ambiguous"))
+    df
 }
 
 
@@ -106,8 +110,8 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' predict(mod)
 #' @export
 predict.clubprofit <- function(object, ...) {
-  x <- individual_results(object)
-  table(x$target, x$prediction)
+    x <- individual_results(object)
+    table(x$target, x$prediction)
 }
 
 
@@ -124,16 +128,20 @@ predict.clubprofit <- function(object, ...) {
 #' accuracy(mod)
 #' @export
 accuracy <- function(m) {
-  UseMethod("accuracy")
+    UseMethod("accuracy")
 }
 
+
 #' @export
-accuracy.default <- function(m) .NotYetImplemented()
+accuracy.default <- function(m) {
+    .NotYetImplemented()
+}
+
 
 #' @export
 accuracy.clubprofit <- function(m) {
-  x <- individual_results(m)
-  table(x$target, x$accuracy)
+    x <- individual_results(m)
+    table(x$target, x$accuracy)
 }
 
 
@@ -148,17 +156,19 @@ accuracy.clubprofit <- function(m) {
 #' pcc(mod)
 #' @export
 pcc <- function(m) {
-  UseMethod("pcc")
+    UseMethod("pcc")
 }
 
 
 #' @export
-pcc.default <- function(m) .NotYetImplemented()
+pcc.default <- function(m) {
+    .NotYetImplemented()
+}
 
 
 #' @export
 pcc.clubprofit <- function(m) {
-  m$pcc
+    m$pcc
 }
 
 
@@ -175,17 +185,19 @@ pcc.clubprofit <- function(m) {
 #' cval(mod)
 #' @export
 cval <- function(m) {
-  UseMethod("cval")
+    UseMethod("cval")
 }
 
 
 #' @export
-cval.default <- function(m) .NotYetImplemented()
+cval.default <- function(m) {
+    .NotYetImplemented()
+}
 
 
 #' @export
 cval.clubprofit <- function(m) {
-  m$cval
+    m$cval
 }
 
 
@@ -201,17 +213,19 @@ cval.clubprofit <- function(m) {
 #' n_correct(mod)
 #' @export
 n_correct <- function(m) {
-  UseMethod("n_correct")
+    UseMethod("n_correct")
 }
 
 
 #' @export
-n_correct.default <- function(m) .NotYetImplemented()
+n_correct.default <- function(m) {
+    .NotYetImplemented()
+}
 
 
 #' @export
 n_correct.clubprofit <- function(m) {
-  m$correct_classifications
+    m$correct_classifications
 }
 
 
@@ -227,17 +241,19 @@ n_correct.clubprofit <- function(m) {
 #' n_incorrect(mod)
 #' @export
 n_incorrect <- function(m) {
-  UseMethod("n_incorrect")
+    UseMethod("n_incorrect")
 }
 
 
 #' @export
-n_incorrect.default <- function(m) .NotYetImplemented()
+n_incorrect.default <- function(m) {
+    .NotYetImplemented()
+}
 
 
 #' @export
 n_incorrect.clubprofit <- function(m) {
-  m$incorrect_classifications
+    m$incorrect_classifications
 }
 
 
@@ -253,17 +269,19 @@ n_incorrect.clubprofit <- function(m) {
 #' n_ambiguous(mod)
 #' @export
 n_ambiguous <- function(m) {
-  UseMethod("n_ambiguous")
+    UseMethod("n_ambiguous")
 }
 
 
 #' @export
-n_ambiguous.default <- function(m) .NotYetImplemented()
+n_ambiguous.default <- function(m) {
+    .NotYetImplemented()
+}
 
 
 #' @export
 n_ambiguous.clubprofit <- function(m) {
-  m$ambiguous_classifications
+    m$ambiguous_classifications
 }
 
 
@@ -279,17 +297,19 @@ n_ambiguous.clubprofit <- function(m) {
 #' csi(mod)
 #' @export
 csi <- function(m) {
-  UseMethod("csi")
+    UseMethod("csi")
 }
 
 
 #' @export
-csi.default <- function(m) .NotYetImplemented()
+csi.default <- function(m) {
+    .NotYetImplemented()
+}
 
 
 #' @export
 csi.clubprofit <- function(m) {
-  m$csi
+    m$csi
 }
 
 
@@ -304,17 +324,19 @@ csi.clubprofit <- function(m) {
 #' median_csi(mod)
 #' @export
 median_csi <- function(m) {
-  UseMethod("median_csi")
+    UseMethod("median_csi")
 }
 
 
 #' @export
-median_csi.default <- function(m) .NotYetImplemented()
+median_csi.default <- function(m) {
+    .NotYetImplemented()
+}
 
 
 #' @export
 median_csi.clubprofit <- function(m) {
-  m$median_csi
+    m$median_csi
 }
 
 
@@ -330,20 +352,22 @@ median_csi.clubprofit <- function(m) {
 #' head(pcc_replicates(mod))
 #' @export
 pcc_replicates <- function(m) {
-  UseMethod("pcc_replicates")
+    UseMethod("pcc_replicates")
 }
 
 
 #' @export
-pcc_replicates.default <- function(m) .NotYetImplemented()
+pcc_replicates.default <- function(m) {
+    .NotYetImplemented()
+}
 
 
 #' @export
 pcc_replicates.clubprofit <- function(m) {
-  pcc_replicates <- m$pcc_replicates
-  attr(pcc_replicates, "observed_pcc") <- m$pcc
-  class(pcc_replicates) <- "clubprorand"
-  pcc_replicates
+    pcc_replicates <- m$pcc_replicates
+    attr(pcc_replicates, "observed_pcc") <- m$pcc
+    class(pcc_replicates) <- "clubprorand"
+    pcc_replicates
 }
 
 
@@ -364,8 +388,8 @@ plot.clubprorand <- function(x, ...) {
         panel = function(...) {
             panel.histogram(...)
             panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)
-    }
-  )
+        }
+    )
 }
 
 
@@ -375,7 +399,7 @@ plot.clubprorand <- function(x, ...) {
 #' Produces bar plot showing counts of individuals against observed values within
 #' each target grouping. Fill colours indicate whether each individual was
 #' classified correctly, incorrectly or ambiguously.
-#' 
+#'
 #' @param x an object of class "clubprofit" produced by \code{club()}
 #' @param ... ignored
 #' @return called for side-effects only
@@ -384,43 +408,36 @@ plot.clubprorand <- function(x, ...) {
 #' plot(mod)
 #' @export
 plot.clubprofit <- function(x, ...) {
-  accuracy <- observation <- target <- NULL
-  z <- individual_results(x)
-  xlabs <- levels(addNA(z$observation))
-  xlabs[is.na(xlabs)] <- "NA"
+    accuracy <- observation <- target <- NULL
+    z <- individual_results(x)
+    xlabs <- levels(addNA(z$observation))
+    xlabs[is.na(xlabs)] <- "NA"
 
-  if (any(is.na(z$target))) {
-    z$target <- addNA(z$target)
-    npanels <- nlevels(z$target)
-  } else {
-    z$target <- factor(z$target)
-    npanels <- nlevels(z$target)
-  }
+    if (any(is.na(z$target))) {
+        z$target <- addNA(z$target)
+        npanels <- nlevels(z$target)
+    } else {
+        z$target <- factor(z$target)
+        npanels <- nlevels(z$target)
+    }
 
-  if (any(is.na(z$observation))) {
-    z$observation <- addNA(z$observation)
-  } else {
-    z$observation <- factor(z$observation)
-  }
+    if (any(is.na(z$observation))) {
+        z$observation <- addNA(z$observation)
+    } else {
+        z$observation <- factor(z$observation)
+    }
 
 
-  histogram(~ observation | target,
-    data = z,
-    type = "count",
-    xlim = c(0:(nlevels(z$observation) + 1)),
-    scales = list(x = list(at = 1:nlevels(z$observation), labels = xlabs)),
-    groups = factor(accuracy, levels = c("correct", "incorrect", "ambiguous")),
-    panel = function(...) {
-                           panel.superpose(..., 
-                                           panel.groups = panel.histogram,
-                                           col = palette()[1:3], 
-                                           border = "black", 
-                                           alpha = 1.0)},
-    xlab = "Observed Value", ylab = "Count",
-    layout = c(1, npanels),
-    par.settings = list(superpose.polygon = list(col = palette()[1:3], 
-                                                 border = "black", 
-                                                 alpha = 1.0)),
-    auto.key = list(space = "top", rectangles = TRUE, columns = 3)
-  )
+    histogram(~ observation | target, data = z, type = "count",
+              xlim = c(0:(nlevels(z$observation) + 1)),
+              scales = list(x = list(at = 1:nlevels(z$observation), labels = xlabs)),
+              groups = factor(accuracy, levels = c("correct", "incorrect", "ambiguous")),
+              panel = function(...) {
+                  panel.superpose(..., panel.groups = panel.histogram,
+                                  col = palette()[1:3],
+                                  border = "black", alpha = 1.0)},
+              xlab = "Observed Value", ylab = "Count",
+              layout = c(1, npanels),
+              par.settings = list(superpose.polygon = list(col = palette()[1:3], border = "black", alpha = 1.0)),
+              auto.key = list(space = "top", rectangles = TRUE, columns = 3))
 }

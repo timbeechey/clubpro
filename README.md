@@ -36,7 +36,7 @@ remotes::install_github("timbeechey/clubpro")
 `clubpro` is an implementation of a subset of the methods described in
 [Grice (2011)](https://psycnet.apa.org/record/2011-14580-000).
 
-## using `clubpro`
+## Using `clubpro`
 
 ``` r
 library(clubpro)
@@ -84,8 +84,8 @@ summary(mod)
 #> Median classification strength index:  0.74 
 #> ----- Randomisation Test Results -----
 #> Random reorderings:  1000 
-#> Minimum random PCC:  26.67 
-#> Maximum random PCC:  83.33 
+#> Minimum random PCC:  20 
+#> Maximum random PCC:  76.67 
 #> Chance-value:  0.9
 ```
 

@@ -2,6 +2,8 @@
 
 S3method(accuracy,clubprofit)
 S3method(accuracy,default)
+S3method(club,default)
+S3method(club,formula)
 S3method(csi,clubprofit)
 S3method(csi,default)
 S3method(cval,clubprofit)

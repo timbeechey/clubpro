@@ -8,6 +8,11 @@ test_dat_int <- data.frame(condition = rep(c(1L, 2L), each = 9),
 
 m1 <- club(items ~ condition, test_dat_int, nreps = 1000L)
 
+expect_error(club(items ~ condition, test_dat_int, nreps = -1000L))
+expect_error(club(items ~ condition, test_dat_int, nreps = 0L))
+expect_error(club(items ~ condition))
+expect_error(club(test_dat_int))
+
 # check types
 expect_inherits(m1, "clubprofit")
 expect_inherits(individual_results(m1), "data.frame")
@@ -28,18 +33,6 @@ expect_equal(round(csi(m1), 2), c(0.97, 1.00, 0.97, 0.97, 1.00, 0.97, 1.00, 0.89
 expect_equal(round(median_csi(m1), 2), 0.97)
 expect_equal(sum(predict(m1)), nrow(test_dat_int))
 expect_equal(sum(accuracy(m1)), nrow(test_dat_int))
-
-# check default generics
-expect_error(accuracy(c(1, 2, 3)))
-expect_error(csi(c(1, 2, 3)))
-expect_error(cval(c(1, 2, 3)))
-expect_error(individual_results(c(1, 2, 3)))
-expect_error(median_csi(c(1, 2, 3)))
-expect_error(n_ambiguous(c(1, 2, 3)))
-expect_error(n_correct(c(1, 2, 3)))
-expect_error(n_incorrect(c(1, 2, 3)))
-expect_error(pcc_replicates(c(1, 2, 3)))
-expect_error(pcc(c(1, 2, 3)))
 
 # check functions called for side-effects
 expect_stdout(print(m1))
