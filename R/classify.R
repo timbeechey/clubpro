@@ -1,5 +1,5 @@
 # clubpro, an R package for classification using binary procrustes rotation.
-# Copyright (C) 2023  Timothy Beechey (tim.beechey@protonmail.com)
+# Copyright (C) 2023-2024  Timothy Beechey (tim.beechey@proton.me)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-classify <- function(obs, target, imprecision, normalise_cols) {
+classify <- function(obs, target, imprecision, normalise_cols, display_progress) {
     unique_group_names <- levels(target)
     predicted_classification <- character(length(obs))
     classification_result <- character(length(obs))
@@ -23,7 +23,7 @@ classify <- function(obs, target, imprecision, normalise_cols) {
     target_indicator_mat <- to_indicator_matrix(target)
 
     conformed_mat <- binary_procrustes_rotation(obs, target_indicator_mat, normalise_cols)
-    csi <- apply(conformed_mat, 1, max)
+    csi <- row_max(conformed_mat)
     median_csi <- median(csi)
     binary_matrix <- dichotemise_matrix(conformed_mat)
     matches <- 0
@@ -64,7 +64,7 @@ classify <- function(obs, target, imprecision, normalise_cols) {
     pcc <- (matches / length(obs)) * 100
     list(predicted_classification = predicted_classification,
          classification_result = classification_result,
-         csi = csi,
+         csi = c(csi),
          median_csi = median_csi,
          pcc = pcc)
 }
@@ -93,6 +93,7 @@ parse_formula <- function(f, dat) {
 #' @param nreps the number of replicates to use in the randomisation test.
 #' @param normalise_cols a boolean indicating whether to normalise matrix columns.
 #' @param reorder_obs a string indicating the method for reordering observations to calculate c-values.
+#' @param display_progress a boolean indictaing whether a progress bar should be displayed.
 #' @return an object of class "clubprofit" is a list containing the folllowing
 #' components:
 #' \describe{
@@ -109,19 +110,19 @@ parse_formula <- function(f, dat) {
 #' @examples
 #' mod <- club(rate ~ dose, data = caffeine)
 #' @export
-club <- function(f, data, imprecision, nreps, normalise_cols, reorder_obs) {
+club <- function(f, data, imprecision, nreps, normalise_cols, reorder_obs, display_progress) {
     UseMethod("club")
 }
 
 
 #' @export
-club.default <- function(f, data, imprecision, nreps, normalise_cols, reorder_obs) {
+club.default <- function(f, data, imprecision, nreps, normalise_cols, reorder_obs, display_progress) {
     .NotYetImplemented()
 }
 
 
 #' @export
-club.formula <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle") {
+club.formula <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle", display_progress = FALSE) {
 
     stopifnot("The data source must be specified"=is.data.frame(data))
     stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double
@@ -148,14 +149,14 @@ club.formula <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols
 
     x_mat <- to_indicator_matrix(x)
 
-    obs_pcc <- classify(obs_num, x, imprecision, normalise_cols)
+    obs_pcc <- classify(obs_num, x, imprecision, normalise_cols, display_progress)
     correct_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "correct"])
     ambiguous_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "ambiguous"])
     incorrect_classifications <- length(obs_pcc$classification_result[obs_pcc$classification_result == "incorrect"])
     if (reorder_obs == "shuffle") {
-        rand_pccs <- shuffle_obs_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols)
+        rand_pccs <- shuffle_obs_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols, display_progress)
     } else if (reorder_obs == "random") {
-        rand_pccs <- random_dat_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols)
+        rand_pccs <- random_dat_pccs(obs_num, x_mat, imprecision, nreps, normalise_cols, display_progress)
     }
     cval <- length(rand_pccs[rand_pccs >= obs_pcc$pcc]) / nreps
     return(structure(list(prediction = obs_pcc$predicted_classification,

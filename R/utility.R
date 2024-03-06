@@ -1,5 +1,5 @@
 # clubpro, an R package for classification using binary procrustes rotation.
-# Copyright (C) 2023  Timothy Beechey (tim.beechey@protonmail.com)
+# Copyright (C) 2023-2024  Timothy Beechey (tim.beechey@proton.me
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
     stopifnot("digits cannot be negative"= digits >= 0)
     stopifnot("digits must be a single number"= length(digits) == 1)
 
-    cat("********** Model Summary **********n\n")
+    cat("********** Model Summary **********\n\n")
     cat("----- Classification Results -----\n")
     cat("Observations: ", length(object$y), "\n")
     cat("Missing observations: ", sum(is.na(object$y)), "\n")
@@ -50,7 +50,7 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
     cat("Incorrectly classified observations: ", object$incorrect_classifications, "\n")
     cat("Ambiguously classified observations: ", object$ambiguous_classifications, "\n")
     cat("PCC: ", round(object$pcc, digits), "\n")
-    cat("Median classification strength index: ", round(object$median_csi, digits), "\n")
+    cat("Median classification strength index: ", round(object$median_csi, digits), "\n\n")
     cat("----- Randomisation Test Results -----\n")
     cat("Random reorderings: ", object$nreps, "\n")
     cat("Minimum random PCC: ", round(min(object$pcc_replicates), digits), "\n")
@@ -384,7 +384,7 @@ pcc_replicates.clubprofit <- function(m) {
 #' plot(pcc_replicates(mod))
 #' @export
 plot.clubprorand <- function(x, ...) {
-    histogram(unclass(x), type = "count", xlab = "PCC", ylab = "Count", col = palette()[1],
+    histogram(unclass(x), type = "count", xlab = "PCC", ylab = "Count", col = palette()[1], xlim = c(0, 100),
         panel = function(...) {
             panel.histogram(...)
             panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)

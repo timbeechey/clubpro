@@ -4,7 +4,15 @@
 \alias{club}
 \title{Classify observations.}
 \usage{
-club(f, data, imprecision, nreps, normalise_cols, reorder_obs)
+club(
+  f,
+  data,
+  imprecision,
+  nreps,
+  normalise_cols,
+  reorder_obs,
+  display_progress
+)
 }
 \arguments{
 \item{f}{a formula.}
@@ -18,6 +26,8 @@ club(f, data, imprecision, nreps, normalise_cols, reorder_obs)
 \item{normalise_cols}{a boolean indicating whether to normalise matrix columns.}
 
 \item{reorder_obs}{a string indicating the method for reordering observations to calculate c-values.}
+
+\item{display_progress}{a boolean indictaing whether a progress bar should be displayed.}
 }
 \value{
 an object of class "clubprofit" is a list containing the folllowing

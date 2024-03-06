@@ -1,5 +1,5 @@
 // clubpro, an R package for classification using binary procrustes rotation.
-// Copyright (C) 2023  Timothy Beechey (tim.beechey@protonmail.com)
+// Copyright (C) 2023-2024  Timothy Beechey (tim.beechey@proton.me)
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,8 +16,12 @@
 
 #include <RcppArmadillo.h>
 #include <RcppArmadilloExtensions/sample.h>
+#include <progress.hpp>
+#include <progress_bar.hpp>
 using namespace arma;
 // [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::depends(RcppProgress)]]
+
 
 // [[Rcpp::export]]
 arma::mat to_indicator_matrix(arma::vec v) {
@@ -30,6 +34,7 @@ arma::mat to_indicator_matrix(arma::vec v) {
     return A;
 }
 
+
 // [[Rcpp::export]]
 arma::mat normalise_columns(arma::mat A) {
     for (size_t j {0}; j < A.n_cols; j++) {
@@ -40,6 +45,7 @@ arma::mat normalise_columns(arma::mat A) {
     }
     return A;
 }
+
 
 // [[Rcpp::export]]
 arma::mat normalise_rows(arma::mat A) {
@@ -52,6 +58,7 @@ arma::mat normalise_rows(arma::mat A) {
     return A;
 }
 
+
 // [[Rcpp::export]]
 arma::mat dichotemise_matrix(arma::mat A) {
     for (size_t i {0}; i < A.n_rows; i++) {
@@ -63,6 +70,7 @@ arma::mat dichotemise_matrix(arma::mat A) {
     return A;
 }
 
+
 // [[Rcpp::export]]
 arma::mat binary_procrustes_rotation(arma::vec obs, arma::mat target_mat, bool normalise_cols) {
     arma::mat obs_mat = to_indicator_matrix(obs);
@@ -70,6 +78,17 @@ arma::mat binary_procrustes_rotation(arma::vec obs, arma::mat target_mat, bool n
     arma::mat A = normalise_cols ? obs_mat * normalise_rows(normalise_columns(T)) : obs_mat * normalise_rows(T);
     return A;
 }
+
+
+// [[Rcpp::export]]
+arma::vec row_max(arma::mat X) {
+    arma::vec max_vals(X.n_rows);
+    for (size_t i {0}; i < X.n_rows; i++) {
+        max_vals(i) = arma::max(X.row(i));
+    }
+    return max_vals;
+}
+
 
 // [[Rcpp::export]]
 double c_pcc(arma::vec obs, arma::mat target_indicator_mat, int imprecision, bool normalise_cols) {
@@ -85,23 +104,32 @@ double c_pcc(arma::vec obs, arma::mat target_indicator_mat, int imprecision, boo
     return (matches / obs.n_elem) * 100;
 }
 
+
 // [[Rcpp::export]]
-arma::vec shuffle_obs_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, size_t nreps, bool normalise_cols) {
+arma::vec shuffle_obs_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision,
+                           size_t nreps, bool normalise_cols, bool display_progress) {
+    Progress p(nreps, display_progress);
     arma::vec pccs(nreps);
     for (size_t i {0}; i < nreps; i++) {
+        p.increment();
         Rcpp::checkUserInterrupt();
         pccs(i) = c_pcc(arma::shuffle(obs), target_indicator_mat, imprecision, normalise_cols);
     }
     return pccs;
 }
 
+
 // [[Rcpp::export]]
-arma::vec random_dat_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision, size_t nreps, bool normalise_cols) {
+arma::vec random_dat_pccs(arma::vec obs, arma::mat target_indicator_mat, int imprecision,
+                          size_t nreps, bool normalise_cols, bool display_progress) {
+    Progress p(nreps, display_progress);
     arma::vec pccs(nreps);
     arma::vec obs_range = arma::linspace(min(obs), max(obs), (max(obs) - min(obs)) + 1);
     for (size_t i {0}; i < nreps; i++) {
+        p.increment();
         Rcpp::checkUserInterrupt();
-        pccs(i) = c_pcc(Rcpp::RcppArmadillo::sample(obs_range, obs.n_elem, true), target_indicator_mat, imprecision, normalise_cols);
+        pccs(i) = c_pcc(Rcpp::RcppArmadillo::sample(obs_range, obs.n_elem, true), 
+                        target_indicator_mat, imprecision, normalise_cols);
     }
     return pccs;
 }
