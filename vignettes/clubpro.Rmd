@@ -35,7 +35,8 @@ plot(mod)
 ```
 
 ```{r plot_csi}
-plot(csi(mod))
+mod_csi <- csi(mod)
+plot(mod_csi)
 ```
 
 ```{r predict_jellyfish}
