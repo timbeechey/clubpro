@@ -16,10 +16,8 @@
 
 
 classify <- function(obs, target, imprecision, normalise_cols, display_progress) {
-    unique_group_names <- levels(target)
     predicted_classification <- character(length(obs))
     classification_result <- character(length(obs))
-    all_group_names <- character(length(obs))
     target_indicator_mat <- to_indicator_matrix(target)
 
     conformed_mat <- binary_procrustes_rotation(obs, target_indicator_mat, normalise_cols)
@@ -28,22 +26,8 @@ classify <- function(obs, target, imprecision, normalise_cols, display_progress)
     binary_matrix <- dichotemise_matrix(conformed_mat)
     matches <- 0
 
-    for (i in seq_along(all_group_names)) {
-        all_group_names[i] <- unique_group_names[target[i]]
-    }
-
     for (i in seq_len(nrow(binary_matrix))) {
-        matched_groups <- c()
-        for (j in seq_len(ncol(binary_matrix))) {
-            if (binary_matrix[i, j] == 1) {
-                matched_groups <- c(matched_groups, unique_group_names[j])
-                if (predicted_classification[i] == "") {
-                    predicted_classification[i] <- unique_group_names[j]
-                } else {
-                    predicted_classification[i] <- paste0(c(predicted_classification[i], unique_group_names[j]), collapse = "|")
-                }
-            }
-        }
+        predicted_classification[i] <- paste0(levels(target)[which(binary_matrix[i, ] == 1)], collapse = "|")
 
         if (sum(binary_matrix[i, ]) == 1) {
             if (abs(which.max(binary_matrix[i, ]) - which.max(target_indicator_mat[i, ])) <= imprecision) {
@@ -53,15 +37,12 @@ classify <- function(obs, target, imprecision, normalise_cols, display_progress)
                 classification_result[i] <- "incorrect"
             }
         } else if (sum(binary_matrix[i, ]) > 1) {
-            if (all_group_names[i] %in% matched_groups) {
-                classification_result[i] <- "ambiguous"
-            } else {
-                classification_result[i] <- "incorrect"
-            }
+            classification_result[i] <- "ambiguous"
         }
     }
 
     pcc <- (matches / length(obs)) * 100
+
     list(predicted_classification = predicted_classification,
          classification_result = classification_result,
          csi = c(csi),
@@ -122,7 +103,8 @@ club.default <- function(f, data, imprecision, nreps, normalise_cols, reorder_ob
 
 
 #' @export
-club.formula <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE, reorder_obs = "shuffle", display_progress = FALSE) {
+club.formula <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols = TRUE,
+                         reorder_obs = "shuffle", display_progress = FALSE) {
 
     stopifnot("The data source must be specified"=is.data.frame(data))
     stopifnot("nreps must be a number"=is.numeric(nreps)) # TRUE for int or double

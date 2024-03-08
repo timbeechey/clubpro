@@ -72,20 +72,22 @@ Print a summary of the model output.
 
 ``` r
 summary(mod)
-#> ********** Model Summary **********n
+#> ********** Model Summary **********
+#> 
 #> ----- Classification Results -----
 #> Observations:  30 
 #> Missing observations:  0 
 #> Target groups:  3 
 #> Correctly classified observations:  15 
-#> Incorrectly classified observations:  7 
-#> Ambiguously classified observations:  8 
+#> Incorrectly classified observations:  6 
+#> Ambiguously classified observations:  9 
 #> PCC:  50 
 #> Median classification strength index:  0.74 
+#> 
 #> ----- Randomisation Test Results -----
 #> Random reorderings:  1000 
-#> Minimum random PCC:  20 
-#> Maximum random PCC:  76.67 
+#> Minimum random PCC:  30 
+#> Maximum random PCC:  83.33 
 #> Chance-value:  0.9
 ```
 
