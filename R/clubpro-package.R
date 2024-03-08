@@ -24,6 +24,11 @@ NULL
 NULL
 
 ## usethis namespace: start
+#' @importFrom lattice dotplot
+## usethis namespace: end
+NULL
+
+## usethis namespace: start
 #' @importFrom lattice histogram
 ## usethis namespace: end
 NULL

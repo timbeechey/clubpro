@@ -18,6 +18,7 @@ expect_inherits(m1, "clubprofit")
 expect_inherits(individual_results(m1), "data.frame")
 expect_inherits(pcc_replicates(m1), "clubprorand")
 expect_inherits(predict(m1), "table")
+expect_inherits(csi(m1), "clubprocsi")
 
 # check getters
 expect_equal(n_correct(m1), 15)
@@ -28,8 +29,8 @@ expect_equal(sum(n_correct(m1), n_incorrect(m1), n_ambiguous(m1)), nrow(test_dat
 expect_equal(round(pcc(m1), 2), 83.33)
 expect_true(cval(m1) < 0.2)
 expect_equal(length(csi(m1)), nrow(test_dat_int))
-expect_equal(round(csi(m1), 2), c(0.97, 1.00, 0.97, 0.97, 1.00, 0.97, 1.00, 0.89, 0.97, 0.97, 0.89, 
-                                  1.00, 0.97, 0.97, 0.89, 1.00, 0.97, 0.97))
+expect_equal(round(unclass(csi(m1)), 2), c(0.97, 1.00, 0.97, 0.97, 1.00, 0.97, 1.00, 0.89, 0.97, 0.97, 0.89,
+                                           1.00, 0.97, 0.97, 0.89, 1.00, 0.97, 0.97))
 expect_equal(round(median_csi(m1), 2), 0.97)
 expect_equal(sum(predict(m1)), nrow(test_dat_int))
 expect_equal(sum(accuracy(m1)), nrow(test_dat_int))
@@ -61,7 +62,7 @@ expect_equal(round(pcc(m2), 2), 55.56)
 expect_true(cval(m2) < 0.5)
 expect_true(cval(m2) > 0.2)
 expect_equal(length(csi(m2)), nrow(test_dat_int))
-expect_equal(round(csi(m2), 2), c(0.85, 1.00, 0.69, 0.85, 1.00, 0.85, 1.00, 0.65, 0.85, 0.69, 
+expect_equal(round(unclass(csi(m2)), 2), c(0.85, 1.00, 0.69, 0.85, 1.00, 0.85, 1.00, 0.65, 0.85, 0.69, 
                                   0.65, 0.73, 0.69, 0.85, 0.65, 0.73, 0.69, 0.69))
 expect_equal(round(median_csi(m2), 2), 0.73)
 expect_equal(unclass(predict(m2))[1:12], c(4, 0, 1, 1, 0, 0, 2, 0, 1, 4, 1, 4))
@@ -100,7 +101,7 @@ expect_equal(round(pcc(m3), 2), 83.33)
 expect_true(cval(m3) < 0.2)
 expect_true(cval(m3) > 0.05)
 expect_equal(length(csi(m3)), nrow(test_dat_nas))
-expect_equal(round(csi(m3), 2), c(0.96,1.00,0.92,0.96,1.00,0.96,1.00,0.92,
+expect_equal(round(unclass(csi(m3)), 2), c(0.96,1.00,0.92,0.96,1.00,0.96,1.00,0.92,
                                   0.96,1.00,0.92,1.00,0.92,0.96,0.92,1.00,0.92,1.00))
 expect_equal(round(median_csi(m3), 2), 0.96)
 expect_equal(sum(predict(m3)), nrow(test_dat_nas))
@@ -135,7 +136,7 @@ expect_equal(round(pcc(m4), 2), 55.56)
 expect_true(cval(m4) < 0.5)
 expect_true(cval(m4) > 0.2)
 expect_equal(length(csi(m4)), nrow(test_dat_char))
-expect_equal(round(csi(m4), 2), c(0.85, 1.00, 0.69, 0.85, 1.00, 0.85, 1.00, 0.65, 0.85, 0.69, 
+expect_equal(round(unclass(csi(m4)), 2), c(0.85, 1.00, 0.69, 0.85, 1.00, 0.85, 1.00, 0.65, 0.85, 0.69, 
                                   0.65, 0.73, 0.69, 0.85, 0.65, 0.73, 0.69, 0.69))
 expect_equal(round(median_csi(m4), 2), 0.73)
 expect_equal(sum(predict(m4)), nrow(test_dat_char))
@@ -174,7 +175,7 @@ expect_equal(round(pcc(m5), 2), 55.56)
 expect_true(cval(m5) < 0.5)
 expect_true(cval(m5) > 0.2)
 expect_equal(length(csi(m5)), nrow(test_dat_fac))
-expect_equal(round(csi(m5), 2), c(0.85, 1.00, 0.69, 0.85, 1.00, 0.85, 1.00, 0.65, 0.85, 0.69, 
+expect_equal(round(unclass(csi(m5)), 2), c(0.85, 1.00, 0.69, 0.85, 1.00, 0.85, 1.00, 0.65, 0.85, 0.69, 
                                   0.65, 0.73, 0.69, 0.85, 0.65, 0.73, 0.69, 0.69))
 expect_equal(round(median_csi(m5), 2), 0.73)
 expect_equal(sum(predict(m5)), nrow(test_dat_fac))
@@ -208,7 +209,7 @@ expect_equal(sum(n_correct(m6), n_incorrect(m6), n_ambiguous(m6)), nrow(test_dat
 expect_equal(round(pcc(m6), 2), 83.33)
 expect_true(cval(m6) < 0.2)
 expect_equal(length(csi(m6)), nrow(test_dat_float))
-expect_equal(round(csi(m6), 2), c(0.97, 1.00, 0.97, 0.97, 1.00, 0.97, 1.00, 0.89, 0.97, 0.97, 0.89, 
+expect_equal(round(unclass(csi(m6)), 2), c(0.97, 1.00, 0.97, 0.97, 1.00, 0.97, 1.00, 0.89, 0.97, 0.97, 0.89, 
                                   1.00, 0.97, 0.97, 0.89, 1.00, 0.97, 0.97))
 expect_equal(round(median_csi(m6), 2), 0.97)
 expect_equal(sum(predict(m6)), nrow(test_dat_float))

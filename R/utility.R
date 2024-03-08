@@ -309,7 +309,9 @@ csi.default <- function(m) {
 
 #' @export
 csi.clubprofit <- function(m) {
-    m$csi
+    x <- m$csi
+    class(x) <- "clubprocsi"
+    x
 }
 
 
@@ -408,7 +410,6 @@ plot.clubprorand <- function(x, ...) {
 #' plot(mod)
 #' @export
 plot.clubprofit <- function(x, ...) {
-    accuracy <- observation <- target <- NULL
     z <- individual_results(x)
     xlabs <- levels(addNA(z$observation))
     xlabs[is.na(xlabs)] <- "NA"
@@ -440,4 +441,26 @@ plot.clubprofit <- function(x, ...) {
               layout = c(1, npanels),
               par.settings = list(superpose.polygon = list(col = palette()[1:3], border = "black", alpha = 1.0)),
               auto.key = list(space = "top", rectangles = TRUE, columns = 3))
+}
+
+
+#' Plot classification strength indices.
+#'
+#' @details
+#' Produces dotplot showing classification strength for each individual.
+#'
+#' @param x an object of class "clubprocsi"
+#' @param ... ignored
+#' @return called for side-effects only
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' z <- csi(mod)
+#' plot(z)
+#' @export
+plot.clubprocsi <- function(x, ...) {
+    dat <- data.frame(y = seq_along(x), x = x)
+    dotplot(y ~ x, dat, pch = 3, lty = 3, col = palette()[1],
+            col.line = "grey", cex = 1,
+            xlab = "Classification Strength",
+            ylab = "Individual")
 }
