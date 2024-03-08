@@ -86,7 +86,7 @@ summary(mod)
 #> 
 #> ----- Randomisation Test Results -----
 #> Random reorderings:  1000 
-#> Minimum random PCC:  30 
+#> Minimum random PCC:  26.67 
 #> Maximum random PCC:  83.33 
 #> Chance-value:  0.9
 ```
