@@ -110,20 +110,22 @@
 <p>Print a summary of the model output.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ********** Model Summary **********n</span></span>
+<span><span class="co">#&gt; ********** Model Summary **********</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----- Classification Results -----</span></span>
 <span><span class="co">#&gt; Observations:  30 </span></span>
 <span><span class="co">#&gt; Missing observations:  0 </span></span>
 <span><span class="co">#&gt; Target groups:  3 </span></span>
 <span><span class="co">#&gt; Correctly classified observations:  15 </span></span>
-<span><span class="co">#&gt; Incorrectly classified observations:  7 </span></span>
-<span><span class="co">#&gt; Ambiguously classified observations:  8 </span></span>
+<span><span class="co">#&gt; Incorrectly classified observations:  6 </span></span>
+<span><span class="co">#&gt; Ambiguously classified observations:  9 </span></span>
 <span><span class="co">#&gt; PCC:  50 </span></span>
 <span><span class="co">#&gt; Median classification strength index:  0.74 </span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----- Randomisation Test Results -----</span></span>
 <span><span class="co">#&gt; Random reorderings:  1000 </span></span>
-<span><span class="co">#&gt; Minimum random PCC:  20 </span></span>
-<span><span class="co">#&gt; Maximum random PCC:  76.67 </span></span>
+<span><span class="co">#&gt; Minimum random PCC:  30 </span></span>
+<span><span class="co">#&gt; Maximum random PCC:  83.33 </span></span>
 <span><span class="co">#&gt; Chance-value:  0.9</span></span></code></pre></div>
 <p>Plot the classification results.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
