@@ -106,7 +106,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_jellyfish-1.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/csi.html">csi</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod_csi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csi.html">csi</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod_csi</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_csi-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
@@ -125,7 +126,7 @@
 <span><span class="co">#&gt; [1] 84.78261</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cval.html">cval</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.015</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.012</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/pcc_replicates.html">pcc_replicates</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_cval_dist-1.png" width="700"></p>
