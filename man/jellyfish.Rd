@@ -5,7 +5,6 @@
 \alias{jellyfish}
 \title{Jellyfish dimension data}
 \format{
-## `jellyfish`
 A data frame with 46 rows and 3 columns:
 \describe{
  \item{location}{location where jellyfish was caught}

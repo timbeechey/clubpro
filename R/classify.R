@@ -158,3 +158,65 @@ club.formula <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols
                           call = match.call()),
                      class = "clubprofit"))
 }
+
+
+#' Print the model call.
+#' @param x an object of class "clubprofit"
+#' @param ... ignored
+#' @return No return value, called for side effects.
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' print(mod)
+#' @export
+print.clubprofit <- function(x, ...) {
+    print(x$call)
+}
+
+
+#' Plot classification accuracy.
+#'
+#' @details
+#' Produces bar plot showing counts of individuals against observed values within
+#' each target grouping. Fill colours indicate whether each individual was
+#' classified correctly, incorrectly or ambiguously.
+#'
+#' @param x an object of class "clubprofit" produced by \code{club()}
+#' @param ... ignored
+#' @return called for side-effects only
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' plot(mod)
+#' @export
+plot.clubprofit <- function(x, ...) {
+    z <- individual_results(x)
+    xlabs <- levels(addNA(z$observation))
+    xlabs[is.na(xlabs)] <- "NA"
+
+    if (any(is.na(z$target))) {
+        z$target <- addNA(z$target)
+        npanels <- nlevels(z$target)
+    } else {
+        z$target <- factor(z$target)
+        npanels <- nlevels(z$target)
+    }
+
+    if (any(is.na(z$observation))) {
+        z$observation <- addNA(z$observation)
+    } else {
+        z$observation <- factor(z$observation)
+    }
+
+
+    histogram(~ observation | target, data = z, type = "count",
+              xlim = c(0:(nlevels(z$observation) + 1)),
+              scales = list(x = list(at = 1:nlevels(z$observation), labels = xlabs)),
+              groups = factor(accuracy, levels = c("correct", "incorrect", "ambiguous")),
+              panel = function(...) {
+                  panel.superpose(..., panel.groups = panel.histogram,
+                                  col = palette()[1:3],
+                                  border = "black", alpha = 1.0)},
+              xlab = "Observed Value", ylab = "Count",
+              layout = c(1, npanels),
+              par.settings = list(superpose.polygon = list(col = palette()[1:3], border = "black", alpha = 1.0)),
+              auto.key = list(space = "top", rectangles = TRUE, columns = 3))
+}

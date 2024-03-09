@@ -38,66 +38,10 @@ remotes::install_github("timbeechey/clubpro")
 
 ## Using `clubpro`
 
-``` r
-library(clubpro)
-library(carData)
-```
-
-For this example we’ll use the `Friendly` dataset from the `carData`
-package.
-
-``` r
-data(Friendly, package = "carData")
-dat <- Friendly
-```
-
-This data set consists of counts of correctly recalled words (out of 40)
-across three experimental conditions.
-
-``` r
-str(dat)
-#> 'data.frame':    30 obs. of  2 variables:
-#>  $ condition: Factor w/ 3 levels "Before","Meshed",..: 3 3 3 3 3 3 3 3 3 3 ...
-#>  $ correct  : int  39 25 37 25 29 39 21 39 24 25 ...
-```
-
-Run the model to quantify how well each count of `correct` recalled
-words is classified in terms of `condition`.
-
-``` r
-mod <- club(correct ~ condition, data = dat, nreps = 1000)
-```
-
-Print a summary of the model output.
-
-``` r
-summary(mod)
-#> ********** Model Summary **********
-#> 
-#> ----- Classification Results -----
-#> Observations:  30 
-#> Missing observations:  0 
-#> Target groups:  3 
-#> Correctly classified observations:  15 
-#> Incorrectly classified observations:  6 
-#> Ambiguously classified observations:  9 
-#> PCC:  50 
-#> Median classification strength index:  0.74 
-#> 
-#> ----- Randomisation Test Results -----
-#> Random reorderings:  1000 
-#> Minimum random PCC:  33.33 
-#> Maximum random PCC:  83.33 
-#> Chance-value:  0.91
-```
-
-Plot the classification results.
-
-``` r
-plot(mod)
-```
-
-![](man/figures/README-plot-1.png)<!-- -->
+See the [introductory
+guide](https://timbeechey.github.io/clubpro/articles/clubpro.html) for a
+brief demonstration of how to conduct a classification analysis using
+`clubpro`.
 
 # References
 

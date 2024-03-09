@@ -5,7 +5,6 @@
 \alias{caffeine}
 \title{Caffeine data}
 \format{
-## `caffeine`
 A data frame with 30 rows and 2 columns:
 \describe{
  \item{dose}{dose of caffeine in mg}
