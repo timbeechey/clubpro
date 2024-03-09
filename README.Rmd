@@ -70,41 +70,7 @@ remotes::install_github("timbeechey/clubpro")
 
 ## Using `clubpro`
 
-```{r load_clubpro}
-library(clubpro)
-library(carData)
-```
-
-For this example we'll use the `Friendly` dataset from the `carData` package.
-
-```{r load_data}
-data(Friendly, package = "carData")
-dat <- Friendly
-```
-
-This data set consists of counts of correctly recalled words (out of 40) across three experimental conditions.
-
-```{r inspect_data}
-str(dat)
-```
-
-Run the model to quantify how well each count of `correct` recalled words is classified in terms of `condition`.
-
-```{r run_model}
-mod <- club(correct ~ condition, data = dat, nreps = 1000)
-```
-
-Print a summary of the model output.
-
-```{r model_summary}
-summary(mod)
-```
-
-Plot the classification results.
-
-```{r plot}
-plot(mod)
-```
+See the [introductory guide](https://timbeechey.github.io/clubpro/articles/clubpro.html) for a brief demonstration of how to conduct a classification analysis using `clubpro`.
 
 # References
 

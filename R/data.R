@@ -2,7 +2,7 @@
 #' 
 #' Effect of three different doses of caffeine on finger tapping rate.
 #' 
-#' @format ## `caffeine`
+#' @format
 #' A data frame with 30 rows and 2 columns:
 #' \describe{
 #'  \item{dose}{dose of caffeine in mg}
@@ -16,7 +16,7 @@
 #' 
 #' Sizes of jellyfish from two locations in the Hawkesbury River, New South Wales, Australia.
 #' 
-#' @format ## `jellyfish`
+#' @format
 #' A data frame with 46 rows and 3 columns:
 #' \describe{
 #'  \item{location}{location where jellyfish was caught}

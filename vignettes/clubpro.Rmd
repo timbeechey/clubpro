@@ -34,7 +34,7 @@ summary(mod)
 plot(mod)
 ```
 
-```{r plot_csi, fig.width=5, fig.height=5}
+```{r plot_csi, fig.width=8, fig.height=6}
 mod_csi <- csi(mod)
 plot(mod_csi)
 ```
@@ -43,12 +43,16 @@ plot(mod_csi)
 predict(mod)
 ```
 
-```{r plot_predictions}
+```{r plot_predictions, fig.width=8, fig.height=6}
 plot(predict(mod))
 ```
 
 ```{r accuracy_jellyfish}
 accuracy(mod)
+```
+
+```{r plot_accuracy, fig.width=8, fig.height=6}
+plot(accuracy(mod))
 ```
 
 ```{r pcc_jellyfish}
