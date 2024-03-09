@@ -163,7 +163,9 @@ accuracy.default <- function(m) {
 #' @export
 accuracy.clubprofit <- function(m) {
     x <- individual_results(m)
-    table(x$target, x$accuracy)
+    acc_tab <- table(x$target, x$accuracy)
+    class(acc_tab) <- "clubproaccuracy"
+    acc_tab
 }
 
 
@@ -545,6 +547,26 @@ plot.clubpropredictions <- function(x, ...) {
 }
 
 
+#' Plot accuracy.
+#'
+#' @details
+#' Produces a mosaic plot of predictio naccuracy by category
+#'
+#' @param x an object of class "clubproaccuracy"
+#' @param ... ignored
+#' @return called for side-effects only
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' z <- accuracy(mod)
+#' plot(z)
+#' @export
+plot.clubproaccuracy <- function(x, ...) {
+    mosaicplot(x, color = palette(), main = NULL,
+               xlab = "Observed Category", ylab = "Prediction Accuracy",
+               las = 1, cex.axis = 1)
+}
+
+
 #' Print predictions.
 #'
 #' @details
@@ -559,5 +581,23 @@ plot.clubpropredictions <- function(x, ...) {
 #' print(z)
 #' @export
 print.clubpropredictions <- function(x, ...) {
+    print(unclass(x))
+}
+
+
+#' Print prediction accuracy.
+#'
+#' @details
+#' Print a table of prediction accuracy by category
+#'
+#' @param x an object of class "clubproaccuracy"
+#' @param ... ignored
+#' @return called for side-effects only
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' z <- accuracy(mod)
+#' print(z)
+#' @export
+print.clubproaccuracy <- function(x, ...) {
     print(unclass(x))
 }
