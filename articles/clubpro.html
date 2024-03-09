@@ -100,15 +100,15 @@
 <span><span class="co">#&gt; ----- Randomisation Test Results -----</span></span>
 <span><span class="co">#&gt; Random reorderings:  1000 </span></span>
 <span><span class="co">#&gt; Minimum random PCC:  47.83 </span></span>
-<span><span class="co">#&gt; Maximum random PCC:  91.3 </span></span>
-<span><span class="co">#&gt; Chance-value:  0.01</span></span></code></pre></div>
+<span><span class="co">#&gt; Maximum random PCC:  93.48 </span></span>
+<span><span class="co">#&gt; Chance-value:  0.02</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_jellyfish-1.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod_csi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csi.html">csi</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod_csi</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_csi-1.png" width="700"></p>
+<p><img src="clubpro_files/figure-html/plot_csi-1.png" width="480"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 </span></span>
@@ -116,18 +116,21 @@
 <span><span class="co">#&gt;   Dangar Island             17              5</span></span>
 <span><span class="co">#&gt;   Salamander Bay             2             22</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="clubpro_files/figure-html/plot_predictions-1.png" width="700"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 </span></span>
 <span><span class="co">#&gt;                  correct incorrect ambiguous</span></span>
 <span><span class="co">#&gt;   Dangar Island       17         5         0</span></span>
 <span><span class="co">#&gt;   Salamander Bay      22         2         0</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/pcc.html">pcc</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 84.78261</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/cval.html">cval</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.013</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cval.html">cval</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.017</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/pcc_replicates.html">pcc_replicates</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_cval_dist-1.png" width="700"></p>
   </main>

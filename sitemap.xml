@@ -76,6 +76,9 @@
     <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprofit.html</loc>
   </url>
   <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubpropredictions.html</loc>
+  </url>
+  <url>
     <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprorand.html</loc>
   </url>
   <url>
@@ -83,6 +86,9 @@
   </url>
   <url>
     <loc>https://timbeechey.github.io/clubpro/reference/print.clubprofit.html</loc>
+  </url>
+  <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/print.clubpropredictions.html</loc>
   </url>
   <url>
     <loc>https://timbeechey.github.io/clubpro/reference/summary.clubprofit.html</loc>
