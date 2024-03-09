@@ -18,7 +18,6 @@
 #include <RcppArmadilloExtensions/sample.h>
 #include <progress.hpp>
 #include <progress_bar.hpp>
-using namespace arma;
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::depends(RcppProgress)]]
 
@@ -38,7 +37,7 @@ arma::mat to_indicator_matrix(arma::vec v) {
 // [[Rcpp::export]]
 arma::mat normalise_columns(arma::mat A) {
     for (size_t j {0}; j < A.n_cols; j++) {
-        auto colfactor = sqrt(accu(square(A.col(j))));
+        auto colfactor = std::sqrt(arma::accu(arma::square(A.col(j))));
         for (size_t i {}; i < A.n_rows; i++) {
             A(i, j) = colfactor == 0.0 ? 0.0 : A(i, j) / colfactor;
         }
@@ -50,7 +49,7 @@ arma::mat normalise_columns(arma::mat A) {
 // [[Rcpp::export]]
 arma::mat normalise_rows(arma::mat A) {
     for (size_t i {0}; i < A.n_rows; i++) {
-        auto rowfactor = sqrt(accu(square(A.row(i))));
+        auto rowfactor = std::sqrt(arma::accu(arma::square(A.row(i))));
         for (size_t j {0}; j < A.n_cols; j++) {
             A(i, j) = rowfactor == 0.0 ? 0.0 : A(i, j) / rowfactor;
         }
@@ -62,7 +61,7 @@ arma::mat normalise_rows(arma::mat A) {
 // [[Rcpp::export]]
 arma::mat dichotemise_matrix(arma::mat A) {
     for (size_t i {0}; i < A.n_rows; i++) {
-        auto m = max(A.row(i));
+        auto m = arma::max(A.row(i));
         for(size_t j {0}; j < A.n_cols; j++) {
             A(i, j) = ((A(i, j) == m) && (m > 0)) ? 1.0 : 0.0;
         }
@@ -74,7 +73,7 @@ arma::mat dichotemise_matrix(arma::mat A) {
 // [[Rcpp::export]]
 arma::mat binary_procrustes_rotation(arma::vec obs, arma::mat target_mat, bool normalise_cols) {
     arma::mat obs_mat = to_indicator_matrix(obs);
-    arma::mat T = trans(obs_mat) * target_mat;
+    arma::mat T = arma::trans(obs_mat) * target_mat;
     arma::mat A = normalise_cols ? obs_mat * normalise_rows(normalise_columns(T)) : obs_mat * normalise_rows(T);
     return A;
 }
@@ -95,7 +94,7 @@ double c_pcc(arma::vec obs, arma::mat target_indicator_mat, int imprecision, boo
     arma::mat binary_matrix = dichotemise_matrix(binary_procrustes_rotation(obs, target_indicator_mat, normalise_cols));
     double matches{0.0};
     for (size_t i {0}; i < binary_matrix.n_rows; i++) {
-        if (accu(binary_matrix.row(i)) == 1.0) {
+        if (arma::accu(binary_matrix.row(i)) == 1.0) {
             if (std::abs(int(binary_matrix.row(i).index_max()) - int(target_indicator_mat.row(i).index_max())) <= imprecision) {
                 matches += 1.0;
             } 

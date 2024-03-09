@@ -160,13 +160,6 @@ club.formula <- function(f, data, imprecision = 0, nreps = 1000L, normalise_cols
 }
 
 
-#' Print the model call.
-#' @param x an object of class "clubprofit"
-#' @param ... ignored
-#' @return No return value, called for side effects.
-#' @examples
-#' mod <- club(rate ~ dose, data = caffeine)
-#' print(mod)
 #' @export
 print.clubprofit <- function(x, ...) {
     print(x$call)

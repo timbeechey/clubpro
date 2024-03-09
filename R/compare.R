@@ -46,11 +46,10 @@ compare.clubprofit <- function(m1, m2) {
     pcc_diff <- abs(pcc(m1) - pcc(m2))
     diff_dist <- pcc_replicates(m1) - pcc_replicates(m2)
     cval <- length(abs(diff_dist)[abs(diff_dist) >= pcc_diff]) / m1$nreps
-    structure(
-        list(pcc_diff = pcc_diff,
-             diff_dist = diff_dist,
-             cval = cval),
-        class = "clubprocomparison")
+    structure(list(pcc_diff = pcc_diff,
+                   diff_dist = diff_dist,
+                   cval = cval),
+              class = "clubprocomparison")
 }
 
 
@@ -66,13 +65,11 @@ compare.clubprofit <- function(m1, m2) {
 #' @export
 summary.clubprocomparison <- function(object, ...) {
     structure(
-        list(
-            pcc_diff = object$pcc_diff,
-            min_pcc_difference = min(object$diff_dist),
-            max_pcc_difference = max(object$diff_dist),
-            nreps = length(object$diff_dist),
-            cval = object$cval
-        ),
+        list(pcc_diff = object$pcc_diff,
+             min_pcc_difference = min(object$diff_dist),
+             max_pcc_difference = max(object$diff_dist),
+             nreps = length(object$diff_dist),
+             cval = object$cval),
         class = "summary.clubprocomparison"
     )
 }
@@ -84,7 +81,7 @@ print.summary.clubprocomparison <- function(x, ..., digits = 2L) {
     stopifnot("digits cannot be negative"= digits >= 0)
     stopifnot("digits must be a single number"= length(digits) == 1)
 
-    cat("********** Model Comparison **********\n\n")
+    cat("********** Model Comparison **********\n")
     cat("Absolute PCC difference: ", round(x$pcc_diff, 2), "\n")
     cat("Minimum random PCC difference: ", round(x$min_pcc_difference, digits), "\n")
     cat("Maximum random PCC difference: ", round(x$max_pcc_difference, digits), "\n")
@@ -96,9 +93,6 @@ print.summary.clubprocomparison <- function(x, ..., digits = 2L) {
 print.clubprocomparison <- function(x, ...) {
     print(summary(x))
 }
-
-
-# plot.clubprocomparison
 
 
 #' Plot model comparison.

@@ -68,18 +68,6 @@ plot.clubproaccuracy <- function(x, ...) {
 }
 
 
-#' Print prediction accuracy.
-#'
-#' @details
-#' Print a table of prediction accuracy by category
-#'
-#' @param x an object of class "clubproaccuracy"
-#' @param ... ignored
-#' @return called for side-effects only
-#' @examples
-#' mod <- club(rate ~ dose, data = caffeine)
-#' z <- accuracy(mod)
-#' print(z)
 #' @export
 print.clubproaccuracy <- function(x, ...) {
     print(unclass(x))

@@ -56,18 +56,6 @@ plot.clubpropredictions <- function(x, ...) {
 }
 
 
-#' Print predictions.
-#'
-#' @details
-#' Print a table of observed versus predicted categories
-#'
-#' @param x an object of class "clubpropredictions"
-#' @param ... ignored
-#' @return called for side-effects only
-#' @examples
-#' mod <- club(rate ~ dose, data = caffeine)
-#' z <- predict(mod)
-#' print(z)
 #' @export
 print.clubpropredictions <- function(x, ...) {
     print(unclass(x))
