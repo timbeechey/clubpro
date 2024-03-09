@@ -4,14 +4,12 @@
 \alias{summary.clubprofit}
 \title{Print a summary of results from a fitted clubpro model.}
 \usage{
-\method{summary}{clubprofit}(object, ..., digits = 2L)
+\method{summary}{clubprofit}(object, ...)
 }
 \arguments{
 \item{object}{an object of class "clubprofit".}
 
 \item{...}{ignored}
-
-\item{digits}{an integer used for rounding numeric values in the output.}
 }
 \value{
 No return value, called for side effects.

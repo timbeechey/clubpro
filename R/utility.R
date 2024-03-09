@@ -28,14 +28,34 @@ print.clubprofit <- function(x, ...) {
 
 #' Print a summary of results from a fitted clubpro model.
 #' @param object an object of class "clubprofit".
-#' @param digits an integer used for rounding numeric values in the output.
 #' @param ... ignored
 #' @return No return value, called for side effects.
 #' @examples
 #' mod <- club(rate ~ dose, data = caffeine)
 #' summary(mod)
 #' @export
-summary.clubprofit <- function(object, ..., digits = 2L) {
+summary.clubprofit <- function(object, ...) {
+    structure(
+        list(
+            n_obs = length(object$y),
+            missing_obs = sum(is.na(object$y)),
+            n_groups = nlevels(object$x),
+            n_correct = object$correct_classifications,
+            n_incorrect = object$incorrect_classifications,
+            n_ambiguous = object$ambiguous_classifications,
+            pcc = object$pcc,
+            median_csi = object$median_csi,
+            nreps = object$nreps,
+            min_random_pcc = min(object$pcc_replicates),
+            max_random_pcc = max(object$pcc_replicates),
+            cval = object$cval
+        ), class = "summary.clubprofit"
+    )
+}
+
+
+#' @export
+print.summary.clubprofit <- function(x, ..., digits = 2L) {
     # check function arguments
     stopifnot("digits must be a number"= is.numeric(digits))
     stopifnot("digits cannot be negative"= digits >= 0)
@@ -43,19 +63,19 @@ summary.clubprofit <- function(object, ..., digits = 2L) {
 
     cat("********** Model Summary **********\n\n")
     cat("----- Classification Results -----\n")
-    cat("Observations: ", length(object$y), "\n")
-    cat("Missing observations: ", sum(is.na(object$y)), "\n")
-    cat("Target groups: ", nlevels(object$x), "\n")
-    cat("Correctly classified observations: ", object$correct_classifications, "\n")
-    cat("Incorrectly classified observations: ", object$incorrect_classifications, "\n")
-    cat("Ambiguously classified observations: ", object$ambiguous_classifications, "\n")
-    cat("PCC: ", round(object$pcc, digits), "\n")
-    cat("Median classification strength index: ", round(object$median_csi, digits), "\n\n")
+    cat("Observations: ", x$nobs, "\n")
+    cat("Missing observations: ", x$missing_obs, "\n")
+    cat("Target groups: ", x$n_groups, "\n")
+    cat("Correctly classified observations: ", x$n_correct, "\n")
+    cat("Incorrectly classified observations: ", x$n_incorrect, "\n")
+    cat("Ambiguously classified observations: ", x$n_ambiguous, "\n")
+    cat("PCC: ", round(x$pcc, digits), "\n")
+    cat("Median classification strength index: ", round(x$median_csi, digits), "\n\n")
     cat("----- Randomisation Test Results -----\n")
-    cat("Random reorderings: ", object$nreps, "\n")
-    cat("Minimum random PCC: ", round(min(object$pcc_replicates), digits), "\n")
-    cat("Maximum random PCC: ", round(max(object$pcc_replicates), digits), "\n")
-    cat("Chance-value: ", round(object$cval, 2), "\n")
+    cat("Random reorderings: ", x$nreps, "\n")
+    cat("Minimum random PCC: ", round(x$min_random_pcc, digits), "\n")
+    cat("Maximum random PCC: ", round(x$max_random_pcc, digits), "\n")
+    cat("Chance-value: ", round(x$cval, 2), "\n")
 }
 
 
@@ -373,6 +393,24 @@ pcc_replicates.clubprofit <- function(m) {
 }
 
 
+#' Convert the output of pcc_replicates() to a data.frame.
+#'
+#' @details
+#' This function is useful to format pcc replicates data for plotting.
+#' @param x an object of class "clubprorand"
+#' @param row.names ignored
+#' @param optional ignored
+#' @param ... ignored
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' z <- pcc_replicates(mod)
+#' as.data.frame(z)
+#' @export
+as.data.frame.clubprorand <- function(x, row.names = NULL, optional = FALSE, ...) {
+    data.frame(rep = seq_along(unclass(x)), pcc = unclass(x))
+}
+
+
 #' Plot PCC replicates.
 #'
 #' @details
@@ -386,7 +424,8 @@ pcc_replicates.clubprofit <- function(m) {
 #' plot(pcc_replicates(mod))
 #' @export
 plot.clubprorand <- function(x, ...) {
-    histogram(unclass(x), type = "count", xlab = "PCC", ylab = "Count", col = palette()[1], xlim = c(0, 100),
+    dat <- as.data.frame(x)
+    histogram(dat$pcc, type = "count", xlab = "PCC", ylab = "Count", col = palette()[1], xlim = c(0, 100),
         panel = function(...) {
             panel.histogram(...)
             panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)
@@ -444,6 +483,24 @@ plot.clubprofit <- function(x, ...) {
 }
 
 
+#' Convert the output of csi() to a data.frame.
+#'
+#' @details
+#' This function is useful to format pcc replicates data for plotting.
+#' @param x an object of class "clubprocsi"
+#' @param row.names ignored
+#' @param optional ignored
+#' @param ... ignored
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' z <- csi(mod)
+#' as.data.frame(z)
+#' @export
+as.data.frame.clubprocsi <- function(x, row.names = NULL, optional = FALSE, ...) {
+    data.frame(y = seq_along(unclass(x)), x = unclass(x))
+}
+
+
 #' Plot classification strength indices.
 #'
 #' @details
@@ -458,7 +515,7 @@ plot.clubprofit <- function(x, ...) {
 #' plot(z)
 #' @export
 plot.clubprocsi <- function(x, ...) {
-    dat <- data.frame(y = seq_along(unclass(x)), x = unclass(x))
+    dat <- as.data.frame(x)
     dotplot(y ~ x, dat, pch = 3, lty = 3, col = palette()[1],
             col.line = "grey", cex = 1,
             xlab = "Classification Strength",
