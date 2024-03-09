@@ -110,7 +110,7 @@ plot.clubprorand <- function(x, ...) {
     dat <- as.data.frame(x)
     histogram(dat$pcc, type = "count", xlab = "PCC", ylab = "Count", col = palette()[1], xlim = c(0, 100),
         panel = function(...) {
-            panel.histogram(...)
+            panel.histogram(..., border = "white")
             panel.abline(v = attr(x, "observed_pcc"), col = "red", lty = 2)
         }
     )

@@ -116,7 +116,7 @@ plot.clubprocomparison <- function(x, ...) {
     histogram(as.vector(x$diff_dist), col = palette()[1], xlab = "PCC",
         xlim = x_lims, ylab = "",
         panel = function(...) {
-            panel.histogram(...)
+            panel.histogram(..., border = "white")
             panel.abline(v = c(-x$pcc_diff, x$pcc_diff), col = "red", lty = 2)
         }
     )

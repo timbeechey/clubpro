@@ -207,9 +207,9 @@ plot.clubprofit <- function(x, ...) {
               panel = function(...) {
                   panel.superpose(..., panel.groups = panel.histogram,
                                   col = palette()[1:3],
-                                  border = "black", alpha = 1.0)},
+                                  border = "white", alpha = 1.0)},
               xlab = "Observed Value", ylab = "Count",
               layout = c(1, npanels),
-              par.settings = list(superpose.polygon = list(col = palette()[1:3], border = "black", alpha = 1.0)),
+              par.settings = list(superpose.polygon = list(col = palette()[1:3], border = "white", alpha = 1.0)),
               auto.key = list(space = "top", rectangles = TRUE, columns = 3))
 }
