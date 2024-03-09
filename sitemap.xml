@@ -70,6 +70,9 @@
     <loc>https://timbeechey.github.io/clubpro/reference/pcc_replicates.html</loc>
   </url>
   <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubproaccuracy.html</loc>
+  </url>
+  <url>
     <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprocsi.html</loc>
   </url>
   <url>
@@ -83,6 +86,9 @@
   </url>
   <url>
     <loc>https://timbeechey.github.io/clubpro/reference/predict.clubprofit.html</loc>
+  </url>
+  <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/print.clubproaccuracy.html</loc>
   </url>
   <url>
     <loc>https://timbeechey.github.io/clubpro/reference/print.clubprofit.html</loc>
