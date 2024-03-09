@@ -37,6 +37,9 @@
     <loc>https://timbeechey.github.io/clubpro/reference/club.html</loc>
   </url>
   <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/compare.html</loc>
+  </url>
+  <url>
     <loc>https://timbeechey.github.io/clubpro/reference/csi.html</loc>
   </url>
   <url>
@@ -73,6 +76,9 @@
     <loc>https://timbeechey.github.io/clubpro/reference/plot.clubproaccuracy.html</loc>
   </url>
   <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprocomparison.html</loc>
+  </url>
+  <url>
     <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprocsi.html</loc>
   </url>
   <url>
@@ -95,6 +101,9 @@
   </url>
   <url>
     <loc>https://timbeechey.github.io/clubpro/reference/print.clubpropredictions.html</loc>
+  </url>
+  <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/summary.clubprocomparison.html</loc>
   </url>
   <url>
     <loc>https://timbeechey.github.io/clubpro/reference/summary.clubprofit.html</loc>
