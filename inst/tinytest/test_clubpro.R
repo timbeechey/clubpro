@@ -17,7 +17,7 @@ expect_error(club(test_dat_int))
 expect_inherits(m1, "clubprofit")
 expect_inherits(individual_results(m1), "data.frame")
 expect_inherits(pcc_replicates(m1), "clubprorand")
-expect_inherits(predict(m1), "table")
+expect_inherits(predict(m1), "clubpropredictions")
 expect_inherits(csi(m1), "clubprocsi")
 
 # check getters
@@ -51,7 +51,7 @@ m2 <- club(items ~ condition * gender, test_dat_int, nreps = 1000L)
 expect_inherits(m2, "clubprofit")
 expect_inherits(individual_results(m2), "data.frame")
 expect_inherits(pcc_replicates(m2), "clubprorand")
-expect_inherits(predict(m2), "table")
+expect_inherits(predict(m2), "clubpropredictions")
 
 # check getters
 expect_equal(n_correct(m2), 10)
@@ -228,4 +228,3 @@ expect_identical(clubpro:::to_indicator_matrix(c(1,2,3)), matrix(c(1,0,0,0,1,0,0
 
 expect_equal(round(clubpro:::c_pcc(test_dat_int$items, clubpro:::to_indicator_matrix(test_dat_int$condition), 
                    imprecision = 0, normalise_cols = TRUE), 2), 83.33)
-

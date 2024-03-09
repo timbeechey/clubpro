@@ -131,7 +131,9 @@ individual_results.clubprofit <- function(m, digits = 2L) {
 #' @export
 predict.clubprofit <- function(object, ...) {
     x <- individual_results(object)
-    table(x$target, x$prediction)
+    pred_tab <- table(x$target, x$prediction)
+    class(pred_tab) <- "clubpropredictions"
+    pred_tab
 }
 
 
@@ -520,4 +522,42 @@ plot.clubprocsi <- function(x, ...) {
             col.line = "grey", cex = 1,
             xlab = "Classification Strength",
             ylab = "Individual")
+}
+
+
+#' Plot predictions.
+#'
+#' @details
+#' Produces a mosaic plot of observed versus predicted categories
+#'
+#' @param x an object of class "clubpropredictions"
+#' @param ... ignored
+#' @return called for side-effects only
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' z <- predict(mod)
+#' plot(z)
+#' @export
+plot.clubpropredictions <- function(x, ...) {
+    mosaicplot(x, color = palette(), main = NULL,
+               xlab = "Predicted Category", ylab = "Observed Category",
+               las = 1, cex.axis = 1)
+}
+
+
+#' Print predictions.
+#'
+#' @details
+#' Print a table of observed versus predicted categories
+#'
+#' @param x an object of class "clubpropredictions"
+#' @param ... ignored
+#' @return called for side-effects only
+#' @examples
+#' mod <- club(rate ~ dose, data = caffeine)
+#' z <- predict(mod)
+#' print(z)
+#' @export
+print.clubpropredictions <- function(x, ...) {
+    print(unclass(x))
 }
