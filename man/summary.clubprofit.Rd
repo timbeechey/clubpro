@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.R
 \name{summary.clubprofit}
 \alias{summary.clubprofit}
-\title{Print a summary of results from a fitted clubpro model.}
+\title{Generate a summary of results from a fitted clubpro model.}
 \usage{
 \method{summary}{clubprofit}(object, ...)
 }
@@ -15,7 +15,7 @@
 No return value, called for side effects.
 }
 \description{
-Print a summary of results from a fitted clubpro model.
+Generate a summary of results from a fitted clubpro model.
 }
 \examples{
 mod <- club(rate ~ dose, data = caffeine)

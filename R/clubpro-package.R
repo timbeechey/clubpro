@@ -48,6 +48,7 @@ NULL
 ## usethis namespace: end
 NULL
 
+
 ## usethis namespace: start
 #' @importFrom graphics mosaicplot
 ## usethis namespace: end

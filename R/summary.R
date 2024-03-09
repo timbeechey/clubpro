@@ -16,7 +16,7 @@
 
 
 
-#' Print a summary of results from a fitted clubpro model.
+#' Generate a summary of results from a fitted clubpro model.
 #' @param object an object of class "clubprofit".
 #' @param ... ignored
 #' @return No return value, called for side effects.

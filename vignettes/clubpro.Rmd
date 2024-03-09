@@ -34,7 +34,7 @@ summary(mod)
 plot(mod)
 ```
 
-```{r plot_csi, fig.width=8, fig.height=6}
+```{r plot_csi, fig.width=6, fig.height=8}
 mod_csi <- csi(mod)
 plot(mod_csi)
 ```
@@ -43,7 +43,7 @@ plot(mod_csi)
 predict(mod)
 ```
 
-```{r plot_predictions, fig.width=8, fig.height=6}
+```{r plot_predictions}
 plot(predict(mod))
 ```
 
@@ -51,7 +51,7 @@ plot(predict(mod))
 accuracy(mod)
 ```
 
-```{r plot_accuracy, fig.width=8, fig.height=6}
+```{r plot_accuracy}
 plot(accuracy(mod))
 ```
 
