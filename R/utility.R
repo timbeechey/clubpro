@@ -458,7 +458,7 @@ plot.clubprofit <- function(x, ...) {
 #' plot(z)
 #' @export
 plot.clubprocsi <- function(x, ...) {
-    dat <- data.frame(y = seq_along(x), x = x)
+    dat <- data.frame(y = seq_along(unclass(x)), x = unclass(x))
     dotplot(y ~ x, dat, pch = 3, lty = 3, col = palette()[1],
             col.line = "grey", cex = 1,
             xlab = "Classification Strength",
