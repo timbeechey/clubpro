@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   clubpro: clubpro.html
-last_built: 2024-03-09T13:01Z
+last_built: 2024-03-09T13:24Z
 urls:
   reference: https://timbeechey.github.io/clubpro/reference
   article: https://timbeechey.github.io/clubpro/articles
