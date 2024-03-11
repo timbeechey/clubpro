@@ -26,7 +26,7 @@ classify <- function(obs, target, imprecision, normalise_cols, display_progress)
     binary_matrix <- dichotemise_matrix(conformed_mat)
     matches <- 0
 
-    for (i in seq_len(nrow(binary_matrix))) {
+    for (i in seq_len(dim(binary_matrix)[1])) {
         predicted_classification[i] <- paste0(levels(target)[which(binary_matrix[i, ] == 1)], collapse = "|")
 
         if (sum(binary_matrix[i, ]) == 1) {

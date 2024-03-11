@@ -38,7 +38,7 @@ arma::mat to_indicator_matrix(arma::vec v) {
 arma::mat normalise_columns(arma::mat A) {
     for (size_t j {0}; j < A.n_cols; j++) {
         auto colfactor = std::sqrt(arma::accu(arma::square(A.col(j))));
-        for (size_t i {}; i < A.n_rows; i++) {
+        for (size_t i {0}; i < A.n_rows; i++) {
             A(i, j) = colfactor == 0.0 ? 0.0 : A(i, j) / colfactor;
         }
     }
