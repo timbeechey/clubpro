@@ -16,51 +16,53 @@ knitr::opts_chunk$set(
 
 ## Background
 
-`clubpro` is an implementation of a subset of the methods described in Grice (2011) for classification using binary procrustes rotation. Binary procrustes rotation can be used to quantify how well observed data can be classified into known categories. A high degree of classification accuracy indicates that the ordering of the observed data is well explained by the categories used.
+`clubpro` is an implementation of a subset of the methods described in Grice (2011) for classification of observations using binary procrustes rotation. Binary procrustes rotation can be used to quantify how well observed data can be classified into known categories. A high degree of classification accuracy indicates that the ordering of the observed data is well explained by the particular categories used.
 
 ## Set up
 
-Once installed, load `clubpro`:
+`clubpro` can be installed from CRAN with the command `install.packages("clubpro")` and loaded in the usual way.
 
 ```{r setup}
 library(clubpro)
 ```
 
-The plots provided by `clubpro` use the current palette. You can check which colours are used by default by calling the `palette()` function. Or, define your own palette by passing a vector of colours to `palette()`.
+The plots provided by `clubpro` use the colour palette loaded in the current R session. You may specify the colours you wish to use by passing a vector of colours to `palette()`.
 
 ```{r set_palette}
 palette(c("#0073C2", "#EFC000", "#868686"))
 ```
 
-## Classifying jellyfish location by size
+## Classifying jellyfish catch location by size
 
-Hand et. at. (1994) provide data on `width` and `length` in mm of jellyfish caught at two `location`s in New South Wales, Australia.
+Hand et. at. (1994) provide data on the `width` and `length` in mm of jellyfish caught at two `location`s in New South Wales, Australia: `Dangar Island` and `Salamander Bay`.
 
-To quantify how well jellyfish `width` can be classified according to location, binary procrustes rotation can be performed with `clubpro` by passing a formula and a `data.frame` to the `club()` function.
+To quantify how well jellyfish `width` is predicted by catch `location`, binary procrustes rotation can be performed with `clubpro` by passing a `formula` object of the form `observed variable ~ predictor variables(s)` and a `data.frame` containing the data to the `club()` function.
 
 ```{r model_jellyfish}
 mod <- club(width ~ location, data = jellyfish)
 ```
 
-The two most important statistics returned by the `club()` function are the percentage of correct classifications (PCC), and the chance-value. The PCC is the percenatge of observations in the data which are classified into the correct category. 
+The two most important statistics returned by the `club()` function are the percentage of correct classifications (PCC), and the chance-value. 
+
+The PCC is the percenatge of observations in the data which are classified into the correct category. The PCC returned by `club()` can be accessed using the `pcc()` function.
 
 ```{r pcc_jellyfish}
 pcc(mod)
 ```
 
-The chance-value is computed using a randomisation test to determine how frequently a PCC at least as high as that computed for the observed ordering of data is found from random reorderings of the data.
+The chance-value is computed using a randomisation test to determine how frequently a PCC at least as high as that computed for the observed ordering of data is found from random reorderings of the data. Calling the `cval()` function on an object returned by `club()` shows the chance-value of the model. Note that because the chance-value is computed using a randomisation test, the value will be slightly different each time the model is run.
 
 ```{r cval_jellyfish}
 cval(mod)
 ```
 
-More detailed results can be returned using the `summary()` function.
+More detailed classification model results can be returned using the `summary()` function. Note that values in the `summary` output are rounded according to the `digits` argument to `summary` which defaults to 2. 
 
 ```{r summary_jelyfish}
 summary(mod)
 ```
 
-The classification of the observed data by the binary procrustes rotation algorithm can be visualised by plotting the model object using the `plot()` function.
+The classification of the observed data can be visualised by plotting the model object using the `plot()` function.
 
 ```{r plot_jellyfish}
 plot(mod)
@@ -79,25 +81,25 @@ The predicted categories determined by the model can be tabulated using the `pre
 predict(mod)
 ```
 
-These predictions can be visualised as a mosaic plot by plotting the obect returned by the `predict()` function.
+These predictions can be visualised as a mosaic plot by plotting the object returned by the `predict()` function.
 
 ```{r plot_predictions}
 plot(predict(mod))
 ```
 
-Similarly, the accuracy of classifications can be tabulated as a function of category using the `accuracy()` function.
+The same information can be tabulated in terms of prediction accuracy using the `accuracy()` function.
 
 ```{r accuracy_jellyfish}
 accuracy(mod)
 ```
 
-As with predicted categories, prediction accuracy can also be plotted in the form of a mosiac plot using `plot(accuracy())`.
+As with predicted categories, prediction accuracy can also be plotted in the form of a mosaic plot using `plot(accuracy())`.
 
 ```{r plot_accuracy}
 plot(accuracy(mod))
 ```
 
-The calculation of the chance-value as the frequency of occurance a PCC from randomly reordered data  at least as high as the PCC of the observed data ordering can be visualised by plotting the output of the `pcc_replicates()` function. Calling the `plot()` function on the output of `pcc_replicates()` produces a histogram of the PCCs resulting from all random orderings of the data, along with the observed PCC as a dashed vertical line.
+The calculation of the chance-value as the frequency of occurance PCCs from randomly reordered data at least as high as the PCC of the observed data ordering can be visualised by plotting the output of the `pcc_replicates()` function. Calling the `plot()` function on the output of `pcc_replicates()` produces a histogram of the PCCs resulting from all random orderings of the data. The chance value calculated by the model is the frequency with which PCCs produced from random reorderings of the data are at least as high as the PCC produced by the observed data ordering, indicated in the plot by a dashed vertical line.
 
 ```{r plot_cval_dist}
 plot(pcc_replicates(mod))
