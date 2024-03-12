@@ -81,52 +81,67 @@
 <h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
 <p><code>clubpro</code> is an implementation of a subset of the methods
-described in Grice (2011) for classification using binary procrustes
-rotation. Binary procrustes rotation can be used to quantify how well
-observed data can be classified into known categories. A high degree of
-classification accuracy indicates that the ordering of the observed data
-is well explained by the categories used.</p>
+described in Grice (2011) for classification of observations using
+binary procrustes rotation. Binary procrustes rotation can be used to
+quantify how well observed data can be classified into known categories.
+A high degree of classification accuracy indicates that the ordering of
+the observed data is well explained by the particular categories
+used.</p>
 </div>
 <div class="section level2">
 <h2 id="set-up">Set up<a class="anchor" aria-label="anchor" href="#set-up"></a>
 </h2>
-<p>Once installed, load <code>clubpro</code>:</p>
+<p><code>clubpro</code> can be installed from CRAN with the command
+<code>install.packages("clubpro")</code> and loaded in the usual
+way.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://timbeechey.github.io/clubpro/">clubpro</a></span><span class="op">)</span></span></code></pre></div>
-<p>The plots provided by <code>clubpro</code> use the current palette.
-You can check which colours are used by default by calling the
-<code><a href="https://rdrr.io/r/grDevices/palette.html" class="external-link">palette()</a></code> function. Or, define your own palette by passing
-a vector of colours to <code><a href="https://rdrr.io/r/grDevices/palette.html" class="external-link">palette()</a></code>.</p>
+<p>The plots provided by <code>clubpro</code> use the colour palette
+loaded in the current R session. You may specify the colours you wish to
+use by passing a vector of colours to <code><a href="https://rdrr.io/r/grDevices/palette.html" class="external-link">palette()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grDevices/palette.html" class="external-link">palette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#0073C2"</span>, <span class="st">"#EFC000"</span>, <span class="st">"#868686"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="classifying-jellyfish-location-by-size">Classifying jellyfish location by size<a class="anchor" aria-label="anchor" href="#classifying-jellyfish-location-by-size"></a>
+<h2 id="classifying-jellyfish-catch-location-by-size">Classifying jellyfish catch location by size<a class="anchor" aria-label="anchor" href="#classifying-jellyfish-catch-location-by-size"></a>
 </h2>
-<p>Hand et. at. (1994) provide data on <code>width</code> and
+<p>Hand et. at. (1994) provide data on the <code>width</code> and
 <code>length</code> in mm of jellyfish caught at two
-<code>location</code>s in New South Wales, Australia.</p>
-<p>To quantify how well jellyfish <code>width</code> can be classified
-according to location, binary procrustes rotation can be performed with
-<code>clubpro</code> by passing a formula and a <code>data.frame</code>
-to the <code><a href="../reference/club.html">club()</a></code> function.</p>
+<code>location</code>s in New South Wales, Australia:
+<code>Dangar Island</code> and <code>Salamander Bay</code>.</p>
+<p>To quantify how well jellyfish <code>width</code> is predicted by
+catch <code>location</code>, binary procrustes rotation can be performed
+with <code>clubpro</code> by passing a <code>formula</code> object of
+the form <code>observed variable ~ predictor variables(s)</code> and a
+<code>data.frame</code> containing the data to the <code><a href="../reference/club.html">club()</a></code>
+function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/club.html">club</a></span><span class="op">(</span><span class="va">width</span> <span class="op">~</span> <span class="va">location</span>, data <span class="op">=</span> <span class="va">jellyfish</span><span class="op">)</span></span></code></pre></div>
 <p>The two most important statistics returned by the <code><a href="../reference/club.html">club()</a></code>
 function are the percentage of correct classifications (PCC), and the
-chance-value. The PCC is the percenatge of observations in the data
-which are classified into the correct category.</p>
+chance-value.</p>
+<p>The PCC is the percenatge of observations in the data which are
+classified into the correct category. The PCC returned by
+<code><a href="../reference/club.html">club()</a></code> can be accessed using the <code><a href="../reference/pcc.html">pcc()</a></code>
+function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/pcc.html">pcc</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 84.78261</span></span></code></pre></div>
 <p>The chance-value is computed using a randomisation test to determine
 how frequently a PCC at least as high as that computed for the observed
-ordering of data is found from random reorderings of the data.</p>
+ordering of data is found from random reorderings of the data. Calling
+the <code><a href="../reference/cval.html">cval()</a></code> function on an object returned by
+<code><a href="../reference/club.html">club()</a></code> shows the chance-value of the model. Note that
+because the chance-value is computed using a randomisation test, the
+value will be slightly different each time the model is run.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cval.html">cval</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.015</span></span></code></pre></div>
-<p>More detailed results can be returned using the
-<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function.</p>
+<p>More detailed classification model results can be returned using the
+<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function. Note that values in the
+<code>summary</code> output are rounded according to the
+<code>digits</code> argument to <code>summary</code> which defaults to
+2.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ********** Model Summary **********</span></span>
@@ -143,12 +158,11 @@ ordering of data is found from random reorderings of the data.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----- Randomisation Test Results -----</span></span>
 <span><span class="co">#&gt; Random reorderings:  1000 </span></span>
-<span><span class="co">#&gt; Minimum random PCC:  47.83 </span></span>
-<span><span class="co">#&gt; Maximum random PCC:  89.13 </span></span>
+<span><span class="co">#&gt; Minimum random PCC:  50 </span></span>
+<span><span class="co">#&gt; Maximum random PCC:  91.3 </span></span>
 <span><span class="co">#&gt; Chance-value:  0.01</span></span></code></pre></div>
-<p>The classification of the observed data by the binary procrustes
-rotation algorithm can be visualised by plotting the model object using
-the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function.</p>
+<p>The classification of the observed data can be visualised by plotting
+the model object using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_jellyfish-1.png" width="700"></p>
@@ -177,12 +191,12 @@ come from <code>Salamander Bay</code>.</p>
 <span><span class="co">#&gt;   Dangar Island             17              5</span></span>
 <span><span class="co">#&gt;   Salamander Bay             2             22</span></span></code></pre></div>
 <p>These predictions can be visualised as a mosaic plot by plotting the
-obect returned by the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function.</p>
+object returned by the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_predictions-1.png" width="700"></p>
-<p>Similarly, the accuracy of classifications can be tabulated as a
-function of category using the <code><a href="../reference/accuracy.html">accuracy()</a></code> function.</p>
+<p>The same information can be tabulated in terms of prediction accuracy
+using the <code><a href="../reference/accuracy.html">accuracy()</a></code> function.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 </span></span>
@@ -190,17 +204,20 @@ function of category using the <code><a href="../reference/accuracy.html">accura
 <span><span class="co">#&gt;   Dangar Island       17         5         0</span></span>
 <span><span class="co">#&gt;   Salamander Bay      22         2         0</span></span></code></pre></div>
 <p>As with predicted categories, prediction accuracy can also be plotted
-in the form of a mosiac plot using <code>plot(accuracy())</code>.</p>
+in the form of a mosaic plot using <code>plot(accuracy())</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_accuracy-1.png" width="700"></p>
-<p>The calculation of the chance-value as the frequency of occurance a
-PCC from randomly reordered data at least as high as the PCC of the
+<p>The calculation of the chance-value as the frequency of occurance
+PCCs from randomly reordered data at least as high as the PCC of the
 observed data ordering can be visualised by plotting the output of the
 <code><a href="../reference/pcc_replicates.html">pcc_replicates()</a></code> function. Calling the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>
 function on the output of <code><a href="../reference/pcc_replicates.html">pcc_replicates()</a></code> produces a
-histogram of the PCCs resulting from all random orderings of the data,
-along with the observed PCC as a dashed vertical line.</p>
+histogram of the PCCs resulting from all random orderings of the data.
+The chance value calculated by the model is the frequency with which
+PCCs produced from random reorderings of the data are at least as high
+as the PCC produced by the observed data ordering, indicated in the plot
+by a dashed vertical line.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/pcc_replicates.html">pcc_replicates</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_cval_dist-1.png" width="700"></p>
