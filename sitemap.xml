@@ -91,6 +91,9 @@
     <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprorand.html</loc>
   </url>
   <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprothreshold.html</loc>
+  </url>
+  <url>
     <loc>https://timbeechey.github.io/clubpro/reference/predict.clubprofit.html</loc>
   </url>
   <url>
@@ -98,5 +101,8 @@
   </url>
   <url>
     <loc>https://timbeechey.github.io/clubpro/reference/summary.clubprofit.html</loc>
+  </url>
+  <url>
+    <loc>https://timbeechey.github.io/clubpro/reference/threshold.html</loc>
   </url>
 </urlset>

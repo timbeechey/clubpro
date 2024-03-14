@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">clubpro</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,7 +136,7 @@ because the chance-value is computed using a randomisation test, the
 value will be slightly different each time the model is run.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cval.html">cval</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.015</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.011</span></span></code></pre></div>
 <p>More detailed classification model results can be returned using the
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function. Note that values in the
 <code>summary</code> output are rounded according to the
@@ -159,20 +159,59 @@ value will be slightly different each time the model is run.</p>
 <span><span class="co">#&gt; ----- Randomisation Test Results -----</span></span>
 <span><span class="co">#&gt; Random reorderings:  1000 </span></span>
 <span><span class="co">#&gt; Minimum random PCC:  50 </span></span>
-<span><span class="co">#&gt; Maximum random PCC:  91.3 </span></span>
+<span><span class="co">#&gt; Maximum random PCC:  89.13 </span></span>
 <span><span class="co">#&gt; Chance-value:  0.01</span></span></code></pre></div>
 <p>The classification of the observed data can be visualised by plotting
 the model object using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_jellyfish-1.png" width="700"></p>
+<p><img src="clubpro_files/figure-html/plot_jellyfish-1.png" width="576"></p>
+<p>Plotting the classification results shows that observed
+<code>width</code> values of 11 mm and smaller are consistently placed
+into the <code>Dangar Island</code> category, while observed
+<code>width</code> values of at least 16.5 mm are all placed into the
+<code>Salamader Bay</code> category. From these results we can see that
+the boundary between the two categories is somewhere between 11 and
+16.5. However, it is not clear from the plot exactly where the most
+likely boundary falls. Using the <code><a href="../reference/threshold.html">threshold()</a></code> function, the
+PCC that results from each possible boundary location can be computed.
+The boundary location that produces the highest PCC is the best category
+boundary.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/threshold.html">threshold</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     obs      PCC</span></span>
+<span><span class="co">#&gt; 1   6.0 54.34783</span></span>
+<span><span class="co">#&gt; 2   6.5 58.69565</span></span>
+<span><span class="co">#&gt; 3   7.0 65.21739</span></span>
+<span><span class="co">#&gt; 4   8.0 73.91304</span></span>
+<span><span class="co">#&gt; 5   9.0 76.08696</span></span>
+<span><span class="co">#&gt; 6  10.0 78.26087</span></span>
+<span><span class="co">#&gt; 7  11.0 84.78261</span></span>
+<span><span class="co">#&gt; 8  12.0 84.78261</span></span>
+<span><span class="co">#&gt; 9  13.0 84.78261</span></span>
+<span><span class="co">#&gt; 10 14.0 82.60870</span></span>
+<span><span class="co">#&gt; 11 15.0 76.08696</span></span>
+<span><span class="co">#&gt; 12 16.0 67.39130</span></span>
+<span><span class="co">#&gt; 13 16.5 65.21739</span></span>
+<span><span class="co">#&gt; 14 17.0 63.04348</span></span>
+<span><span class="co">#&gt; 15 18.0 56.52174</span></span>
+<span><span class="co">#&gt; 16 19.0 52.17391</span></span>
+<span><span class="co">#&gt; 17 20.0 50.00000</span></span></code></pre></div>
+<p>Plotting the object returned by <code><a href="../reference/threshold.html">threshold()</a></code> shows that
+three adjacent category boundary locations produce equal maximum PCCs.
+This indicates that the best category boundary occurs between 11 and 13
+mm but that there is overlap between the categories within this range of
+<code>width</code>s.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/threshold.html">threshold</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="clubpro_files/figure-html/plot_theshold-1.png" width="576"></p>
 <p>For each observation, a classification strength index (CSI) between 0
 and 1 is returned. A value of 1 indicates that an observed value was
 matched perfectly by the rotation, whereas lower CSI values indicate
 that observations were matched less well. The CSI values can be accessed
 using the <code><a href="../reference/csi.html">csi()</a></code> function, or visualised by plotting the
 object returned by a call to the <code><a href="../reference/csi.html">csi()</a></code> function.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod_csi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csi.html">csi</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod_csi</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clubpro_files/figure-html/plot_csi-1.png" width="576"></p>
@@ -184,7 +223,7 @@ having come from <code>Salamander Bay</code>. Of the 24 jellyfish caught
 at <code>Salamander Bay</code>, 2 were classified as having come from
 <code>Dangar Island</code> and 22 were correctly classified as having
 come from <code>Salamander Bay</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 </span></span>
 <span><span class="co">#&gt;                  Dangar Island Salamander Bay</span></span>
@@ -192,12 +231,12 @@ come from <code>Salamander Bay</code>.</p>
 <span><span class="co">#&gt;   Salamander Bay             2             22</span></span></code></pre></div>
 <p>These predictions can be visualised as a mosaic plot by plotting the
 object returned by the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_predictions-1.png" width="700"></p>
+<p><img src="clubpro_files/figure-html/plot_predictions-1.png" width="576"></p>
 <p>The same information can be tabulated in terms of prediction accuracy
 using the <code><a href="../reference/accuracy.html">accuracy()</a></code> function.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 </span></span>
 <span><span class="co">#&gt;                  correct incorrect ambiguous</span></span>
@@ -205,9 +244,9 @@ using the <code><a href="../reference/accuracy.html">accuracy()</a></code> funct
 <span><span class="co">#&gt;   Salamander Bay      22         2         0</span></span></code></pre></div>
 <p>As with predicted categories, prediction accuracy can also be plotted
 in the form of a mosaic plot using <code>plot(accuracy())</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_accuracy-1.png" width="700"></p>
+<p><img src="clubpro_files/figure-html/plot_accuracy-1.png" width="576"></p>
 <p>The calculation of the chance-value as the frequency of occurance
 PCCs from randomly reordered data at least as high as the PCC of the
 observed data ordering can be visualised by plotting the output of the
@@ -218,9 +257,9 @@ The chance value calculated by the model is the frequency with which
 PCCs produced from random reorderings of the data are at least as high
 as the PCC produced by the observed data ordering, indicated in the plot
 by a dashed vertical line.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/pcc_replicates.html">pcc_replicates</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_cval_dist-1.png" width="700"></p>
+<p><img src="clubpro_files/figure-html/plot_cval_dist-1.png" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
