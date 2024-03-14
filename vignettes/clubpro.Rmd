@@ -64,8 +64,20 @@ summary(mod)
 
 The classification of the observed data can be visualised by plotting the model object using the `plot()` function.
 
-```{r plot_jellyfish}
+```{r plot_jellyfish, fig.width=6, fig.height=5}
 plot(mod)
+```
+
+Plotting the classification results shows that observed `width` values of 11 mm and smaller are consistently placed into the `Dangar Island` category, while observed `width` values of at least 16.5 mm are all placed into the `Salamader Bay` category. From these results we can see that the boundary between the two categories is somewhere between 11 and 16.5. However, it is not clear from the plot exactly where the most likely boundary falls. Using the `threshold()` function, the PCC that results from each possible boundary location can be computed. The boundary location that produces the highest PCC is the best category boundary.
+
+```{r compute_threshold}
+threshold(mod)
+```
+
+Plotting the object returned by `threshold()` shows that three adjacent category boundary locations produce equal maximum PCCs. This indicates that the best category boundary occurs between 11 and 13 mm but that there is overlap between the categories within this range of `width`s.
+
+```{r plot_theshold, fig.width=6, fig.height=5}
+plot(threshold(mod))
 ```
 
 For each observation, a classification strength index (CSI) between 0 and 1 is returned. A value of 1 indicates that an observed value was matched perfectly by the rotation, whereas lower CSI values indicate that observations were matched less well. The CSI values can be accessed using the `csi()` function, or visualised by plotting the object returned by a call to the `csi()` function.
@@ -83,7 +95,7 @@ predict(mod)
 
 These predictions can be visualised as a mosaic plot by plotting the object returned by the `predict()` function.
 
-```{r plot_predictions}
+```{r plot_predictions, fig.width=6, fig.height=5}
 plot(predict(mod))
 ```
 
@@ -95,13 +107,13 @@ accuracy(mod)
 
 As with predicted categories, prediction accuracy can also be plotted in the form of a mosaic plot using `plot(accuracy())`.
 
-```{r plot_accuracy}
+```{r plot_accuracy, fig.width=6, fig.height=5}
 plot(accuracy(mod))
 ```
 
 The calculation of the chance-value as the frequency of occurance PCCs from randomly reordered data at least as high as the PCC of the observed data ordering can be visualised by plotting the output of the `pcc_replicates()` function. Calling the `plot()` function on the output of `pcc_replicates()` produces a histogram of the PCCs resulting from all random orderings of the data. The chance value calculated by the model is the frequency with which PCCs produced from random reorderings of the data are at least as high as the PCC produced by the observed data ordering, indicated in the plot by a dashed vertical line.
 
-```{r plot_cval_dist}
+```{r plot_cval_dist, fig.width=6, fig.height=5}
 plot(pcc_replicates(mod))
 ```
 
