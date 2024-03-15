@@ -64,7 +64,7 @@ summary(mod)
 
 The classification of the observed data can be visualised by plotting the model object using the `plot()` function.
 
-```{r plot_jellyfish, fig.width=6, fig.height=5}
+```{r plot_jellyfish, fig.width=8, fig.height=5}
 plot(mod)
 ```
 
@@ -76,7 +76,7 @@ threshold(mod)
 
 Plotting the object returned by `threshold()` shows that three adjacent category boundary locations produce equal maximum PCCs. This indicates that the best category boundary occurs between 11 and 13 mm but that there is overlap between the categories within this range of `width`s.
 
-```{r plot_theshold, fig.width=7, fig.height=5}
+```{r plot_theshold, fig.width=8, fig.height=5}
 plot(threshold(mod))
 ```
 
@@ -95,7 +95,7 @@ predict(mod)
 
 These predictions can be visualised as a mosaic plot by plotting the object returned by the `predict()` function.
 
-```{r plot_predictions, fig.width=6, fig.height=5}
+```{r plot_predictions, fig.width=8, fig.height=5}
 plot(predict(mod))
 ```
 
@@ -107,13 +107,13 @@ accuracy(mod)
 
 As with predicted categories, prediction accuracy can also be plotted in the form of a mosaic plot using `plot(accuracy())`.
 
-```{r plot_accuracy, fig.width=6, fig.height=5}
+```{r plot_accuracy, fig.width=8, fig.height=5}
 plot(accuracy(mod))
 ```
 
 The calculation of the chance-value as the frequency of occurance PCCs from randomly reordered data at least as high as the PCC of the observed data ordering can be visualised by plotting the output of the `pcc_replicates()` function. Calling the `plot()` function on the output of `pcc_replicates()` produces a histogram of the PCCs resulting from all random orderings of the data. The chance value calculated by the model is the frequency with which PCCs produced from random reorderings of the data are at least as high as the PCC produced by the observed data ordering, indicated in the plot by a dashed vertical line.
 
-```{r plot_cval_dist, fig.width=6, fig.height=5}
+```{r plot_cval_dist, fig.width=8, fig.height=5}
 plot(pcc_replicates(mod))
 ```
 
@@ -121,6 +121,6 @@ plot(pcc_replicates(mod))
 
 Grice, J. W. (2011). Observation oriented modeling: Analysis of cause in the behavioral sciences. Academic Press.
 
-Grice, J. W., Cota, L. D., Barrett, P. T., Wuensch, K. L., & Poteat, G. M. (2016). A Simple and Transparent Alternative to Logistic Regression. Advances in Social Sciences Research Journal, 3(7), 147–165. https://doi.org/10.14738/assrj.37.2125
+Grice, J. W., Cota, L. D., Barrett, P. T., Wuensch, K. L., & Poteat, G. M. (2016). A Simple and Transparent Alternative to Logistic Regression. Advances in Social Sciences Research Journal, 3(7), 147–165.
 
 Hand, D. J., Daly, F., Lunn, A. D., McConway, K. J. and Ostrowski, E. (1994). A Handbook of Small Data Sets. Chapman & Hall.
