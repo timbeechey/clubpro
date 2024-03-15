@@ -73,7 +73,7 @@ threshold.clubprofit <- function(m) {
 #' @export
 plot.clubprothreshold <- function(x, ...) {
     xyplot(cutpoint_pccs ~ unique_obs, x, ylim = c(0, 100),
-           xlab = "Category Boundary", y = "PCC", type = "b", lty = 3,
+           xlab = "Category Boundary", y = "PCC", type = c("p", "l"), lty = 3,
            cex = 1, pch = 1, col = palette()[1],
            scales = list(x = list(at = x$unique_obs, labels = x$unique_obs)))
 }
