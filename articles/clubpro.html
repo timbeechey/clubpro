@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">clubpro</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,7 +136,7 @@ because the chance-value is computed using a randomisation test, the
 value will be slightly different each time the model is run.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cval.html">cval</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.011</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.009</span></span></code></pre></div>
 <p>More detailed classification model results can be returned using the
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function. Note that values in the
 <code>summary</code> output are rounded according to the
@@ -159,7 +159,7 @@ value will be slightly different each time the model is run.</p>
 <span><span class="co">#&gt; ----- Randomisation Test Results -----</span></span>
 <span><span class="co">#&gt; Random reorderings:  1000 </span></span>
 <span><span class="co">#&gt; Minimum random PCC:  50 </span></span>
-<span><span class="co">#&gt; Maximum random PCC:  89.13 </span></span>
+<span><span class="co">#&gt; Maximum random PCC:  86.96 </span></span>
 <span><span class="co">#&gt; Chance-value:  0.01</span></span></code></pre></div>
 <p>The classification of the observed data can be visualised by plotting
 the model object using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function.</p>
@@ -173,10 +173,10 @@ into the <code>Dangar Island</code> category, while observed
 <code>Salamader Bay</code> category. From these results we can see that
 the boundary between the two categories is somewhere between 11 and
 16.5. However, it is not clear from the plot exactly where the most
-likely boundary falls. Using the <code><a href="../reference/threshold.html">threshold()</a></code> function, the
-PCC that results from each possible boundary location can be computed.
-The boundary location that produces the highest PCC is the best category
-boundary.</p>
+likely boundary falls. Grice et. al. (2016) suggest that in the case of
+binary clasification, the best category boundary can be determined by
+calculating a PCC for each possible boundary location. This can be
+achieved using the <code><a href="../reference/threshold.html">threshold()</a></code> function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/threshold.html">threshold</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     obs      PCC</span></span>
@@ -204,7 +204,7 @@ mm but that there is overlap between the categories within this range of
 <code>width</code>s.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/threshold.html">threshold</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_theshold-1.png" width="576"></p>
+<p><img src="clubpro_files/figure-html/plot_theshold-1.png" width="672"></p>
 <p>For each observation, a classification strength index (CSI) between 0
 and 1 is returned. A value of 1 indicates that an observed value was
 matched perfectly by the rotation, whereas lower CSI values indicate
@@ -266,6 +266,10 @@ by a dashed vertical line.</p>
 </h2>
 <p>Grice, J. W. (2011). Observation oriented modeling: Analysis of cause
 in the behavioral sciences. Academic Press.</p>
+<p>Grice, J. W., Cota, L. D., Barrett, P. T., Wuensch, K. L., &amp;
+Poteat, G. M. (2016). A Simple and Transparent Alternative to Logistic
+Regression. Advances in Social Sciences Research Journal, 3(7), 147–165.
+<a href="https://doi.org/10.14738/assrj.37.2125" class="external-link uri">https://doi.org/10.14738/assrj.37.2125</a></p>
 <p>Hand, D. J., Daly, F., Lunn, A. D., McConway, K. J. and Ostrowski, E.
 (1994). A Handbook of Small Data Sets. Chapman &amp; Hall.</p>
 </div>
