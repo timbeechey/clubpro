@@ -136,7 +136,7 @@ because the chance-value is computed using a randomisation test, the
 value will be slightly different each time the model is run.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cval.html">cval</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.009</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.011</span></span></code></pre></div>
 <p>More detailed classification model results can be returned using the
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function. Note that values in the
 <code>summary</code> output are rounded according to the
@@ -158,14 +158,14 @@ value will be slightly different each time the model is run.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----- Randomisation Test Results -----</span></span>
 <span><span class="co">#&gt; Random reorderings:  1000 </span></span>
-<span><span class="co">#&gt; Minimum random PCC:  50 </span></span>
+<span><span class="co">#&gt; Minimum random PCC:  47.83 </span></span>
 <span><span class="co">#&gt; Maximum random PCC:  86.96 </span></span>
 <span><span class="co">#&gt; Chance-value:  0.01</span></span></code></pre></div>
 <p>The classification of the observed data can be visualised by plotting
 the model object using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_jellyfish-1.png" width="576"></p>
+<p><img src="clubpro_files/figure-html/plot_jellyfish-1.png" width="768"></p>
 <p>Plotting the classification results shows that observed
 <code>width</code> values of 11 mm and smaller are consistently placed
 into the <code>Dangar Island</code> category, while observed
@@ -204,7 +204,7 @@ mm but that there is overlap between the categories within this range of
 <code>width</code>s.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/threshold.html">threshold</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_theshold-1.png" width="672"></p>
+<p><img src="clubpro_files/figure-html/plot_theshold-1.png" width="768"></p>
 <p>For each observation, a classification strength index (CSI) between 0
 and 1 is returned. A value of 1 indicates that an observed value was
 matched perfectly by the rotation, whereas lower CSI values indicate
@@ -233,7 +233,7 @@ come from <code>Salamander Bay</code>.</p>
 object returned by the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_predictions-1.png" width="576"></p>
+<p><img src="clubpro_files/figure-html/plot_predictions-1.png" width="768"></p>
 <p>The same information can be tabulated in terms of prediction accuracy
 using the <code><a href="../reference/accuracy.html">accuracy()</a></code> function.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -246,7 +246,7 @@ using the <code><a href="../reference/accuracy.html">accuracy()</a></code> funct
 in the form of a mosaic plot using <code>plot(accuracy())</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_accuracy-1.png" width="576"></p>
+<p><img src="clubpro_files/figure-html/plot_accuracy-1.png" width="768"></p>
 <p>The calculation of the chance-value as the frequency of occurance
 PCCs from randomly reordered data at least as high as the PCC of the
 observed data ordering can be visualised by plotting the output of the
@@ -259,7 +259,7 @@ as the PCC produced by the observed data ordering, indicated in the plot
 by a dashed vertical line.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/pcc_replicates.html">pcc_replicates</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="clubpro_files/figure-html/plot_cval_dist-1.png" width="576"></p>
+<p><img src="clubpro_files/figure-html/plot_cval_dist-1.png" width="768"></p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -268,8 +268,8 @@ by a dashed vertical line.</p>
 in the behavioral sciences. Academic Press.</p>
 <p>Grice, J. W., Cota, L. D., Barrett, P. T., Wuensch, K. L., &amp;
 Poteat, G. M. (2016). A Simple and Transparent Alternative to Logistic
-Regression. Advances in Social Sciences Research Journal, 3(7), 147–165.
-<a href="https://doi.org/10.14738/assrj.37.2125" class="external-link uri">https://doi.org/10.14738/assrj.37.2125</a></p>
+Regression. Advances in Social Sciences Research Journal, 3(7),
+147–165.</p>
 <p>Hand, D. J., Daly, F., Lunn, A. D., McConway, K. J. and Ostrowski, E.
 (1994). A Handbook of Small Data Sets. Chapman &amp; Hall.</p>
 </div>
