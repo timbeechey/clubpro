@@ -26,13 +26,13 @@ knitr::opts_chunk$set(
 library(clubpro)
 ```
 
-The plots provided by `clubpro` use the colour palette loaded in the current R session. You may specify the colours you wish to use by passing a vector of colours to `palette()`.
+The plots provided by `clubpro` use the colour palette loaded in the current R session. You may specify the plot colours by passing a vector of colours to `palette()`.
 
 ```{r set_palette}
 palette(c("#0073C2", "#EFC000", "#868686"))
 ```
 
-## Classifying jellyfish catch location by size
+## Classifying catch location by jellyfish size
 
 Hand et. at. (1994) provide data on the `width` and `length` in mm of jellyfish caught at two `location`s in New South Wales, Australia: `Dangar Island` and `Salamander Bay`.
 
@@ -68,13 +68,13 @@ The classification of the observed data can be visualised by plotting the model 
 plot(mod)
 ```
 
-Plotting the classification results shows that observed `width` values of 11 mm and smaller are consistently placed into the `Dangar Island` category, while observed `width` values of at least 16.5 mm are all placed into the `Salamader Bay` category. From these results we can see that the boundary between the two categories is somewhere between 11 and 16.5. However, it is not clear from the plot exactly where the most likely boundary falls. Grice et. al. (2016) suggest that in the case of binary clasification, the best category boundary can be determined by calculating a PCC for each possible boundary location. This can be achieved using the `threshold()` function.
+Plotting the classification results shows that observed `width` values of 11 mm and smaller are consistently placed into the `Dangar Island` category, while observed `width` values of at least 16.5 mm are all placed into the `Salamader Bay` category. From these results we can see that the boundary between the two categories is somewhere between 11 and 16.5. However, it is not clear from the plot exactly where the most likely boundary falls. Grice et. al. (2016) suggest that in the case of binary clasification, the optimal category boundary can be determined by calculating a PCC for each possible boundary location. This can be achieved using the `threshold()` function.
 
 ```{r compute_threshold}
 threshold(mod)
 ```
 
-Plotting the object returned by `threshold()` shows that three adjacent category boundary locations produce equal maximum PCCs. This indicates that the best category boundary occurs between 11 and 13 mm but that there is overlap between the categories within this range of `width`s.
+Plotting the object returned by `threshold()` shows that three adjacent category boundary locations produce equal maximum PCCs. This indicates that the optimal category boundary for classification occurs between 11 and 13 mm.
 
 ```{r plot_theshold, fig.width=8, fig.height=5}
 plot(threshold(mod))
@@ -119,8 +119,8 @@ plot(pcc_replicates(mod))
 
 ## References
 
-Grice, J. W. (2011). Observation oriented modeling: Analysis of cause in the behavioral sciences. Academic Press.
+Grice, J. W. (2011). _Observation oriented modeling: Analysis of cause in the behavioral sciences_. Academic Press.
 
-Grice, J. W., Cota, L. D., Barrett, P. T., Wuensch, K. L., & Poteat, G. M. (2016). A Simple and Transparent Alternative to Logistic Regression. Advances in Social Sciences Research Journal, 3(7), 147–165.
+Grice, J. W., Cota, L. D., Barrett, P. T., Wuensch, K. L., & Poteat, G. M. (2016). A Simple and Transparent Alternative to Logistic Regression. _Advances in Social Sciences Research Journal_, 3(7), 147–165.
 
-Hand, D. J., Daly, F., Lunn, A. D., McConway, K. J. and Ostrowski, E. (1994). A Handbook of Small Data Sets. Chapman & Hall.
+Hand, D. J., Daly, F., Lunn, A. D., McConway, K. J. and Ostrowski, E. (1994). _A Handbook of Small Data Sets_. Chapman & Hall.
