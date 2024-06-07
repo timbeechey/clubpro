@@ -1,6 +1,13 @@
+# clubpro 0.6.2
+
+## Minor improvements and big fixes
+
+* Handle categories with zero counts.
+* Fixed summary() to correctly print number of observations.
+
 # clubpro 0.6.1
 
-## Minor improvemnts and big fixes
+## Minor improvements and big fixes
 
 * Added a threshold() function to determine optimal category boundary for binary classification problems.
 * Fixed small image sizes in vignette.
