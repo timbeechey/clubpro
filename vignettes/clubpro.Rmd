@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Background
 
-`clubpro` is an implementation of a subset of the methods described in Grice (2011) for classification of observations using binary procrustes rotation. Binary procrustes rotation can be used to quantify how well observed data can be classified into known categories. A high degree of classification accuracy indicates that the ordering of the observed data is well explained by the particular categories used.
+`clubpro` is an implementation of a subset of the methods described in Grice (2011) for classification of observations using binary procrustes rotation. Binary procrustes rotation can be used to quantify how well observed data can be classified into known categories. A high degree of classification accuracy indicates that the ordering of the observed data is well explained by particular categories or experimental conditions.
 
 ## Set up
 
