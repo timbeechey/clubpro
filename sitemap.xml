@@ -1,108 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/404.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/articles/clubpro.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/index.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/accuracy.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/as.data.frame.clubprocsi.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/as.data.frame.clubprorand.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/caffeine.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/club.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/compare.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/csi.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/cval.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/individual_results.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/jellyfish.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/median_csi.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/n_ambiguous.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/n_correct.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/n_incorrect.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/pcc.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/pcc_replicates.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubproaccuracy.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprocomparison.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprocsi.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprofit.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubpropredictions.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprorand.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/plot.clubprothreshold.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/predict.clubprofit.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/summary.clubprocomparison.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/summary.clubprofit.html</loc>
-  </url>
-  <url>
-    <loc>https://timbeechey.github.io/clubpro/reference/threshold.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://timbeechey.github.io/clubpro/404.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/LICENSE.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/articles/clubpro.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/articles/index.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/authors.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/index.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/news/index.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/accuracy.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/as.data.frame.clubprocsi.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/as.data.frame.clubprorand.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/caffeine.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/club.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/compare.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/csi.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/cval.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/index.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/individual_results.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/jellyfish.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/median_csi.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/n_ambiguous.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/n_correct.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/n_incorrect.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/pcc.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/pcc_replicates.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/plot.clubproaccuracy.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/plot.clubprocomparison.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/plot.clubprocsi.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/plot.clubprofit.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/plot.clubpropredictions.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/plot.clubprorand.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/plot.clubprothreshold.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/predict.clubprofit.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/summary.clubprocomparison.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/summary.clubprofit.html</loc></url>
+<url><loc>https://timbeechey.github.io/clubpro/reference/threshold.html</loc></url>
 </urlset>
+

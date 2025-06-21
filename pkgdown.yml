@@ -1,10 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   clubpro: clubpro.html
-last_built: 2024-06-07T14:27Z
+last_built: 2025-06-21T23:02Z
 urls:
   reference: https://timbeechey.github.io/clubpro/reference
   article: https://timbeechey.github.io/clubpro/articles
-
