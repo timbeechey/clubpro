@@ -38,7 +38,9 @@ expect_equal(sum(unclass(accuracy(m1))), nrow(test_dat_int))
 
 # check functions called for side-effects
 expect_stdout(print(m1))
+expect_stdout(print(accuracy(m1)))
 expect_silent(plot(m1))
+expect_silent(plot(accuracy(m1)))
 expect_silent(plot(pcc_replicates(m1)))
 expect_stdout(summary(m1))
 expect_silent(summary(m1))
