@@ -8,8 +8,6 @@
 ![](https://www.r-pkg.org/badges/version-ago/clubpro?color=orange)
 ![](https://cranlogs.r-pkg.org/badges/grand-total/clubpro)
 [![R-CMD-check](https://github.com/timbeechey/clubpro/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/timbeechey/clubpro/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/timbeechey/clubpro/branch/master/graph/badge.svg)](https://app.codecov.io/gh/timbeechey/clubpro?branch=master)
 <!-- badges: end -->
 
 An R package for *cl*assification *u*sing *b*inary *p*rocrustes

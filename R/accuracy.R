@@ -33,11 +33,10 @@ accuracy <- function(m) {
 }
 
 
-# nocov start
 #' @export
 accuracy.default <- function(m) {
     .NotYetImplemented()
-} # nocov end
+}
 
 
 #' @export
