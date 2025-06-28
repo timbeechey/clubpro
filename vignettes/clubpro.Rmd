@@ -68,7 +68,7 @@ The classification of the observed data can be visualised by plotting the model 
 plot(mod)
 ```
 
-Plotting the classification results shows that observed `width` values of 11 mm and smaller are consistently placed into the `Dangar Island` category, while observed `width` values of at least 16.5 mm are all placed into the `Salamader Bay` category. From these results we can see that the boundary between the two categories is somewhere between 11 and 16.5. However, it is not clear from the plot exactly where the most likely boundary falls. Grice et. al. (2016) suggest that in the case of binary clasification, the optimal category boundary can be determined by calculating a PCC for each possible boundary location. This can be achieved using the `threshold()` function.
+Plotting the classification results shows that observed `width` values of 11 mm and smaller are consistently placed into the `Dangar Island` category, while observed `width` values of at least 16.5 mm are all placed into the `Salamader Bay` category. From these results we can see that the boundary between the two categories is somewhere between 11 and 16.5. However, it is not clear from the plot exactly where the most likely boundary falls. Grice et. al. (2016) suggest that in the case of binary classification, the optimal category boundary can be determined by calculating a PCC for each possible boundary location. This can be achieved using the `threshold()` function.
 
 ```{r compute_threshold}
 threshold(mod)
